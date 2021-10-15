@@ -1,5 +1,5 @@
 @import-normalize;
-@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Display:wdth,wght@62.5..100,100..900&display=swap');
 
 html {
   font-size: 18px;
@@ -17,7 +17,7 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Alata', sans-serif;
+  font-family: 'Noto Sans Display', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
