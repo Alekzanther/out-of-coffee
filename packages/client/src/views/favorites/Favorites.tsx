@@ -2,7 +2,7 @@
 import React from 'react';
 import { css } from '@emotion/react';
 
-import { SimpleList } from '../components';
+import { SimpleList } from '../../components';
 
 type FavoriteItem = {
   title: string;
