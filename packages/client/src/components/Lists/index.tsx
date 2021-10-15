@@ -1,1 +1,1 @@
-export {SimpleList} from "./SimpleList"
+export { SimpleList } from './SimpleList';

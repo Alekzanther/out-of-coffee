@@ -12,10 +12,12 @@ type SimpleListItem = {
 const style = css`
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding: 11px 0;
+  position: relative;
 
-  p {
-    margin-left: 12px;
+  svg {
+    position: absolute;
+    left: -30px;
   }
 `;
 
