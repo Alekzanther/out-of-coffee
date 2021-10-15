@@ -19,7 +19,7 @@ services:
     - db
     restart: always
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@db:5432/postgres
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@db:5432/oos
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
       ## uncomment next line to set an admin secret
       # HASURA_GRAPHQL_ADMIN_SECRET: superdupersecret
