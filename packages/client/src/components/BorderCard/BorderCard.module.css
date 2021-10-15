@@ -1,7 +1,3 @@
-:root {
-  --top-padding: 44px;
-}
-
 h1,
 h2,
 h3,
@@ -11,19 +7,13 @@ h5 {
   margin: 0;
 }
 
-.topWhiteBackground {
-  background: white;
-  height: 1px;
-  width: 80%;
-  bottom: 50%;
-}
-
 .borderCard {
-  padding: 32px;
+  padding: 48px;
   position: relative;
   border: 1px solid black;
   border-top: black 1px solid;
-  margin-top: var(--top-padding);
+  margin-top: 48px;
+  width: 400px;
 }
 
 .cardTitlesContainer {
@@ -31,28 +21,43 @@ h5 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: -50%;
+  top: 0;
+  left: 0;
   width: 100%;
+  transform: translateY(-50%);
 }
 
 .cardTitles {
   background-color: white;
+  padding: 0 8px;
 }
 
 .leftSideWhite {
   position: absolute;
-  left: -1px;
-  width: 1px;
+  left: -2px;
+  width: 3px;
   height: 50%;
   background-color: white;
-  top: calc(75% - var(--top-padding));
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .rightSideWhite {
   position: absolute;
-  right: -1px;
-  width: 1px;
+  right: -2px;
+  width: 3px;
   height: 50%;
   background-color: white;
-  top: calc(75% - var(--top-padding));
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.bottomSideWhite {
+  position: absolute;
+  width: 50%;
+  height: 3px;
+  background-color: white;
+  bottom: -2px;
+  right: 50%;
+  transform: translatex(50%);
 }
