@@ -1,9 +1,20 @@
+import { gql, useQuery } from '@apollo/client';
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@reach/tabs';
 import { Header } from './components';
 
 import { Orders } from './views';
 
+const query = gql`
+  query GetSchema {
+    __schema {
+      __typename
+    }
+  }
+`;
+
 function App() {
+  const { data } = useQuery(query);
+
   return (
     <>
       <Header />
