@@ -11,7 +11,7 @@ services:
   graphql-engine:
     image: hasura/graphql-engine:v2.0.5
     ports:
-      - "8080:8080"
+      - "4443:8080"
     depends_on:
       - db
     restart: always
@@ -33,6 +33,6 @@ services:
       # network: host
     restart: always
     environment:
-      REACT_APP_GRAPHQL_ENDPOINT: "localhost:8080"
+      REACT_APP_GRAPHQL_ENDPOINT: "localhost:4443"
 volumes:
   db_data:
