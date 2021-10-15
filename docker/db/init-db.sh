@@ -2,9 +2,8 @@
 set -e
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
-    CREATE USER docker;
-    CREATE DATABASE docker;
-    GRANT ALL PRIVILEGES ON DATABASE docker TO postgres;
+    CREATE DATABASE oos;
+    GRANT ALL PRIVILEGES ON DATABASE oos TO postgres;
 		CREATE TABLE IF NOT EXISTS items (
 					id INTEGER UNIQUE PRIMARY KEY,
 					name TEXT UNIQUE NOT NULL,

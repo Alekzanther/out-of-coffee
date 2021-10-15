@@ -1,25 +1,22 @@
-version: '3.9'
+version: "3.9"
 
 services:
   db:
     image: postgres:14-alpine
     restart: always
-    ports:
-    - "4441:5432" 
-    environment: 
+    environment:
       POSTGRES_HOST_AUTH_METHOD: "trust"
     volumes:
-    - db_data:/var/lib/postgresql/data
-    - ./db/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+      - db_data:/var/lib/postgresql/data
   graphql-engine:
     image: hasura/graphql-engine:v2.0.5
     ports:
-    - "4443:8080"
+      - "8080:8080"
     depends_on:
-    - db
+      - db
     restart: always
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@db:5432/postgres
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@db:5432/oos
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
       ## uncomment next line to set an admin secret
       # HASURA_GRAPHQL_ADMIN_SECRET: superdupersecret
@@ -29,13 +26,13 @@ services:
       - "4444:8008"
       - "4445:3000"
     depends_on:
-    - graphql-engine
-    build: 
+      - graphql-engine
+    build:
       context: ..
       dockerfile: docker/Dockerfile
       # network: host
-    restart: always 
+    restart: always
+    environment:
+      REACT_APP_GRAPHQL_ENDPOINT: "localhost:8080"
 volumes:
   db_data:
-  
-
