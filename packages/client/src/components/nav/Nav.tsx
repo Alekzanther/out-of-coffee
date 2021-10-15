@@ -1,5 +1,5 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@reach/tabs';
-import { Orders } from '../../views';
+import { Orders, Favorites } from '../../views';
 
 export const Nav = () => {
   console.log('hejsan');
@@ -8,7 +8,7 @@ export const Nav = () => {
     <Tabs>
       <TabList>
         <Tab>Beställning</Tab>
-        <Tab>Two</Tab>
+        <Tab>Favorites</Tab>
         <Tab>Three</Tab>
         {/* Just nu jobbar Victor här */}
         <Tab>Border box dev area</Tab>
@@ -19,7 +19,7 @@ export const Nav = () => {
           <p>Beställningar!</p>
         </TabPanel>
         <TabPanel>
-          <p>two!</p>
+          <Favorites />
         </TabPanel>
         <TabPanel>
           <p>three!</p>
