@@ -1,1 +1,1 @@
-export { SimpleList } from './SimpleList';
+export * from './SimpleList';
