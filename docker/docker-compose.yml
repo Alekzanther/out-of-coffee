@@ -8,6 +8,7 @@ services:
       POSTGRES_HOST_AUTH_METHOD: "trust"
     volumes:
       - db_data:/var/lib/postgresql/data
+      - ./db/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
   graphql-engine:
     image: hasura/graphql-engine:v2.0.5
     ports:
