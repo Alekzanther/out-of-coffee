@@ -9,25 +9,21 @@ function App() {
       <Header />
       <Tabs>
         <TabList>
+          {/* Just nu jobbar Victor här */}
           <Tab>Beställning</Tab>
           <Tab>Two</Tab>
           <Tab>Three</Tab>
-          {/* Just nu jobbar Victor här */}
-          <Tab>Border box dev area</Tab>
         </TabList>
 
         <TabPanels>
           <TabPanel>
-            <p>Beställningar!</p>
+            <Orders />
           </TabPanel>
           <TabPanel>
             <p>two!</p>
           </TabPanel>
           <TabPanel>
             <p>three!</p>
-          </TabPanel>
-          <TabPanel>
-            <Orders />
           </TabPanel>
         </TabPanels>
       </Tabs>

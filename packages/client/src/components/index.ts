@@ -1,2 +1,2 @@
 export * from "./header"
-export * from './BorderCard'
+export * from './border-card'
