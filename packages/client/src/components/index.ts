@@ -1,3 +1,3 @@
 export * from "./header"
-export * from './BorderCard'
 export * from "./nav"
+export * from './border-card'
