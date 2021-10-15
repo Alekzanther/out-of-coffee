@@ -8,12 +8,11 @@ h5 {
 }
 
 .borderCard {
-  /* padding: 48px; */
   position: relative;
+  min-width: 200px;
+  margin-top: 48px;
   border: 1px solid black;
   border-top: black 1px solid;
-  margin-top: 48px;
-  width: 400px;
 }
 
 .cardTitlesContainer {
