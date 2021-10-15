@@ -12,7 +12,7 @@ export const Header = () => {
   return (
     <div className={styles.headerContainer}>
       <SnackBar />
-      <h1 className={styles.headerTitle}>FOODURA</h1>
+      <h1 className={styles.headerTitle}>Müsl.io</h1>
     </div>
   );
 };
