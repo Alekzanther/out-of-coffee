@@ -1,7 +1,3 @@
-:root {
-  --top-padding: 44px;
-}
-
 h1,
 h2,
 h3,
@@ -16,7 +12,7 @@ h5 {
   position: relative;
   border: 1px solid black;
   border-top: black 1px solid;
-  margin-top: var(--top-padding);
+  margin-top: 44px;
   width: 400px;
 }
 
