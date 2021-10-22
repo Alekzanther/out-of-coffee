@@ -5,7 +5,7 @@ import { ReactComponent as New } from '../../assets/new.svg';
 
 type SimpleListItem = {
   title: string;
-  newItem: boolean;
+  newItem?: boolean;
 };
 
 const style = css`
