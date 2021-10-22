@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { css } from '@emotion/react';
+import { AnimatedButton } from '../animated-button';
 
 type ComplicatedListItem = {
   title: string;
@@ -27,7 +28,7 @@ const actionsContainer = css`
   display: flex;
   align-items: center;
   width: 100%;
-  justify-content: flex-end
+  justify-content: flex-end;
 `;
 
 const incrementContainerStyles = css`
@@ -40,7 +41,7 @@ export const ComplicatedList: React.FC<ComplicatedListItem> = ({
   newItem,
   iLoveIt,
   throwItInTheTrash,
-  incrementAndDecrementItems
+  incrementAndDecrementItems,
 }) => {
   const [numberOfItems, setNumberOfItems] = useState(0);
   return (
@@ -54,25 +55,37 @@ export const ComplicatedList: React.FC<ComplicatedListItem> = ({
       >
         {title}
       </p>
-        <div css={actionsContainer}>
-          {incrementAndDecrementItems && (
-            <div css={incrementContainerStyles}>
-              <button onClick={() => setNumberOfItems((prevCount) => Math.min(0, --prevCount))}>-</button>
-                <p>{numberOfItems}</p>
-              <button onClick={() => setNumberOfItems((prevCount) => ++prevCount)}>+</button>
-            </div>
-          )}
-          {throwItInTheTrash && (
-            <div css={incrementContainerStyles}>
-              Trash
-            </div>
-          )}
-          {iLoveIt && (
-            <div css={incrementContainerStyles}>
-              Heart
-            </div>
-          )}
-        </div>
+      <div css={actionsContainer}>
+        {incrementAndDecrementItems && (
+          <div css={incrementContainerStyles}>
+            <button
+              onClick={() =>
+                setNumberOfItems((prevCount) =>
+                  Math.min(0, --prevCount),
+                )
+              }
+            >
+              -
+            </button>
+            <p>{numberOfItems}</p>
+            <button
+              onClick={() =>
+                setNumberOfItems((prevCount) => ++prevCount)
+              }
+            >
+              +
+            </button>
+          </div>
+        )}
+        {throwItInTheTrash && (
+          <div css={incrementContainerStyles}>Trash</div>
+        )}
+        {iLoveIt && (
+          <div css={incrementContainerStyles}>
+            <AnimatedButton kind="outlineHeartToFilledHeart" />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
