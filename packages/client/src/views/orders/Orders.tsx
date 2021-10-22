@@ -11,7 +11,7 @@ export const Orders = () => {
                 <ComplicatedList title="Produkt" />
                 <ComplicatedList title="Produkt" />
                 <ComplicatedList title="Produkt" />
-                <ComplicatedList title="Produkt" />
+                <ComplicatedList title="Produkt" newItem />
                 <ComplicatedList title="Produkt" throwItInTheTrash={() => {}}/>
             </BorderCard>
             <button> Lägg till ny vara </button>

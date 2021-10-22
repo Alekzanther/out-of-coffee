@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import React, { useState } from 'react';
 import { css } from '@emotion/react';
-import { AnimatedButton } from '../animated-button';
 
+import { AnimatedButton } from '../animated-button';
+import { ReactComponent as New } from '../../assets/new.svg';
 import { ReactComponent as Trashcan } from '../../assets/trashcan.svg';
 
 type ComplicatedListItem = {
@@ -68,6 +69,7 @@ export const ComplicatedList: React.FC<ComplicatedListItem> = ({
 
   return (
     <div css={style}>
+      {newItem ? <New /> : null}
       <p
         css={(theme) => ({
           color: newItem
