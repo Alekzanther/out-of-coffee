@@ -22,11 +22,16 @@ const StyledButton = styled.button<StyledButtonProps>`
 
     transition: font-variation-settings 0.4s ease;
   }
+  &:focus-visible {
+    border: solid 1px hotpink;
+    border-radius: 5px;
+  }
 `;
 
 interface AnimatedButtonProps {
   kind: keyof typeof kinds;
   onClick?: () => void;
+  ariaLabel?: string;
 }
 
 export const AnimatedButton: React.FC<AnimatedButtonProps> = (
@@ -41,7 +46,7 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = (
 
   return (
     <div>
-      <StyledButton onClick={handleClick} isFavourited={isToggled}>
+      <StyledButton onClick={handleClick} isFavourited={isToggled} aria-label={props.ariaLabel}>
         <div className="icon">{kinds[props.kind]}</div>
       </StyledButton>
     </div>

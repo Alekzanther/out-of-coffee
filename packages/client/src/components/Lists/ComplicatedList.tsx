@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { css } from '@emotion/react';
 import { AnimatedButton } from '../animated-button';
 
+import { ReactComponent as Trashcan } from '../../assets/trashcan.svg';
+
 type ComplicatedListItem = {
   title: string;
   newItem?: boolean;
@@ -17,11 +19,6 @@ const style = css`
   padding: 11px 0;
   position: relative;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-
-  svg {
-    position: absolute;
-    left: -30px;
-  }
 `;
 
 const actionsContainer = css`
@@ -103,10 +100,14 @@ export const ComplicatedList: React.FC<ComplicatedListItem> = ({
           </div>
         )}
         {throwItInTheTrash && (
-          <div css={incrementContainerStyles}>Trash</div>
+          <div css={incrementContainerStyles}>
+            <button type="button" css={nakedButtonStyles} aria-label="remove"> 
+              <Trashcan style={{cursor: 'pointer'}} />
+            </button>
+          </div>
         )}
         <div css={incrementContainerStyles}>
-          <AnimatedButton kind="outlineHeartToFilledHeart" onClick={iLoveIt} />
+          <AnimatedButton kind="outlineHeartToFilledHeart" onClick={iLoveIt} ariaLabel="favorite product" />
         </div>
       </div>
     </div>
