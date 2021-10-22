@@ -5,7 +5,7 @@ import styles from './Orders.module.css'
 export const Orders = () => {
     return (
         <div className={styles.ordersContainer}>
-            <BorderCard subTitle="Produkter">
+            <BorderCard subTitle="Produkter" style={{width: '400px'}}>
                 produkt
                 <br />
                 produkt
