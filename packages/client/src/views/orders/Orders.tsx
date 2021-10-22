@@ -24,7 +24,7 @@ export const Orders = () => {
                 <br />
             </BorderCard>
             <button> Lägg till ny vara </button>
-            <BorderCard title="Nästa order" subTitle="Levereras 4 oktober">
+            <BorderCard title="Nästa order" subTitle="Levereras 4 oktober" style={{width: '400px'}}>
                 Beställning
                 <br />
                 Beställning
