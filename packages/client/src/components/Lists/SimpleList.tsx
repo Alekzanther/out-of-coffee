@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
 import { css } from '@emotion/react';
-
 import { ReactComponent as New } from '../../assets/new.svg';
 
 type SimpleListItem = {

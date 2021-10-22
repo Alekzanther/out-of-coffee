@@ -8,13 +8,11 @@ import { Header, Nav } from './components';
 function App() {
   const { data } = useQuery(getSchema);
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <Global styles={globalStyles} />
-        <Header />
-        <Nav />
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={theme}>
+      <Global styles={globalStyles} />
+      <Header />
+      <Nav />
+    </ThemeProvider>
   );
 }
 
