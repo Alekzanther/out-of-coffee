@@ -105,11 +105,9 @@ export const ComplicatedList: React.FC<ComplicatedListItem> = ({
         {throwItInTheTrash && (
           <div css={incrementContainerStyles}>Trash</div>
         )}
-        {iLoveIt && (
-          <div css={incrementContainerStyles}>
-            <AnimatedButton kind="outlineHeartToFilledHeart" />
-          </div>
-        )}
+        <div css={incrementContainerStyles}>
+          <AnimatedButton kind="outlineHeartToFilledHeart" onClick={iLoveIt} />
+        </div>
       </div>
     </div>
   );

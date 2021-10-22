@@ -26,6 +26,7 @@ const StyledButton = styled.button<StyledButtonProps>`
 
 interface AnimatedButtonProps {
   kind: keyof typeof kinds;
+  onClick?: () => void;
 }
 
 export const AnimatedButton: React.FC<AnimatedButtonProps> = (
@@ -33,13 +34,14 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = (
 ) => {
   const [isToggled, toggle] = useToggle(false);
 
-  if (props.kind === 'outlineHeartToFilledHeart' && isToggled) {
-    console.log('now');
+  const handleClick = () => {
+    props?.onClick?.();
+    toggle();
   }
 
   return (
     <div>
-      <StyledButton onClick={toggle} isFavourited={isToggled}>
+      <StyledButton onClick={handleClick} isFavourited={isToggled}>
         <div className="icon">{kinds[props.kind]}</div>
       </StyledButton>
     </div>

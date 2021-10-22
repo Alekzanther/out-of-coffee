@@ -13,7 +13,6 @@ export const Orders = () => {
                 <ComplicatedList title="Produkt" />
                 <ComplicatedList title="Produkt" />
                 <ComplicatedList title="Produkt" />
-                <ComplicatedList title="Produkt" />
             </BorderCard>
             <button> Lägg till ny vara </button>
             <BorderCard title="Nästa order" subTitle="Levereras 4 oktober" style={{width: '400px'}}>
