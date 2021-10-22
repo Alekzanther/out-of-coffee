@@ -35,6 +35,19 @@ const incrementContainerStyles = css`
   align-items: center;
 `;
 
+const nakedButtonStyles = css`
+  background: none;
+  color: inherit;
+  border: 1px solid transparent;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  &:focus-visible {
+    border: solid 1px hotpink;
+    border-radius: 5px;
+  }
+`;
+
 export const ComplicatedList: React.FC<ComplicatedListItem> = ({
   title,
   newItem,
@@ -43,6 +56,18 @@ export const ComplicatedList: React.FC<ComplicatedListItem> = ({
   incrementAndDecrementItems
 }) => {
   const [numberOfItems, setNumberOfItems] = useState(0);
+  
+  const increaseCount = () => {
+    setNumberOfItems((prevCount) => ++prevCount);
+  }
+
+  const decreaseCount = () => {
+    setNumberOfItems((prevCount) => {
+      const newCount = prevCount - 1;
+      return Math.max(newCount, 0);
+    })
+  }
+
   return (
     <div css={style}>
       <p
@@ -55,11 +80,11 @@ export const ComplicatedList: React.FC<ComplicatedListItem> = ({
         {title}
       </p>
         <div css={actionsContainer}>
-          {incrementAndDecrementItems && (
+          {!incrementAndDecrementItems && (
             <div css={incrementContainerStyles}>
-              <button onClick={() => setNumberOfItems((prevCount) => Math.min(0, --prevCount))}>-</button>
-                <p>{numberOfItems}</p>
-              <button onClick={() => setNumberOfItems((prevCount) => ++prevCount)}>+</button>
+              <button aria-label="decrease" css={nakedButtonStyles} onClick={decreaseCount}>-</button>
+                <p aria-label={`${numberOfItems} ${title}`} tabIndex={0}>{numberOfItems}</p>
+              <button aria-label="increase" css={nakedButtonStyles} onClick={increaseCount}>+</button>
             </div>
           )}
           {throwItInTheTrash && (
