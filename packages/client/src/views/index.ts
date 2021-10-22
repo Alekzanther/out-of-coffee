@@ -1,2 +1,2 @@
 export * from './orders'
-export * from './Favorites'
+export * from './favorites'
