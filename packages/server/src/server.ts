@@ -1,21 +1,32 @@
+const http = require('http');
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
-import path from 'path';
+import { connectToDb } from './db';
+import { schema } from './graphql/schema';
 
-const app = express();
 const port = 8008;
-const serverDir = process.cwd();
-const buildDir = path.join(serverDir, "../client/build");
 
-app.use(express.static(buildDir));
+async function initServer() {
+  const app = express();
 
-// @ts-ignore
-app.get('/ping', function (req, res) {
-  return res.send('pong');
-});
+  await connectToDb();
 
-// @ts-ignore
-app.get('/', function (req, res) {
-  res.sendFile(path.join(buildDir, 'index.html'));
-});
+  const httpServer = http.createServer(app);
+  const server = new ApolloServer({
+    schema,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  });
+  await server.start();
 
-app.listen(port, () => console.log("listening on port", port));
+  server.applyMiddleware({ app });
+
+  await new Promise<void>((resolve) =>
+    httpServer.listen({ port }, resolve),
+  );
+  console.log(
+    `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`,
+  );
+}
+
+initServer();
