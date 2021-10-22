@@ -31,23 +31,14 @@ export const Nav = () => {
       <StyledTabList>
         <StyledTab>Beställning</StyledTab>
         <StyledTab>Favorites</StyledTab>
-
-        {/* Just nu jobbar Victor här */}
-        <StyledTab>Border box dev area</StyledTab>
       </StyledTabList>
 
       <TabPanels>
         <TabPanel>
-          <p>Beställningar!</p>
+          <Orders />
         </TabPanel>
         <TabPanel>
           <Favorites />
-        </TabPanel>
-        <TabPanel>
-          <p>three!</p>
-        </TabPanel>
-        <TabPanel>
-          <Orders />
         </TabPanel>
       </TabPanels>
     </Tabs>
