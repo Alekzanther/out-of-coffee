@@ -107,7 +107,7 @@ export const ComplicatedList: React.FC<ComplicatedListItem> = ({
           </div>
         )}
         <div css={incrementContainerStyles}>
-          <AnimatedButton kind="outlineHeartToFilledHeart" onClick={iLoveIt} ariaLabel="favorite product" />
+          <AnimatedButton kind="outlineHeartToFilledHeart" onClick={iLoveIt} ariaLabel="favorite" />
         </div>
       </div>
     </div>
