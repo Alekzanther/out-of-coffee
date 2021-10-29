@@ -1,3 +1,4 @@
-type BaseOrder {
-  items: [Item]
+type BaseOrder @entity {
+  _id: String! @id
+  items: [Item] @link
 }

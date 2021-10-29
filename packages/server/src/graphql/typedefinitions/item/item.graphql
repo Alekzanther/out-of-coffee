@@ -1,5 +1,14 @@
-type Item {
-  name: String!
-  productUrl: String!
-  productImageUrl: String
+type Item @entity {
+  _id: String! @id
+  name: String! @column
+  productUrl: String! @column
+  productImageUrl: String @column
+}
+
+type Mutation {
+  CreateItem(
+    name: String!
+    productUrl: String!
+    productImageUrl: String!
+  ): Item
 }

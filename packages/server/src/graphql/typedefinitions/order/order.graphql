@@ -1,10 +1,11 @@
-type Order {
-  status: String!
-  items: [Item]
-  creationDate: Int
-  endDate: Int
+type Order @entity {
+  _id: String! @id
+  status: String! @column
+  items: [Item] @link
+  creationDate: Int @column
+  endDate: Int @column
 }
 
 type Query {
-  GetCurrentOrder: Order
+  GetCurrentOrder(id: ID!): Order
 }

@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import { ItemDbObject } from 'src/generated/graphql';
 
 export const ItemSchema = new Schema({
   name: String,
@@ -6,4 +7,4 @@ export const ItemSchema = new Schema({
   productImageUrl: String,
 });
 
-export const Item = model('Item', ItemSchema);
+export const Item = model<ItemDbObject>('Item', ItemSchema);
