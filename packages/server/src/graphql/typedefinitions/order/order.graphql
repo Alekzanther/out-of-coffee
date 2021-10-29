@@ -1,0 +1,10 @@
+type Order {
+  status: String!
+  items: [Item]
+  creationDate: Int
+  endDate: Int
+}
+
+type Query {
+  GetCurrentOrder: Order
+}

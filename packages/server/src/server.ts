@@ -1,21 +1,32 @@
+import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
+import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
-import path from 'path';
+import { connectToDb } from './db/db';
+import { schema } from './graphql/schema';
 
-const app = express();
 const port = 8008;
-const serverDir = process.cwd();
-const buildDir = path.join(serverDir, "../client/build");
 
-app.use(express.static(buildDir));
+async function initServer() {
+  try {
+    const app = express();
 
-// @ts-ignore
-app.get('/ping', function (req, res) {
-  return res.send('pong');
-});
+    await connectToDb();
 
-// @ts-ignore
-app.get('/', function (req, res) {
-  res.sendFile(path.join(buildDir, 'index.html'));
-});
+    const server = new ApolloServer({
+      schema,
+      plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+    });
+    await server.start();
+    server.applyMiddleware({ app });
 
-app.listen(port, () => console.log("listening on port", port));
+    app.listen({ port }, () => {
+      console.log(
+        `🚀 Server ready at http://localhost:${port}${server.graphqlPath}`,
+      );
+    });
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+initServer();
