@@ -15,7 +15,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 		);
 		CREATE TABLE IF NOT EXISTS orders (
 					id SERIAL PRIMARY KEY UNIQUE,
-					timestamp TEXT UNIQUE,
+					order_date TEXT UNIQUE,
 					status TEXT
 		);
 		CREATE TABLE IF NOT EXISTS order_items (
