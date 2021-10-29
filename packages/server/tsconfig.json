@@ -4,6 +4,11 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "lib": ["es2015", "DOM"],
+    "baseUrl": ".",
+    "paths": {
+      "graphql": ["node_modules/graphql"],
+      "@graphql-tools/schema": ["node_modules/@graphql-tools/schema"]
+    },
 
     "rootDir": "src",
     "outDir": "lib",

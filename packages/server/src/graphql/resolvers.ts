@@ -1,9 +1,9 @@
-import { Orders } from '../models/Orders/orders';
+import { Order } from '../models/Order/order';
 
 export const resolvers = {
   Query: {
     GetCurrentOrder: async () => {
-      await Orders.find();
+      await Order.find();
     },
   },
 };
