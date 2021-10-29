@@ -9,7 +9,7 @@ const typesLoader = loadFilesSync(
 );
 
 const resolversLoader = loadFilesSync(
-  path.join(__dirname, 'resolver.ts'),
+  path.join(__dirname, 'resolvers.ts'),
 );
 
 const typeDefs = mergeTypeDefs(typesLoader);
