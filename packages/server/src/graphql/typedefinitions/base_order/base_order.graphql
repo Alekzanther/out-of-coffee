@@ -1,4 +1,18 @@
 type BaseOrder @entity {
   _id: String! @id
   items: [Item] @link
+  active: Boolean! @column
+}
+
+type Query {
+  GetBaseOrder: BaseOrder
+}
+
+input NewBaseOrder {
+  items: [String]!
+  active: Boolean!
+}
+
+type Mutation {
+  SetBaseOrder(newBaseOrder: NewBaseOrder!): BaseOrder
 }

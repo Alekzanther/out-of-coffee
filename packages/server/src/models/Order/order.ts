@@ -10,7 +10,8 @@ export const OrderSchema = new Schema({
   items: [{ type: SchemaTypes.ObjectId, ref: 'Item' }],
   creationDate: Number,
   endDate: Number,
-  isBaseOrder: { type: Boolean },
+  isBaseOrder: Boolean,
+  processed: { type: Boolean, default: false },
 });
 
 export const Order = model<OrderDbObject>('Order', OrderSchema);

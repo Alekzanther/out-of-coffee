@@ -4,8 +4,19 @@ type Order @entity {
   items: [Item] @link
   creationDate: Int @column
   endDate: Int @column
+  processed: Boolean
 }
 
 type Query {
   GetCurrentOrder(id: ID!): Order
+  GetOrder(id: ID!): Order
+  GetOrders: [Order]
+}
+
+input NewOrder {
+  items: [String]!
+}
+
+type Mutation {
+  CreateOrder(newOrder: NewOrder!): Order
 }
