@@ -89,6 +89,7 @@ export const resolvers: Resolvers = {
       });
 
       if (currentBaseOrder) {
+        // Actually update this to be inactive.
         await BaseOrderModel.updateOne({ _id: currentBaseOrder._id });
       }
 
