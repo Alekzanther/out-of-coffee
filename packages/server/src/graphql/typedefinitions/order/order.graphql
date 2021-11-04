@@ -12,11 +12,11 @@ input NewOrder {
 }
 
 type Query {
-  GetCurrentOrder(id: ID!): Response
-  GetOrder(id: ID!): Response
-  GetOrders: [Response]
+  GetCurrentOrder(id: ID!): Order
+  GetOrder(id: ID!): Order
+  GetOrders: [Order]
 }
 
 type Mutation {
-  CreateOrder(newOrder: NewOrder!): Response
+  CreateOrder(newOrder: NewOrder!): Order
 }

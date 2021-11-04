@@ -11,10 +11,10 @@ input NewItem {
 }
 
 type Mutation {
-  CreateItem(newItem: NewItem!): Response
+  CreateItem(newItem: NewItem!): Item
 }
 
 type Query {
-  GetItem(id: ID!): Response
+  GetItem(id: ID!): Item
   GetItems: [Item]
 }

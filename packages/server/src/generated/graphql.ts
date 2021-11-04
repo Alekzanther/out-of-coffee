@@ -50,9 +50,9 @@ export type Item = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  CreateItem?: Maybe<Response>;
-  CreateOrder?: Maybe<Response>;
-  SetBaseOrder?: Maybe<Response>;
+  CreateItem?: Maybe<Item>;
+  CreateOrder?: Maybe<Order>;
+  SetBaseOrder?: Maybe<BaseOrder>;
 };
 
 export type MutationCreateItemArgs = {
@@ -93,12 +93,12 @@ export type Order = {
 
 export type Query = {
   __typename?: 'Query';
-  GetBaseOrder?: Maybe<Response>;
-  GetCurrentOrder?: Maybe<Response>;
-  GetItem?: Maybe<Response>;
+  GetBaseOrder?: Maybe<BaseOrder>;
+  GetCurrentOrder?: Maybe<Order>;
+  GetItem?: Maybe<Item>;
   GetItems?: Maybe<Array<Maybe<Item>>>;
-  GetOrder?: Maybe<Response>;
-  GetOrders?: Maybe<Array<Maybe<Response>>>;
+  GetOrder?: Maybe<Order>;
+  GetOrders?: Maybe<Array<Maybe<Order>>>;
 };
 
 export type QueryGetCurrentOrderArgs = {
@@ -439,19 +439,19 @@ export type MutationResolvers<
   ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
 > = {
   CreateItem?: Resolver<
-    Maybe<ResolversTypes['Response']>,
+    Maybe<ResolversTypes['Item']>,
     ParentType,
     ContextType,
     RequireFields<MutationCreateItemArgs, 'newItem'>
   >;
   CreateOrder?: Resolver<
-    Maybe<ResolversTypes['Response']>,
+    Maybe<ResolversTypes['Order']>,
     ParentType,
     ContextType,
     RequireFields<MutationCreateOrderArgs, 'newOrder'>
   >;
   SetBaseOrder?: Resolver<
-    Maybe<ResolversTypes['Response']>,
+    Maybe<ResolversTypes['BaseOrder']>,
     ParentType,
     ContextType,
     RequireFields<MutationSetBaseOrderArgs, 'newBaseOrder'>
@@ -496,18 +496,18 @@ export type QueryResolvers<
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
   GetBaseOrder?: Resolver<
-    Maybe<ResolversTypes['Response']>,
+    Maybe<ResolversTypes['BaseOrder']>,
     ParentType,
     ContextType
   >;
   GetCurrentOrder?: Resolver<
-    Maybe<ResolversTypes['Response']>,
+    Maybe<ResolversTypes['Order']>,
     ParentType,
     ContextType,
     RequireFields<QueryGetCurrentOrderArgs, 'id'>
   >;
   GetItem?: Resolver<
-    Maybe<ResolversTypes['Response']>,
+    Maybe<ResolversTypes['Item']>,
     ParentType,
     ContextType,
     RequireFields<QueryGetItemArgs, 'id'>
@@ -518,13 +518,13 @@ export type QueryResolvers<
     ContextType
   >;
   GetOrder?: Resolver<
-    Maybe<ResolversTypes['Response']>,
+    Maybe<ResolversTypes['Order']>,
     ParentType,
     ContextType,
     RequireFields<QueryGetOrderArgs, 'id'>
   >;
   GetOrders?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['Response']>>>,
+    Maybe<Array<Maybe<ResolversTypes['Order']>>>,
     ParentType,
     ContextType
   >;

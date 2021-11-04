@@ -23,13 +23,12 @@ export const resolvers: Resolvers = {
         case 'Order':
           return 'Order';
         default:
-          return 'ErrorResponse';
+          return null;
       }
     },
   },
   Query: {
-    GetOrders: async (_, {}, { models }): Promise<Order[]> => {
-      console.log(models);
+    GetOrders: async (): Promise<Order[]> => {
       return await OrderModel.find().populate('items');
     },
     GetCurrentOrder: async (_, { id }): Promise<Order | null> => {
@@ -69,6 +68,12 @@ export const resolvers: Resolvers = {
       }
       return item;
     },
+    // TODO: Base order should maybe be unique?
+    GetBaseOrder: async (): Promise<BaseOrder | null> => {
+      return await BaseOrderModel.findOne({ active: true }).populate(
+        'items',
+      );
+    },
   },
   Mutation: {
     CreateItem: async (_, { newItem }): Promise<Item | null> => {
@@ -92,7 +97,7 @@ export const resolvers: Resolvers = {
       const order = await OrderModel.create({
         status: 'pending',
         items: newOrder?.items,
-        creationDate: Date.now(),
+        creationDate: Date.now(), // TODO: Too large int for graphql, update dates to strings?
         endDate: Date.now() + 604800000, // Date now + 1 week.
         processed: false,
       });

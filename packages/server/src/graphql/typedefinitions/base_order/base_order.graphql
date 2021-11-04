@@ -10,9 +10,9 @@ input NewBaseOrder {
 }
 
 type Query {
-  GetBaseOrder: Response
+  GetBaseOrder: BaseOrder
 }
 
 type Mutation {
-  SetBaseOrder(newBaseOrder: NewBaseOrder!): Response
+  SetBaseOrder(newBaseOrder: NewBaseOrder!): BaseOrder
 }
