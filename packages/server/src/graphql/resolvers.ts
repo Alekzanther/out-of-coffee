@@ -11,14 +11,31 @@ import { Item as ItemModel } from '../models/Item/item';
 import { Order as OrderModel } from '../models/Order/order';
 
 export const resolvers: Resolvers = {
+  Response: {
+    __resolveType(obj) {
+      switch (obj.__typename) {
+        case 'ErrorResponse':
+          return 'ErrorResponse';
+        case 'Item':
+          return 'Item';
+        case 'BaseOrder':
+          return 'BaseOrder';
+        case 'Order':
+          return 'Order';
+        default:
+          return 'ErrorResponse';
+      }
+    },
+  },
   Query: {
-    GetOrders: async (): Promise<Order[]> => {
+    GetOrders: async (_, {}, { models }): Promise<Order[]> => {
+      console.log(models);
       return await OrderModel.find().populate('items');
     },
     GetCurrentOrder: async (_, { id }): Promise<Order | null> => {
-      const newOrder = await OrderModel.findById(id).populate(
+      const newOrder = (await OrderModel.findById(id).populate(
         'items',
-      );
+      )) as Order;
 
       if (!newOrder) {
         return null;
@@ -89,8 +106,10 @@ export const resolvers: Resolvers = {
       });
 
       if (currentBaseOrder) {
-        // Actually update this to be inactive.
-        await BaseOrderModel.updateOne({ _id: currentBaseOrder._id });
+        await currentBaseOrder.updateOne(
+          { _id: currentBaseOrder._id },
+          { active: false },
+        );
       }
 
       const baseOrder = await BaseOrderModel.create({

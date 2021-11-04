@@ -1,0 +1,5 @@
+type ErrorResponse {
+  httpStatusCode: Int
+  message: String!
+  code: String
+}

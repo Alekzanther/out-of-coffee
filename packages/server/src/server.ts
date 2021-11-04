@@ -3,6 +3,7 @@ import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import { connectToDb } from './db/db';
 import { schema } from './graphql/schema';
+import * as models from './models';
 
 const port = 8008;
 
@@ -15,6 +16,9 @@ async function initServer() {
     const server = new ApolloServer({
       schema,
       plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+      context: () => ({
+        models: models,
+      }),
     });
     await server.start();
     server.applyMiddleware({ app });
