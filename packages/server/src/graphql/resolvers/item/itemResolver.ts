@@ -46,31 +46,41 @@ export const itemResolver: Resolvers = {
   },
   Mutation: {
     CreateItem: async (_, { newItem }): Promise<ItemResponse> => {
-      const productImageUrl = await scrapeProductUrl(
-        newItem.productUrl,
-      );
+      try {
+        const productImageUrl = await scrapeProductUrl(
+          newItem.productUrl,
+        );
 
-      if (!productImageUrl) {
+        if (!productImageUrl) {
+          const response: ItemResponse = {
+            data: null,
+            error: {
+              message:
+                'Unable to fetch productImage from supplied product URL',
+            },
+          };
+          return response;
+        }
+        const item = await ItemModel.create({
+          name: newItem?.name,
+          productUrl: newItem?.productUrl,
+          productImageUrl,
+        });
+
+        const response: ItemResponse = {
+          data: [item],
+          error: null,
+        };
+        return response;
+      } catch (error) {
         const response: ItemResponse = {
           data: null,
           error: {
-            message:
-              'Unable to fetch productImage from supplied product URL',
+            message: `Unable to create a new Item: ${error}`,
           },
         };
         return response;
       }
-      const item = await ItemModel.create({
-        name: newItem?.name,
-        productUrl: newItem?.productUrl,
-        productImageUrl,
-      });
-
-      const response: ItemResponse = {
-        data: [item],
-        error: null,
-      };
-      return response;
     },
   },
 };

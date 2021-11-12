@@ -10,7 +10,7 @@ type BaseOrderResponse {
 }
 
 input NewBaseOrder {
-  items: [String]!
+  items: [String!]!
   active: Boolean!
 }
 
