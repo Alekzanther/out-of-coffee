@@ -7,16 +7,21 @@ type Order @entity {
   processed: Boolean
 }
 
+type OrderResponse {
+  data: [Order]
+  error: ErrorResponse
+}
+
 input NewOrder {
   items: [String]!
 }
 
 type Query {
-  GetCurrentOrder(id: ID!): Order
-  GetOrder(id: ID!): Order
-  GetOrders: [Order]
+  GetCurrentOrder(id: ID!): OrderResponse!
+  GetOrder(id: ID!): OrderResponse!
+  GetOrders: OrderResponse!
 }
 
 type Mutation {
-  CreateOrder(newOrder: NewOrder!): Order
+  CreateOrder(newOrder: NewOrder!): OrderResponse!
 }
