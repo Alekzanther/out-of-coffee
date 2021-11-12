@@ -1,9 +1,11 @@
 import { isValidObjectId } from 'mongoose';
 import {
-  Item,
   Resolvers,
   Order,
   BaseOrder,
+  ItemResponse,
+  OrderResponse,
+  BaseOrderResponse,
 } from '../generated/graphql';
 import { scrapeProductUrl } from '../scraper';
 import { BaseOrder as BaseOrderModel } from '../models/BaseOrder/base_order';
@@ -11,89 +13,174 @@ import { Item as ItemModel } from '../models/Item/item';
 import { Order as OrderModel } from '../models/Order/order';
 
 export const resolvers: Resolvers = {
-  Response: {
-    __resolveType(obj) {
-      switch (obj.__typename) {
-        case 'ErrorResponse':
-          return 'ErrorResponse';
-        case 'Item':
-          return 'Item';
-        case 'BaseOrder':
-          return 'BaseOrder';
-        case 'Order':
-          return 'Order';
-        default:
-          return null;
-      }
-    },
-  },
   Query: {
-    GetOrders: async (): Promise<Order[]> => {
-      return await OrderModel.find().populate('items');
+    GetOrders: async (): Promise<OrderResponse> => {
+      const orders = await OrderModel.find().populate('items');
+
+      if (!orders) {
+        const response: OrderResponse = {
+          data: null,
+          error: {
+            message: 'Unable to fetch orders',
+          },
+        };
+        return response;
+      }
+
+      const response: OrderResponse = {
+        data: orders,
+        error: null,
+      };
+
+      return response;
     },
-    GetCurrentOrder: async (_, { id }): Promise<Order | null> => {
-      const newOrder = (await OrderModel.findById(id).populate(
+    GetCurrentOrder: async (_, { id }): Promise<OrderResponse> => {
+      const order = (await OrderModel.findById(id).populate(
         'items',
       )) as Order;
 
-      if (!newOrder) {
-        return null;
-      }
-      return newOrder;
-    },
-    GetOrder: async (_, { id }): Promise<Order | null> => {
-      const isIdValid = isValidObjectId(id);
-      // This could be replaced by an error message instead
-      if (!isIdValid) {
-        return null;
-      }
-      const order = await OrderModel.findById(id).populate('items');
       if (!order) {
-        return null;
+        const response: OrderResponse = {
+          data: null,
+          error: {
+            message: 'Unable to find order with supplied ID',
+          },
+        };
+        return response;
       }
-      return order as Order;
+
+      const response: OrderResponse = {
+        data: [order],
+        error: null,
+      };
+
+      return response;
     },
-    GetItems: async (): Promise<Item[]> => {
-      return await ItemModel.find();
-    },
-    GetItem: async (_, { id }): Promise<Item | null> => {
+    GetOrder: async (_, { id }): Promise<OrderResponse> => {
       const isIdValid = isValidObjectId(id);
-      // This could be replaced by an error message instead
       if (!isIdValid) {
-        return null;
+        const response: OrderResponse = {
+          data: null,
+          error: {
+            message: 'Supplied ID is not a valid MongoDb ObjectId',
+          },
+        };
+        return response;
       }
+
+      const order = await OrderModel.findById(id).populate('items');
+
+      if (!order) {
+        const response: OrderResponse = {
+          data: null,
+          error: {
+            message: 'No order found with supplied ID.',
+          },
+        };
+        return response;
+      }
+
+      const response: OrderResponse = {
+        data: [order],
+        error: null,
+      };
+      return response;
+    },
+    GetItems: async (): Promise<ItemResponse> => {
+      const items = await ItemModel.find();
+      const response: ItemResponse = {
+        __typename: 'ItemResponse',
+        data: items,
+        error: null,
+      };
+      return response;
+    },
+    GetItem: async (_, { id }): Promise<ItemResponse> => {
+      const isIdValid = isValidObjectId(id);
+
+      if (!isIdValid) {
+        const response: ItemResponse = {
+          data: null,
+          error: {
+            message: 'Supplied ID is not a valid MongoDb ObjectId',
+          },
+        };
+        return response;
+      }
+
       const item = await ItemModel.findById(id);
       if (!item) {
-        return null;
+        const response: ItemResponse = {
+          data: null,
+          error: {
+            message: 'No item found with supplied ID.',
+          },
+        };
+        return response;
       }
-      return item;
+      const response: ItemResponse = {
+        data: [item],
+        error: null,
+      };
+      return response;
     },
     // TODO: Base order should maybe be unique?
-    GetBaseOrder: async (): Promise<BaseOrder | null> => {
-      return await BaseOrderModel.findOne({ active: true }).populate(
+    GetBaseOrder: async (): Promise<BaseOrderResponse> => {
+      const baseOrder = await BaseOrderModel.findOne({
+        active: true,
+      });
+
+      if (!baseOrder) {
+        const response: BaseOrderResponse = {
+          data: null,
+          error: {
+            message: 'Unable to get BaseOrder',
+          },
+        };
+        return response;
+      }
+
+      const populatedBaseOrder: BaseOrder = await baseOrder.populate(
         'items',
       );
+      const response: BaseOrderResponse = {
+        data: [populatedBaseOrder],
+        error: null,
+      };
+
+      return response;
     },
   },
   Mutation: {
-    CreateItem: async (_, { newItem }): Promise<Item | null> => {
+    CreateItem: async (_, { newItem }): Promise<ItemResponse> => {
       const productImageUrl = await scrapeProductUrl(
         newItem.productUrl,
       );
 
       if (!productImageUrl) {
-        // Can replace with error message instead
-        return null;
+        const response: ItemResponse = {
+          data: null,
+          error: {
+            message:
+              'Unable to fetch productImage from supplied product URL',
+          },
+        };
+        return response;
       }
       const item = await ItemModel.create({
         name: newItem?.name,
         productUrl: newItem?.productUrl,
         productImageUrl,
       });
-      return item;
+
+      const response: ItemResponse = {
+        data: [item],
+        error: null,
+      };
+      return response;
     },
 
-    CreateOrder: async (_, { newOrder }): Promise<Order> => {
+    CreateOrder: async (_, { newOrder }): Promise<OrderResponse> => {
       const order = await OrderModel.create({
         status: 'pending',
         items: newOrder?.items,
@@ -102,13 +189,43 @@ export const resolvers: Resolvers = {
         processed: false,
       });
 
-      return order.populate('items');
+      if (!order) {
+        const response: OrderResponse = {
+          data: null,
+          error: {
+            message: 'Unable to save new order',
+          },
+        };
+        return response;
+      }
+
+      const populatedOrder: Order = await order.populate('items');
+
+      const response: OrderResponse = {
+        data: [populatedOrder],
+        error: null,
+      };
+
+      return response;
     },
 
-    SetBaseOrder: async (_, { newBaseOrder }): Promise<BaseOrder> => {
+    SetBaseOrder: async (
+      _,
+      { newBaseOrder },
+    ): Promise<BaseOrderResponse> => {
       const currentBaseOrder = await BaseOrderModel.findOne({
         active: true,
       });
+
+      if (!currentBaseOrder) {
+        const response: BaseOrderResponse = {
+          data: null,
+          error: {
+            message: 'No current BaseOrder found',
+          },
+        };
+        return response;
+      }
 
       if (currentBaseOrder) {
         await currentBaseOrder.updateOne(
@@ -122,7 +239,16 @@ export const resolvers: Resolvers = {
         active: newBaseOrder?.active,
       });
 
-      return baseOrder.populate('items');
+      const populatedBaseOrder: BaseOrder = await baseOrder.populate(
+        'items',
+      );
+
+      const response: BaseOrderResponse = {
+        data: [populatedBaseOrder],
+        error: null,
+      };
+
+      return response;
     },
   },
 };

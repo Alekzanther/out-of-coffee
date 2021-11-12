@@ -4,15 +4,20 @@ type BaseOrder @entity {
   active: Boolean! @column
 }
 
+type BaseOrderResponse {
+  data: [BaseOrder]
+  error: ErrorResponse
+}
+
 input NewBaseOrder {
   items: [String]!
   active: Boolean!
 }
 
 type Query {
-  GetBaseOrder: BaseOrder
+  GetBaseOrder: BaseOrderResponse!
 }
 
 type Mutation {
-  SetBaseOrder(newBaseOrder: NewBaseOrder!): BaseOrder
+  SetBaseOrder(newBaseOrder: NewBaseOrder!): BaseOrderResponse!
 }
