@@ -4,8 +4,8 @@ import { OrderDbObject } from 'src/generated/graphql';
 export const OrderSchema = new Schema({
   status: {
     type: String,
-    enum: ['pending', 'delivered'],
-    default: 'pending',
+    enum: ['PENDING', 'DELIVERED'],
+    default: 'PENDING',
   },
   items: [{ type: SchemaTypes.ObjectId, ref: 'Item' }],
   creationDate: Number,

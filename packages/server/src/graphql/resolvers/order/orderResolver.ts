@@ -2,8 +2,9 @@ import { isValidObjectId } from 'mongoose';
 import {
   Order,
   OrderResponse,
+  OrderStatus,
   Resolvers,
-} from 'src/generated/graphql';
+} from '../../../generated/graphql';
 import { Order as OrderModel } from '../../../models/Order/order';
 
 export const orderResolver: Resolvers = {
@@ -88,7 +89,7 @@ export const orderResolver: Resolvers = {
   Mutation: {
     CreateOrder: async (_, { newOrder }): Promise<OrderResponse> => {
       const order = await OrderModel.create({
-        status: 'pending',
+        status: OrderStatus.Pending,
         items: newOrder?.items,
         creationDate: Date.now(), // TODO: Too large int for graphql, update dates to strings?
         endDate: Date.now() + 604800000, // Date now + 1 week.
