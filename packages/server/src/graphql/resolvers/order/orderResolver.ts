@@ -88,10 +88,23 @@ export const orderResolver: Resolvers = {
   },
   Mutation: {
     CreateOrder: async (_, { newOrder }): Promise<OrderResponse> => {
+      for (let i = 0; i < newOrder.items.length; i++) {
+        const isIdValid = isValidObjectId(newOrder.items[i]);
+        if (!isIdValid) {
+          const response: OrderResponse = {
+            data: null,
+            error: {
+              message: `Supplied ID ${newOrder.items[i]} is not a valid ObjectId`,
+            },
+          };
+          return response;
+        }
+      }
+
       const order = await OrderModel.create({
         status: OrderStatus.Pending,
         items: newOrder?.items,
-        creationDate: Date.now(), // TODO: Too large int for graphql, update dates to strings?
+        creationDate: Date.now(),
         endDate: Date.now() + 604800000, // Date now + 1 week.
         processed: false,
       });
