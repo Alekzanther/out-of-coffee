@@ -77,7 +77,7 @@ export type MutationSetBaseOrderArgs = {
 
 export type NewBaseOrder = {
   active: Scalars['Boolean'];
-  items: Array<Maybe<Scalars['String']>>;
+  items: Array<Scalars['String']>;
 };
 
 export type NewItem = {
@@ -325,12 +325,101 @@ export enum __TypeKind {
   NonNull = 'NON_NULL'
 }
 
+export type GetItemQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetItemQuery = { __typename?: 'Query', GetItem: { __typename?: 'ItemResponse', data?: Array<{ __typename?: 'Item', name: string, productUrl: string, productImageUrl?: string | null | undefined } | null | undefined> | null | undefined } };
+
+export type GetItemsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetItemsQuery = { __typename?: 'Query', GetItems: { __typename?: 'ItemResponse', data?: Array<{ __typename?: 'Item', name: string, productUrl: string, productImageUrl?: string | null | undefined } | null | undefined> | null | undefined } };
+
 export type GetSchemaQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetSchemaQuery = { __typename?: 'Query', __schema: { __typename: '__Schema' } };
 
 
+export const GetItemDocument = gql`
+    query getItem($id: ID!) {
+  GetItem(id: $id) {
+    data {
+      name
+      productUrl
+      productImageUrl
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetItemQuery__
+ *
+ * To run a query within a React component, call `useGetItemQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetItemQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetItemQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetItemQuery(baseOptions: Apollo.QueryHookOptions<GetItemQuery, GetItemQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetItemQuery, GetItemQueryVariables>(GetItemDocument, options);
+      }
+export function useGetItemLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetItemQuery, GetItemQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetItemQuery, GetItemQueryVariables>(GetItemDocument, options);
+        }
+export type GetItemQueryHookResult = ReturnType<typeof useGetItemQuery>;
+export type GetItemLazyQueryHookResult = ReturnType<typeof useGetItemLazyQuery>;
+export type GetItemQueryResult = Apollo.QueryResult<GetItemQuery, GetItemQueryVariables>;
+export const GetItemsDocument = gql`
+    query getItems {
+  GetItems {
+    data {
+      name
+      productUrl
+      productImageUrl
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetItemsQuery__
+ *
+ * To run a query within a React component, call `useGetItemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetItemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetItemsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetItemsQuery(baseOptions?: Apollo.QueryHookOptions<GetItemsQuery, GetItemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetItemsQuery, GetItemsQueryVariables>(GetItemsDocument, options);
+      }
+export function useGetItemsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetItemsQuery, GetItemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetItemsQuery, GetItemsQueryVariables>(GetItemsDocument, options);
+        }
+export type GetItemsQueryHookResult = ReturnType<typeof useGetItemsQuery>;
+export type GetItemsLazyQueryHookResult = ReturnType<typeof useGetItemsLazyQuery>;
+export type GetItemsQueryResult = Apollo.QueryResult<GetItemsQuery, GetItemsQueryVariables>;
 export const GetSchemaDocument = gql`
     query GetSchema {
   __schema {
