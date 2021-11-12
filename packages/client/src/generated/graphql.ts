@@ -92,8 +92,8 @@ export type NewOrder = {
 export type Order = {
   __typename?: 'Order';
   _id: Scalars['String'];
-  creationDate?: Maybe<Scalars['Int']>;
-  endDate?: Maybe<Scalars['Int']>;
+  creationDate?: Maybe<Scalars['Float']>;
+  endDate?: Maybe<Scalars['Float']>;
   items?: Maybe<Array<Maybe<Item>>>;
   status: OrderStatus;
 };
@@ -337,6 +337,11 @@ export type GetItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetItemsQuery = { __typename?: 'Query', GetItems: { __typename?: 'ItemResponse', data?: Array<{ __typename?: 'Item', name: string, productUrl: string, productImageUrl?: string | null | undefined } | null | undefined> | null | undefined } };
 
+export type GetOrdersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetOrdersQuery = { __typename?: 'Query', GetOrders: { __typename?: 'OrderResponse', data?: Array<{ __typename: 'Order', _id: string, status: OrderStatus, creationDate?: number | null | undefined, endDate?: number | null | undefined, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined } };
+
 export type GetSchemaQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -420,6 +425,53 @@ export function useGetItemsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetItemsQueryHookResult = ReturnType<typeof useGetItemsQuery>;
 export type GetItemsLazyQueryHookResult = ReturnType<typeof useGetItemsLazyQuery>;
 export type GetItemsQueryResult = Apollo.QueryResult<GetItemsQuery, GetItemsQueryVariables>;
+export const GetOrdersDocument = gql`
+    query getOrders {
+  GetOrders {
+    data {
+      _id
+      status
+      items {
+        _id
+        name
+        productUrl
+        productImageUrl
+        __typename
+      }
+      creationDate
+      endDate
+      __typename
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOrdersQuery__
+ *
+ * To run a query within a React component, call `useGetOrdersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOrdersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOrdersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetOrdersQuery(baseOptions?: Apollo.QueryHookOptions<GetOrdersQuery, GetOrdersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOrdersQuery, GetOrdersQueryVariables>(GetOrdersDocument, options);
+      }
+export function useGetOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOrdersQuery, GetOrdersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOrdersQuery, GetOrdersQueryVariables>(GetOrdersDocument, options);
+        }
+export type GetOrdersQueryHookResult = ReturnType<typeof useGetOrdersQuery>;
+export type GetOrdersLazyQueryHookResult = ReturnType<typeof useGetOrdersLazyQuery>;
+export type GetOrdersQueryResult = Apollo.QueryResult<GetOrdersQuery, GetOrdersQueryVariables>;
 export const GetSchemaDocument = gql`
     query GetSchema {
   __schema {

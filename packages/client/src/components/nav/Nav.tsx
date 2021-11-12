@@ -3,6 +3,7 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@reach/tabs';
 import { Orders, Favorites } from '../../views';
 import styled from '@emotion/styled';
+import { useGetOrdersQuery } from 'generated/graphql';
 
 const StyledTabList = styled(TabList)`
   max-width: 888px;
@@ -24,8 +25,9 @@ const StyledTab = styled(Tab)`
 `;
 
 export const Nav = () => {
-  console.log('hejsan');
-
+  // const { data: items } = useGetItemsQuery();
+  const { data: orders } = useGetOrdersQuery();
+  console.log(`orders`, orders);
   return (
     <Tabs>
       <StyledTabList>
