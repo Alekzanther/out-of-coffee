@@ -1,18 +1,12 @@
-import styles from './Header.module.css';
+import styled from '@emotion/styled';
 
-const SnackBar = () => {
-  return (
-    <div className={styles.snackContainer}>
-      <p> Beställ innan torsdag 25 september kl 12:00! 🎉 </p>
-    </div>
-  );
-};
-
-export const Header = () => {
-  return (
-    <div className={styles.headerContainer}>
-      <SnackBar />
-      <h1 className={styles.headerTitle}>Müsl.io</h1>
-    </div>
-  );
-};
+export const Header = styled.h1`
+  font-style: normal;
+  font-weight: normal;
+  line-height: 66px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin: 12px 0;
+  grid-area: header;
+  text-align: center;
+`

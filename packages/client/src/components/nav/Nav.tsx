@@ -5,11 +5,10 @@ import { Orders, Favorites } from '../../views';
 import styled from '@emotion/styled';
 
 const StyledTabList = styled(TabList)`
-  max-width: 888px;
-  padding: 0 60px;
-  margin: 0 auto;
+  justify-content: space-evenly;
+  width: 100%;
   background: none;
-  justify-content: space-between;
+  grid-area: nav;
   > [data-reach-tab][data-selected] {
     border-bottom-color: hotpink;
     border-bottom-width: 4px;
@@ -17,30 +16,43 @@ const StyledTabList = styled(TabList)`
       outline-color: hotpink;
     }
   }
-`;
+  `;
 
 const StyledTab = styled(Tab)`
   border-bottom-width: 4px;
+  `;
+
+const StyledTabs = styled(Tabs)`
+  grid-area: content;
+  display: grid;
+  grid-template-areas:
+                    "nav nav nav"
+                    "a b c";
+  grid-auto-rows: auto 1fr;
+  grid-auto-columns: 1fr;
+  
+`;
+
+const StyledTabPanels = styled(TabPanels)`
+  display: contents;
 `;
 
 export const Nav = () => {
-  console.log('hejsan');
-
   return (
-    <Tabs>
+    <StyledTabs>
       <StyledTabList>
         <StyledTab>Beställning</StyledTab>
         <StyledTab>Favorites</StyledTab>
       </StyledTabList>
 
-      <TabPanels>
+      <StyledTabPanels>
         <TabPanel>
           <Orders />
         </TabPanel>
         <TabPanel>
           <Favorites />
         </TabPanel>
-      </TabPanels>
-    </Tabs>
+      </StyledTabPanels>
+    </StyledTabs>
   );
 };
