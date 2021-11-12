@@ -5,9 +5,9 @@ services:
     image: mongo
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: start
-      MONGO_INITDB_ROOT_PASSWORD: gott
-      MONGO_INITDB_DATABASE: outOfStartDB
+      MONGO_INITDB_ROOT_USERNAME: start-admin
+      MONGO_INITDB_ROOT_PASSWORD: gott-mos
+      MONGO_INITDB_DATABASE: out-of-start
     volumes:
       - db_data:/data/db
       - ./db/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
