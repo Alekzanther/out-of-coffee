@@ -81,7 +81,7 @@ export type MutationSetBaseOrderArgs = {
 
 export type NewBaseOrder = {
   active: Scalars['Boolean'];
-  items: Array<Maybe<Scalars['String']>>;
+  items: Array<Scalars['String']>;
 };
 
 export type NewItem = {
