@@ -1,3 +1,4 @@
+import { checkIfIdsAreValid } from '../../../helpers/helpers';
 import {
   Resolvers,
   BaseOrder,
@@ -39,42 +40,64 @@ export const baseOrderResolver: Resolvers = {
       _,
       { newBaseOrder },
     ): Promise<BaseOrderResponse> => {
-      const currentBaseOrder = await BaseOrderModel.findOne({
-        active: true,
-      });
+      try {
+        const currentBaseOrder = await BaseOrderModel.findOne({
+          active: true,
+        });
 
-      if (!currentBaseOrder) {
+        if (currentBaseOrder) {
+          await currentBaseOrder.updateOne(
+            { _id: currentBaseOrder._id },
+            { active: false },
+          );
+        }
+
+        const invalidId = checkIfIdsAreValid(
+          newBaseOrder.items as string[],
+        );
+        if (invalidId) {
+          const response: BaseOrderResponse = {
+            data: null,
+            error: {
+              message: `Supplied ID ${invalidId} is not a valid ObjectId`,
+            },
+          };
+          return response;
+        }
+
+        const baseOrder = await BaseOrderModel.create({
+          items: newBaseOrder?.items,
+          active: newBaseOrder?.active,
+        });
+
+        if (!baseOrder) {
+          const response: BaseOrderResponse = {
+            data: null,
+            error: {
+              message: 'Unable to create BaseOrder',
+            },
+          };
+          return response;
+        }
+
+        const populatedBaseOrder: BaseOrder =
+          await baseOrder.populate('items');
+
+        const response: BaseOrderResponse = {
+          data: [populatedBaseOrder],
+          error: null,
+        };
+
+        return response;
+      } catch (error) {
         const response: BaseOrderResponse = {
           data: null,
           error: {
-            message: 'No current BaseOrder found',
+            message: `Error when trying to set BaseOrder: ${error}`,
           },
         };
         return response;
       }
-
-      if (currentBaseOrder) {
-        await currentBaseOrder.updateOne(
-          { _id: currentBaseOrder._id },
-          { active: false },
-        );
-      }
-
-      const baseOrder = await BaseOrderModel.create({
-        items: newBaseOrder?.items,
-        active: newBaseOrder?.active,
-      });
-
-      const populatedBaseOrder: BaseOrder = await baseOrder.populate(
-        'items',
-      );
-
-      const response: BaseOrderResponse = {
-        data: [populatedBaseOrder],
-        error: null,
-      };
-
-      return response;
     },
   },
 };

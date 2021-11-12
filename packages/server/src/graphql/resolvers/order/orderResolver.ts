@@ -1,4 +1,5 @@
 import { isValidObjectId } from 'mongoose';
+import { checkIfIdsAreValid } from '../../../helpers/helpers';
 import {
   Order,
   OrderResponse,
@@ -88,45 +89,55 @@ export const orderResolver: Resolvers = {
   },
   Mutation: {
     CreateOrder: async (_, { newOrder }): Promise<OrderResponse> => {
-      for (let i = 0; i < newOrder.items.length; i++) {
-        const isIdValid = isValidObjectId(newOrder.items[i]);
-        if (!isIdValid) {
+      try {
+        const invalidId = checkIfIdsAreValid(
+          newOrder.items as string[],
+        );
+        if (invalidId) {
           const response: OrderResponse = {
             data: null,
             error: {
-              message: `Supplied ID ${newOrder.items[i]} is not a valid ObjectId`,
+              message: `Supplied ID ${invalidId} is not a valid ObjectId`,
             },
           };
           return response;
         }
-      }
 
-      const order = await OrderModel.create({
-        status: OrderStatus.Pending,
-        items: newOrder?.items,
-        creationDate: Date.now(),
-        endDate: Date.now() + 604800000, // Date now + 1 week.
-        processed: false,
-      });
+        const order = await OrderModel.create({
+          status: OrderStatus.Pending,
+          items: newOrder?.items,
+          creationDate: Date.now(),
+          endDate: Date.now() + 604800000, // Date now + 1 week.
+          processed: false,
+        });
 
-      if (!order) {
+        if (!order) {
+          const response: OrderResponse = {
+            data: null,
+            error: {
+              message: 'Unable to save new order',
+            },
+          };
+          return response;
+        }
+
+        const populatedOrder: Order = await order.populate('items');
+
+        const response: OrderResponse = {
+          data: [populatedOrder],
+          error: null,
+        };
+
+        return response;
+      } catch (error) {
         const response: OrderResponse = {
           data: null,
           error: {
-            message: 'Unable to save new order',
+            message: `Unable to save new order: ${error}`,
           },
         };
         return response;
       }
-
-      const populatedOrder: Order = await order.populate('items');
-
-      const response: OrderResponse = {
-        data: [populatedOrder],
-        error: null,
-      };
-
-      return response;
     },
   },
 };

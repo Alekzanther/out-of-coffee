@@ -15,7 +15,7 @@ db.createUser(
 use ${MONGO_INITDB_DATABASE}
 db.createCollection("orders")
 db.createCollection("items")
-db.createCollection("base_orders")
+db.createCollection("baseorders")
 db.items.insert({ "name": "russin", "productUrl": "https://www.mat.se/butik/russin-krav-salta-kvarn-500g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/42660-280.jpg" })
 db.items.insert({ "name": "bananer", "productUrl": null, "productImageUrl": null })
 db.items.insert({ "name": "grönt te", "productUrl": "https://www.mat.se/butik/gront-te-krav-kung-markatt-20p", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/23843-280.jpg" })
