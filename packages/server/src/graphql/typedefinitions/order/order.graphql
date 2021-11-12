@@ -1,10 +1,14 @@
+enum OrderStatus {
+  PENDING
+  DELIVERED
+}
+
 type Order @entity {
   _id: String! @id
-  status: String! @column
+  status: OrderStatus! @column
   items: [Item] @link
   creationDate: Int @column
   endDate: Int @column
-  processed: Boolean
 }
 
 type OrderResponse {

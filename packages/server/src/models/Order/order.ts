@@ -11,7 +11,6 @@ export const OrderSchema = new Schema({
   creationDate: Number,
   endDate: Number,
   isBaseOrder: Boolean,
-  processed: { type: Boolean, default: false },
 });
 
 export const Order = model<OrderDbObject>('Order', OrderSchema);
