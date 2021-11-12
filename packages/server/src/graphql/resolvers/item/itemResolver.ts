@@ -1,6 +1,6 @@
 import { isValidObjectId } from 'mongoose';
-import { ItemResponse, Resolvers } from 'src/generated/graphql';
-import { scrapeProductUrl } from 'src/scraper';
+import { ItemResponse, Resolvers } from '../../../generated/graphql';
+import { scrapeProductUrl } from '../../../scraper';
 import { Item as ItemModel } from '../../../models/Item/item';
 
 export const itemResolver: Resolvers = {
