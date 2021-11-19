@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
+import React, { useState } from 'react';
 import { css } from '@emotion/react';
 
 import { SimpleList } from '../../components';
+import { useGetBaseOrderQuery } from 'generated/graphql';
 
 type FavoriteItem = {
   title: string;
@@ -53,6 +54,10 @@ const listWrapperStyle = css`
 `;
 
 export const Favorites: React.FC = () => {
+  const { data } = useGetBaseOrderQuery();
+
+  const items = data?.GetBaseOrder.data?.[0]?.items || [];
+
   return (
     <div css={wrapperStyle}>
       <div css={listWrapperStyle}>
@@ -67,13 +72,32 @@ export const Favorites: React.FC = () => {
       </div>
       <div css={listWrapperStyle}>
         <h2>Basorder</h2>
-        {baseorderItems.map((item, index) => (
-          <SimpleList
-            title={item.title}
-            newItem={item.new}
-            key={index}
-          />
-        ))}
+        <ul style={{ listStyle: 'none' }}>
+          {items.length >= 1
+            ? items.map((item, index) => (
+                <li key={index}>
+                  <p>{item?.name}</p>
+                  {item?.productImageUrl && (
+                    <img
+                      style={{ height: '20px', width: '400px' }}
+                      src={item?.productImageUrl}
+                      alt={item.name}
+                    />
+                  )}
+                  {item?.productUrl && (
+                    <a
+                      style={{
+                        textDecoration: 'none',
+                      }}
+                      href={item?.productUrl}
+                    >
+                      Gå till skiten
+                    </a>
+                  )}
+                </li>
+              ))
+            : null}
+        </ul>
       </div>
     </div>
   );

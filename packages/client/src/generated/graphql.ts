@@ -325,6 +325,11 @@ export enum __TypeKind {
   NonNull = 'NON_NULL'
 }
 
+export type GetBaseOrderQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetBaseOrderQuery = { __typename: 'Query', GetBaseOrder: { __typename: 'BaseOrderResponse', data?: Array<{ __typename: 'BaseOrder', _id: string, active: boolean, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined, error?: { __typename: 'ErrorResponse', message: string, code?: string | null | undefined } | null | undefined } };
+
 export type GetItemQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -348,6 +353,54 @@ export type GetSchemaQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetSchemaQuery = { __typename: 'Query', __schema: { __typename: '__Schema' } };
 
 
+export const GetBaseOrderDocument = gql`
+    query getBaseOrder {
+  GetBaseOrder {
+    data {
+      _id
+      active
+      items {
+        _id
+        name
+        productUrl
+        productImageUrl
+        __typename
+      }
+    }
+    error {
+      message
+      code
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetBaseOrderQuery__
+ *
+ * To run a query within a React component, call `useGetBaseOrderQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBaseOrderQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBaseOrderQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetBaseOrderQuery(baseOptions?: Apollo.QueryHookOptions<GetBaseOrderQuery, GetBaseOrderQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetBaseOrderQuery, GetBaseOrderQueryVariables>(GetBaseOrderDocument, options);
+      }
+export function useGetBaseOrderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBaseOrderQuery, GetBaseOrderQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetBaseOrderQuery, GetBaseOrderQueryVariables>(GetBaseOrderDocument, options);
+        }
+export type GetBaseOrderQueryHookResult = ReturnType<typeof useGetBaseOrderQuery>;
+export type GetBaseOrderLazyQueryHookResult = ReturnType<typeof useGetBaseOrderLazyQuery>;
+export type GetBaseOrderQueryResult = Apollo.QueryResult<GetBaseOrderQuery, GetBaseOrderQueryVariables>;
 export const GetItemDocument = gql`
     query getItem($id: ID!) {
   GetItem(id: $id) {
