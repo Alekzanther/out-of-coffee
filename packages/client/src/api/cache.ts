@@ -1,5 +1,5 @@
 import { InMemoryCache, ReactiveVar, makeVar } from '@apollo/client';
-import { Order } from 'types';
+import { Order } from 'generated/graphql';
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {
