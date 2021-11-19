@@ -40,7 +40,7 @@ export const Nav = () => {
     <StyledTabs>
       <StyledTabList>
         <StyledTab>Beställning</StyledTab>
-        <StyledTab>Favorites</StyledTab>
+        <StyledTab>Basorder & Favoriter</StyledTab>
       </StyledTabList>
 
       <StyledTabPanels>
