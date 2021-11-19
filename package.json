@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "start": "pnpm start --prefix packages/client/",
-    "serve": "pnpm start --prefix packages/server/"
+    "serve": "pnpm start --prefix packages/server/",
+    "dev": "pnpm recursive run dev --filter ./packages/server --filter ./packages/client"
   }
 }

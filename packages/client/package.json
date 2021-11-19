@@ -27,7 +27,8 @@
     "build": "react-scripts build --production",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "generate": "graphql-codegen --config codegen.yml"
+    "generate": "graphql-codegen --config codegen.yml",
+    "dev": "pnpm start"
   },
   "eslintConfig": {
     "extends": [
