@@ -5,16 +5,13 @@ import styles from './Orders.module.css';
 
 export const Orders = () => {
   const { data } = useGetItemsQuery();
-  console.log(`orders`, data);
+
   return (
     <div className={styles.ordersContainer}>
       <BorderCard subTitle="Produkter" style={{ width: '400px' }}>
-        {data &&
-          data.GetItems &&
-          data.GetItems.data &&
-          data.GetItems.data.map((item) => (
-            <ComplicatedListItem key={item._id} title={item.name} />
-          ))}
+        {data?.GetItems?.data?.map((item) => (
+          <ComplicatedListItem key={item._id} title={item.name} />
+        ))}
       </BorderCard>
       <button> Lägg till ny vara </button>
       <BorderCard
