@@ -1,23 +1,20 @@
 import { BorderCard, ComplicatedListItem } from 'components';
+import { useGetItemsQuery } from 'generated/graphql';
 
 import styles from './Orders.module.css';
 
 export const Orders = () => {
-  // get the orders
-
+  const { data } = useGetItemsQuery();
+  console.log(`orders`, data);
   return (
     <div className={styles.ordersContainer}>
       <BorderCard subTitle="Produkter" style={{ width: '400px' }}>
-        <ComplicatedListItem title="Produkt" />
-        <ComplicatedListItem title="Produkt" />
-        <ComplicatedListItem title="Produkt" />
-        <ComplicatedListItem title="Produkt" />
-        <ComplicatedListItem title="Produkt" />
-        <ComplicatedListItem title="Produkt" newItem />
-        <ComplicatedListItem
-          title="Produkt"
-          throwItInTheTrash={() => {}}
-        />
+        {data &&
+          data.GetItems &&
+          data.GetItems.data &&
+          data.GetItems.data.map((item) => (
+            <ComplicatedListItem key={item._id} title={item.name} />
+          ))}
       </BorderCard>
       <button> Lägg till ny vara </button>
       <BorderCard

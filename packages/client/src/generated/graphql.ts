@@ -20,27 +20,27 @@ export type AdditionalEntityFields = {
 };
 
 export type BaseOrder = {
-  __typename?: 'BaseOrder';
+  __typename: 'BaseOrder';
   _id: Scalars['String'];
   active: Scalars['Boolean'];
   items?: Maybe<Array<Maybe<Item>>>;
 };
 
 export type BaseOrderResponse = {
-  __typename?: 'BaseOrderResponse';
+  __typename: 'BaseOrderResponse';
   data?: Maybe<Array<Maybe<BaseOrder>>>;
   error?: Maybe<ErrorResponse>;
 };
 
 export type ErrorResponse = {
-  __typename?: 'ErrorResponse';
+  __typename: 'ErrorResponse';
   code?: Maybe<Scalars['String']>;
   httpStatusCode?: Maybe<Scalars['Int']>;
   message: Scalars['String'];
 };
 
 export type Item = {
-  __typename?: 'Item';
+  __typename: 'Item';
   _id: Scalars['String'];
   name: Scalars['String'];
   productImageUrl?: Maybe<Scalars['String']>;
@@ -48,13 +48,13 @@ export type Item = {
 };
 
 export type ItemResponse = {
-  __typename?: 'ItemResponse';
-  data?: Maybe<Array<Maybe<Item>>>;
+  __typename: 'ItemResponse';
+  data?: Maybe<Array<Item>>;
   error?: Maybe<ErrorResponse>;
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
+  __typename: 'Mutation';
   CreateItem: ItemResponse;
   CreateOrder: OrderResponse;
   SetBaseOrder: BaseOrderResponse;
@@ -90,17 +90,17 @@ export type NewOrder = {
 };
 
 export type Order = {
-  __typename?: 'Order';
+  __typename: 'Order';
   _id: Scalars['String'];
-  creationDate?: Maybe<Scalars['Int']>;
-  endDate?: Maybe<Scalars['Int']>;
+  creationDate?: Maybe<Scalars['Float']>;
+  endDate?: Maybe<Scalars['Float']>;
   items?: Maybe<Array<Maybe<Item>>>;
   status: OrderStatus;
 };
 
 export type OrderResponse = {
-  __typename?: 'OrderResponse';
-  data?: Maybe<Array<Maybe<Order>>>;
+  __typename: 'OrderResponse';
+  data?: Maybe<Array<Order>>;
   error?: Maybe<ErrorResponse>;
 };
 
@@ -110,7 +110,7 @@ export enum OrderStatus {
 }
 
 export type Query = {
-  __typename?: 'Query';
+  __typename: 'Query';
   GetBaseOrder: BaseOrderResponse;
   GetCurrentOrder: OrderResponse;
   GetItem: ItemResponse;
@@ -142,7 +142,7 @@ export type Response = BaseOrder | ErrorResponse | Item | Order;
  * In some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.
  */
 export type __Directive = {
-  __typename?: '__Directive';
+  __typename: '__Directive';
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   isRepeatable: Scalars['Boolean'];
@@ -204,7 +204,7 @@ export enum __DirectiveLocation {
 
 /** One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string. */
 export type __EnumValue = {
-  __typename?: '__EnumValue';
+  __typename: '__EnumValue';
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   isDeprecated: Scalars['Boolean'];
@@ -213,7 +213,7 @@ export type __EnumValue = {
 
 /** Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type. */
 export type __Field = {
-  __typename?: '__Field';
+  __typename: '__Field';
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   args: Array<__InputValue>;
@@ -230,7 +230,7 @@ export type __FieldArgsArgs = {
 
 /** Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value. */
 export type __InputValue = {
-  __typename?: '__InputValue';
+  __typename: '__InputValue';
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   type: __Type;
@@ -242,7 +242,7 @@ export type __InputValue = {
 
 /** A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations. */
 export type __Schema = {
-  __typename?: '__Schema';
+  __typename: '__Schema';
   description?: Maybe<Scalars['String']>;
   /** A list of all types supported by this server. */
   types: Array<__Type>;
@@ -262,7 +262,7 @@ export type __Schema = {
  * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByUrl`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
  */
 export type __Type = {
-  __typename?: '__Type';
+  __typename: '__Type';
   kind: __TypeKind;
   name?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
@@ -330,17 +330,22 @@ export type GetItemQueryVariables = Exact<{
 }>;
 
 
-export type GetItemQuery = { __typename?: 'Query', GetItem: { __typename?: 'ItemResponse', data?: Array<{ __typename?: 'Item', name: string, productUrl: string, productImageUrl?: string | null | undefined } | null | undefined> | null | undefined } };
+export type GetItemQuery = { __typename: 'Query', GetItem: { __typename: 'ItemResponse', data?: Array<{ __typename: 'Item', name: string, productUrl: string, productImageUrl?: string | null | undefined }> | null | undefined } };
 
 export type GetItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetItemsQuery = { __typename?: 'Query', GetItems: { __typename?: 'ItemResponse', data?: Array<{ __typename?: 'Item', name: string, productUrl: string, productImageUrl?: string | null | undefined } | null | undefined> | null | undefined } };
+export type GetItemsQuery = { __typename: 'Query', GetItems: { __typename: 'ItemResponse', data?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined }> | null | undefined } };
+
+export type GetOrdersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetOrdersQuery = { __typename: 'Query', GetOrders: { __typename: 'OrderResponse', data?: Array<{ __typename: 'Order', _id: string, status: OrderStatus, creationDate?: number | null | undefined, endDate?: number | null | undefined, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined } | null | undefined> | null | undefined }> | null | undefined } };
 
 export type GetSchemaQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSchemaQuery = { __typename?: 'Query', __schema: { __typename: '__Schema' } };
+export type GetSchemaQuery = { __typename: 'Query', __schema: { __typename: '__Schema' } };
 
 
 export const GetItemDocument = gql`
@@ -386,6 +391,7 @@ export const GetItemsDocument = gql`
     query getItems {
   GetItems {
     data {
+      _id
       name
       productUrl
       productImageUrl
@@ -420,6 +426,53 @@ export function useGetItemsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetItemsQueryHookResult = ReturnType<typeof useGetItemsQuery>;
 export type GetItemsLazyQueryHookResult = ReturnType<typeof useGetItemsLazyQuery>;
 export type GetItemsQueryResult = Apollo.QueryResult<GetItemsQuery, GetItemsQueryVariables>;
+export const GetOrdersDocument = gql`
+    query getOrders {
+  GetOrders {
+    data {
+      _id
+      status
+      items {
+        _id
+        name
+        productUrl
+        productImageUrl
+        __typename
+      }
+      creationDate
+      endDate
+      __typename
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOrdersQuery__
+ *
+ * To run a query within a React component, call `useGetOrdersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOrdersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOrdersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetOrdersQuery(baseOptions?: Apollo.QueryHookOptions<GetOrdersQuery, GetOrdersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOrdersQuery, GetOrdersQueryVariables>(GetOrdersDocument, options);
+      }
+export function useGetOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOrdersQuery, GetOrdersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOrdersQuery, GetOrdersQueryVariables>(GetOrdersDocument, options);
+        }
+export type GetOrdersQueryHookResult = ReturnType<typeof useGetOrdersQuery>;
+export type GetOrdersLazyQueryHookResult = ReturnType<typeof useGetOrdersLazyQuery>;
+export type GetOrdersQueryResult = Apollo.QueryResult<GetOrdersQuery, GetOrdersQueryVariables>;
 export const GetSchemaDocument = gql`
     query GetSchema {
   __schema {

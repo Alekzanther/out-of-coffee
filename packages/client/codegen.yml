@@ -11,3 +11,4 @@ config:
   withHooks: true
   withMutationFn: true
   withResultType: true
+  nonOptionalTypename: true

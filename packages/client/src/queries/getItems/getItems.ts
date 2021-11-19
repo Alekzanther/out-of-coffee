@@ -4,6 +4,7 @@ export const getItemsQuery = gql`
   query getItems {
     GetItems {
       data {
+        _id
         name
         productUrl
         productImageUrl

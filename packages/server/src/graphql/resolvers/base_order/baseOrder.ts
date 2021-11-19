@@ -1,6 +1,10 @@
-import {checkIfIdsAreValid} from '../../../helpers/helpers';
-import {BaseOrder, BaseOrderResponse, Resolvers,} from '../../../generated/graphql';
-import {BaseOrder as BaseOrderModel} from '../../../models/BaseOrder/base_order';
+import { checkIfIdsAreValid } from '../../../helpers/helpers';
+import {
+  BaseOrder,
+  BaseOrderResponse,
+  Resolvers,
+} from '../../../generated/graphql';
+import { BaseOrder as BaseOrderModel } from '../../../models/BaseOrder/base_order';
 
 export const baseOrderResolver: Resolvers = {
   Query: {
@@ -12,9 +16,10 @@ export const baseOrderResolver: Resolvers = {
 
       if (!baseOrder) {
         return {
-          __typename: "BaseOrderResponse",
+          __typename: 'BaseOrderResponse',
           data: null,
           error: {
+            __typename: 'ErrorResponse',
             message: 'Unable to get BaseOrder',
           },
         };
@@ -24,7 +29,7 @@ export const baseOrderResolver: Resolvers = {
         'items',
       );
       return {
-        __typename: "BaseOrderResponse",
+        __typename: 'BaseOrderResponse',
         data: [populatedBaseOrder],
         error: null,
       };
@@ -52,9 +57,10 @@ export const baseOrderResolver: Resolvers = {
         );
         if (invalidId) {
           return {
-            __typename: "BaseOrderResponse",
+            __typename: 'BaseOrderResponse',
             data: null,
             error: {
+              __typename: 'ErrorResponse',
               message: `Supplied ID ${invalidId} is not a valid ObjectId`,
             },
           };
@@ -67,9 +73,10 @@ export const baseOrderResolver: Resolvers = {
 
         if (!baseOrder) {
           return {
-            __typename: "BaseOrderResponse",
+            __typename: 'BaseOrderResponse',
             data: null,
             error: {
+              __typename: 'ErrorResponse',
               message: 'Unable to create BaseOrder',
             },
           };
@@ -79,15 +86,16 @@ export const baseOrderResolver: Resolvers = {
           await baseOrder.populate('items');
 
         return {
-          __typename: "BaseOrderResponse",
+          __typename: 'BaseOrderResponse',
           data: [populatedBaseOrder],
           error: null,
         };
       } catch (error) {
         return {
-          __typename: "BaseOrderResponse",
+          __typename: 'BaseOrderResponse',
           data: null,
           error: {
+            __typename: 'ErrorResponse',
             message: `Error when trying to set BaseOrder: ${error}`,
           },
         };

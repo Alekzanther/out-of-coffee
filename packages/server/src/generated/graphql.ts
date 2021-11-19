@@ -56,7 +56,7 @@ export type Item = {
 
 export type ItemResponse = {
   __typename?: 'ItemResponse';
-  data?: Maybe<Array<Maybe<Item>>>;
+  data?: Maybe<Array<Item>>;
   error?: Maybe<ErrorResponse>;
 };
 
@@ -96,15 +96,15 @@ export type NewOrder = {
 export type Order = {
   __typename?: 'Order';
   _id: Scalars['String'];
-  creationDate?: Maybe<Scalars['Int']>;
-  endDate?: Maybe<Scalars['Int']>;
+  creationDate?: Maybe<Scalars['Float']>;
+  endDate?: Maybe<Scalars['Float']>;
   items?: Maybe<Array<Maybe<Item>>>;
   status: OrderStatus;
 };
 
 export type OrderResponse = {
   __typename?: 'OrderResponse';
-  data?: Maybe<Array<Maybe<Order>>>;
+  data?: Maybe<Array<Order>>;
   error?: Maybe<ErrorResponse>;
 };
 
@@ -280,6 +280,7 @@ export type ResolversTypes = {
   NewItem: NewItem;
   NewOrder: NewOrder;
   Order: ResolverTypeWrapper<Order>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
   OrderResponse: ResolverTypeWrapper<OrderResponse>;
   OrderStatus: OrderStatus;
   Query: ResolverTypeWrapper<{}>;
@@ -307,6 +308,7 @@ export type ResolversParentTypes = {
   NewItem: NewItem;
   NewOrder: NewOrder;
   Order: Order;
+  Float: Scalars['Float'];
   OrderResponse: OrderResponse;
   Query: {};
   ID: Scalars['ID'];
@@ -485,7 +487,7 @@ export type ItemResponseResolvers<
   ParentType extends ResolversParentTypes['ItemResponse'] = ResolversParentTypes['ItemResponse'],
 > = {
   data?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['Item']>>>,
+    Maybe<Array<ResolversTypes['Item']>>,
     ParentType,
     ContextType
   >;
@@ -527,12 +529,12 @@ export type OrderResolvers<
 > = {
   _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   creationDate?: Resolver<
-    Maybe<ResolversTypes['Int']>,
+    Maybe<ResolversTypes['Float']>,
     ParentType,
     ContextType
   >;
   endDate?: Resolver<
-    Maybe<ResolversTypes['Int']>,
+    Maybe<ResolversTypes['Float']>,
     ParentType,
     ContextType
   >;
@@ -554,7 +556,7 @@ export type OrderResponseResolvers<
   ParentType extends ResolversParentTypes['OrderResponse'] = ResolversParentTypes['OrderResponse'],
 > = {
   data?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['Order']>>>,
+    Maybe<Array<ResolversTypes['Order']>>,
     ParentType,
     ContextType
   >;

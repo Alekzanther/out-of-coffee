@@ -1,7 +1,12 @@
-import {isValidObjectId} from 'mongoose';
-import {checkIfIdsAreValid} from '../../../helpers/helpers';
-import {Order, OrderResponse, OrderStatus, Resolvers,} from '../../../generated/graphql';
-import {Order as OrderModel} from '../../../models/Order/order';
+import { isValidObjectId } from 'mongoose';
+import { checkIfIdsAreValid } from '../../../helpers/helpers';
+import {
+  Order,
+  OrderResponse,
+  OrderStatus,
+  Resolvers,
+} from '../../../generated/graphql';
+import { Order as OrderModel } from '../../../models/Order/order';
 
 export const orderResolver: Resolvers = {
   Query: {
@@ -12,14 +17,17 @@ export const orderResolver: Resolvers = {
 
       if (!orders) {
         return {
+          __typename: 'OrderResponse',
           data: null,
           error: {
+            __typename: 'ErrorResponse',
             message: 'Unable to fetch orders',
           },
         };
       }
 
       return {
+        __typename: 'OrderResponse',
         data: orders,
         error: null,
       };
@@ -31,14 +39,17 @@ export const orderResolver: Resolvers = {
 
       if (!order) {
         return {
+          __typename: 'OrderResponse',
           data: null,
           error: {
+            __typename: 'ErrorResponse',
             message: 'Unable to find order with supplied ID',
           },
         };
       }
 
       return {
+        __typename: 'OrderResponse',
         data: [order],
         error: null,
       };
@@ -47,8 +58,10 @@ export const orderResolver: Resolvers = {
       const isIdValid = isValidObjectId(id);
       if (!isIdValid) {
         return {
+          __typename: 'OrderResponse',
           data: null,
           error: {
+            __typename: 'ErrorResponse',
             message: 'Supplied ID is not a valid MongoDb ObjectId',
           },
         };
@@ -58,8 +71,10 @@ export const orderResolver: Resolvers = {
 
       if (!order) {
         return {
+          __typename: 'OrderResponse',
           data: null,
           error: {
+            __typename: 'ErrorResponse',
             message: 'No order found with supplied ID.',
           },
         };
@@ -68,6 +83,7 @@ export const orderResolver: Resolvers = {
       const populatedOrder: Order = await order.populate('items');
 
       return {
+        __typename: 'OrderResponse',
         data: [populatedOrder],
         error: null,
       };
@@ -81,8 +97,10 @@ export const orderResolver: Resolvers = {
         );
         if (invalidId) {
           return {
+            __typename: 'OrderResponse',
             data: null,
             error: {
+              __typename: 'ErrorResponse',
               message: `Supplied ID ${invalidId} is not a valid ObjectId`,
             },
           };
@@ -98,8 +116,10 @@ export const orderResolver: Resolvers = {
 
         if (!order) {
           return {
+            __typename: 'OrderResponse',
             data: null,
             error: {
+              __typename: 'ErrorResponse',
               message: 'Unable to save new order',
             },
           };
@@ -108,13 +128,16 @@ export const orderResolver: Resolvers = {
         const populatedOrder: Order = await order.populate('items');
 
         return {
+          __typename: 'OrderResponse',
           data: [populatedOrder],
           error: null,
         };
       } catch (error) {
         return {
+          __typename: 'OrderResponse',
           data: null,
           error: {
+            __typename: 'ErrorResponse',
             message: `Unable to save new order: ${error}`,
           },
         };

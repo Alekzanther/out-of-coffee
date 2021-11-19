@@ -7,12 +7,12 @@ type Order @entity {
   _id: String! @id
   status: OrderStatus! @column
   items: [Item] @link
-  creationDate: Int @column
-  endDate: Int @column
+  creationDate: Float @column
+  endDate: Float @column
 }
 
 type OrderResponse {
-  data: [Order]
+  data: [Order!]
   error: ErrorResponse
 }
 

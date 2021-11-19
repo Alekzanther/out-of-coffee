@@ -1,12 +1,17 @@
-import {isValidObjectId} from 'mongoose';
-import {ItemResponse, Resolvers} from '../../../generated/graphql';
-import {scrapeProductUrl} from '../../../scraper';
-import {Item as ItemModel} from '../../../models/Item/item';
+import { isValidObjectId } from 'mongoose';
+import {
+  Item,
+  ItemResponse,
+  Resolvers,
+} from '../../../generated/graphql';
+import { scrapeProductUrl } from '../../../scraper';
+import { Item as ItemModel } from '../../../models/Item/item';
 
 export const itemResolver: Resolvers = {
   Query: {
     GetItems: async (): Promise<ItemResponse> => {
-      const items = await ItemModel.find();
+      const items: Item[] = await ItemModel.find();
+
       return {
         __typename: 'ItemResponse',
         data: items,
@@ -21,6 +26,7 @@ export const itemResolver: Resolvers = {
           __typename: 'ItemResponse',
           data: null,
           error: {
+            __typename: 'ErrorResponse',
             message: 'Supplied ID is not a valid MongoDb ObjectId',
           },
         };
@@ -32,6 +38,7 @@ export const itemResolver: Resolvers = {
           __typename: 'ItemResponse',
           data: null,
           error: {
+            __typename: 'ErrorResponse',
             message: 'No item found with supplied ID.',
           },
         };
@@ -55,8 +62,9 @@ export const itemResolver: Resolvers = {
             __typename: 'ItemResponse',
             data: null,
             error: {
+              __typename: 'ErrorResponse',
               message:
-                  'Unable to fetch productImage from supplied product URL',
+                'Unable to fetch productImage from supplied product URL',
             },
           };
         }
@@ -76,6 +84,7 @@ export const itemResolver: Resolvers = {
           __typename: 'ItemResponse',
           data: null,
           error: {
+            __typename: 'ErrorResponse',
             message: `Unable to create a new Item: ${error}`,
           },
         };
