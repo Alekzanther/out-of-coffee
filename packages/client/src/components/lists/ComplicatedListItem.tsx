@@ -47,7 +47,7 @@ const nakedButtonStyles = css`
   }
 `;
 
-export const ComplicatedList: React.FC<ComplicatedListItem> = ({
+export const ComplicatedListItem: React.FC<ComplicatedListItem> = ({
   title,
   newItem,
   iLoveIt,
@@ -103,13 +103,21 @@ export const ComplicatedList: React.FC<ComplicatedListItem> = ({
         )}
         {throwItInTheTrash && (
           <div css={incrementContainerStyles}>
-            <button type="button" css={nakedButtonStyles} aria-label="remove"> 
-              <Trashcan style={{cursor: 'pointer'}} />
+            <button
+              type="button"
+              css={nakedButtonStyles}
+              aria-label="remove"
+            >
+              <Trashcan style={{ cursor: 'pointer' }} />
             </button>
           </div>
         )}
         <div css={incrementContainerStyles}>
-          <AnimatedButton kind="outlineHeartToFilledHeart" onClick={iLoveIt} ariaLabel="favorite" />
+          <AnimatedButton
+            kind="outlineHeartToFilledHeart"
+            onClick={iLoveIt}
+            ariaLabel="favorite"
+          />
         </div>
       </div>
     </div>

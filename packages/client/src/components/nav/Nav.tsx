@@ -16,21 +16,20 @@ const StyledTabList = styled(TabList)`
       outline-color: hotpink;
     }
   }
-  `;
+`;
 
 const StyledTab = styled(Tab)`
   border-bottom-width: 4px;
-  `;
+`;
 
 const StyledTabs = styled(Tabs)`
   grid-area: content;
   display: grid;
   grid-template-areas:
-                    "nav nav nav"
-                    "a b c";
+    'nav nav nav'
+    'a b c';
   grid-auto-rows: auto 1fr;
   grid-auto-columns: 1fr;
-  
 `;
 
 const StyledTabPanels = styled(TabPanels)`
@@ -42,7 +41,7 @@ export const Nav = () => {
     <StyledTabs>
       <StyledTabList>
         <StyledTab>Beställning</StyledTab>
-        <StyledTab>Favorites</StyledTab>
+        <StyledTab>Basorder & Favoriter</StyledTab>
       </StyledTabList>
 
       <StyledTabPanels>

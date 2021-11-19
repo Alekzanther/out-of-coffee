@@ -12,8 +12,16 @@ export async function scrapeProductUrl(targetUrl: string) {
 
     await page.goto(targetUrl);
 
+    const btn = await page.evaluate(() =>
+      document.querySelector('button[type="submit"]'),
+    );
+
+    if (btn !== null) await page.click('button[type="submit"]');
+
     const image = await page.evaluate(() =>
-      document.querySelector('.product-image')?.getAttribute('src'),
+      document
+        .querySelector('.image-container > figure > img')
+        ?.getAttribute('src'),
     );
 
     // the bad boy
