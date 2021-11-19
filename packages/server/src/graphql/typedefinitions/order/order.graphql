@@ -12,7 +12,7 @@ type Order @entity {
 }
 
 type OrderResponse {
-  data: [Order]
+  data: [Order!]
   error: ErrorResponse
 }
 

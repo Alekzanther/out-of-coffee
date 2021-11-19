@@ -6,7 +6,7 @@ type Item @entity {
 }
 
 type ItemResponse {
-  data: [Item]
+  data: [Item!]
   error: ErrorResponse
 }
 
