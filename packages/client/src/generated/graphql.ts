@@ -94,7 +94,7 @@ export type Order = {
   _id: Scalars['String'];
   creationDate?: Maybe<Scalars['Float']>;
   endDate?: Maybe<Scalars['Float']>;
-  items?: Maybe<Array<Maybe<Item>>>;
+  items?: Maybe<Array<Item>>;
   status: OrderStatus;
 };
 
@@ -345,7 +345,7 @@ export type GetItemsQuery = { __typename: 'Query', GetItems: { __typename: 'Item
 export type GetOrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetOrdersQuery = { __typename: 'Query', GetOrders: { __typename: 'OrderResponse', data?: Array<{ __typename: 'Order', _id: string, status: OrderStatus, creationDate?: number | null | undefined, endDate?: number | null | undefined, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined } | null | undefined> | null | undefined }> | null | undefined } };
+export type GetOrdersQuery = { __typename: 'Query', GetOrders: { __typename: 'OrderResponse', data?: Array<{ __typename: 'Order', _id: string, status: OrderStatus, creationDate?: number | null | undefined, endDate?: number | null | undefined, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined }> | null | undefined }> | null | undefined } };
 
 export type GetSchemaQueryVariables = Exact<{ [key: string]: never; }>;
 

@@ -33,7 +33,7 @@ let baseOrderItems = db.items.find({}, { "_id": 1 }).toArray().map((item) => ite
 let firstFive = baseOrderItems.slice(0, 4);
 let lastFive = baseOrderItems.slice(5);
 db.orders.insertOne({ "status": "DELIVERED", "creationDate": 1602280800000, "endDate": 1602885600000, "isBaseOrder": false, "items": firstFive })
-db.orders.insertOne({ "status": "PENDING", "creationDate": 1602280800000, "endDate": 1602885600000, "isBaseOrder": false, "items": lastFive })
+db.orders.insertOne({ "status": "PENDING", "creationDate": 1636671600000, "endDate": 1637276400000, "isBaseOrder": false, "items": lastFive })
 db.baseorders.insertOne({ "active": true, "items": baseOrderItems.slice(3, 8) })
 
 EOF

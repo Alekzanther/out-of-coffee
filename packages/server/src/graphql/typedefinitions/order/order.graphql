@@ -6,7 +6,7 @@ enum OrderStatus {
 type Order @entity {
   _id: String! @id
   status: OrderStatus! @column
-  items: [Item] @link
+  items: [Item!] @link
   creationDate: Float @column
   endDate: Float @column
 }
