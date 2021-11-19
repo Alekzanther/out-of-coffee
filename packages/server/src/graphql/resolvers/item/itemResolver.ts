@@ -1,12 +1,17 @@
-import {isValidObjectId} from 'mongoose';
-import {ItemResponse, Resolvers} from '../../../generated/graphql';
-import {scrapeProductUrl} from '../../../scraper';
-import {Item as ItemModel} from '../../../models/Item/item';
+import { isValidObjectId } from 'mongoose';
+import {
+  Item,
+  ItemResponse,
+  Resolvers,
+} from '../../../generated/graphql';
+import { scrapeProductUrl } from '../../../scraper';
+import { Item as ItemModel } from '../../../models/Item/item';
 
 export const itemResolver: Resolvers = {
   Query: {
     GetItems: async (): Promise<ItemResponse> => {
-      const items = await ItemModel.find();
+      const items: Item[] = await ItemModel.find();
+
       return {
         __typename: 'ItemResponse',
         data: items,
