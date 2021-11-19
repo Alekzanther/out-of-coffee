@@ -21,6 +21,7 @@ export const itemResolver: Resolvers = {
           __typename: 'ItemResponse',
           data: null,
           error: {
+            __typename: 'ErrorResponse',
             message: 'Supplied ID is not a valid MongoDb ObjectId',
           },
         };
@@ -32,6 +33,7 @@ export const itemResolver: Resolvers = {
           __typename: 'ItemResponse',
           data: null,
           error: {
+            __typename: 'ErrorResponse',
             message: 'No item found with supplied ID.',
           },
         };
@@ -55,8 +57,9 @@ export const itemResolver: Resolvers = {
             __typename: 'ItemResponse',
             data: null,
             error: {
+              __typename: 'ErrorResponse',
               message:
-                  'Unable to fetch productImage from supplied product URL',
+                'Unable to fetch productImage from supplied product URL',
             },
           };
         }
@@ -76,6 +79,7 @@ export const itemResolver: Resolvers = {
           __typename: 'ItemResponse',
           data: null,
           error: {
+            __typename: 'ErrorResponse',
             message: `Unable to create a new Item: ${error}`,
           },
         };
