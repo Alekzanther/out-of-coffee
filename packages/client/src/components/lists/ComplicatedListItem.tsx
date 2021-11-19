@@ -76,6 +76,7 @@ export const ComplicatedListItem: React.FC<ComplicatedListItemProps> =
             color: newItem
               ? theme.colors.greenLantern
               : theme.colors.pitchBlack,
+            width: '100%',
           })}
         >
           {title}
@@ -121,6 +122,7 @@ export const ComplicatedListItem: React.FC<ComplicatedListItemProps> =
               kind="outlineHeartToFilledHeart"
               onClick={iLoveIt}
               ariaLabel="favorite"
+              buttonColor="red"
             />
           </div>
         </div>

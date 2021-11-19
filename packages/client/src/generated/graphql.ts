@@ -335,7 +335,7 @@ export type GetItemQuery = { __typename: 'Query', GetItem: { __typename: 'ItemRe
 export type GetItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetItemsQuery = { __typename: 'Query', GetItems: { __typename: 'ItemResponse', data?: Array<{ __typename: 'Item', name: string, productUrl: string, productImageUrl?: string | null | undefined }> | null | undefined } };
+export type GetItemsQuery = { __typename: 'Query', GetItems: { __typename: 'ItemResponse', data?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined }> | null | undefined } };
 
 export type GetOrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -391,6 +391,7 @@ export const GetItemsDocument = gql`
     query getItems {
   GetItems {
     data {
+      _id
       name
       productUrl
       productImageUrl
