@@ -1,10 +1,6 @@
-import { checkIfIdsAreValid } from '../../../helpers/helpers';
-import {
-  Resolvers,
-  BaseOrder,
-  BaseOrderResponse,
-} from '../../../generated/graphql';
-import { BaseOrder as BaseOrderModel } from '../../../models/BaseOrder/base_order';
+import {checkIfIdsAreValid} from '../../../helpers/helpers';
+import {BaseOrder, BaseOrderResponse, Resolvers,} from '../../../generated/graphql';
+import {BaseOrder as BaseOrderModel} from '../../../models/BaseOrder/base_order';
 
 export const baseOrderResolver: Resolvers = {
   Query: {
@@ -15,24 +11,23 @@ export const baseOrderResolver: Resolvers = {
       });
 
       if (!baseOrder) {
-        const response: BaseOrderResponse = {
+        return {
+          __typename: "BaseOrderResponse",
           data: null,
           error: {
             message: 'Unable to get BaseOrder',
           },
         };
-        return response;
       }
 
       const populatedBaseOrder: BaseOrder = await baseOrder.populate(
         'items',
       );
-      const response: BaseOrderResponse = {
+      return {
+        __typename: "BaseOrderResponse",
         data: [populatedBaseOrder],
         error: null,
       };
-
-      return response;
     },
   },
   Mutation: {
@@ -56,13 +51,13 @@ export const baseOrderResolver: Resolvers = {
           newBaseOrder.items as string[],
         );
         if (invalidId) {
-          const response: BaseOrderResponse = {
+          return {
+            __typename: "BaseOrderResponse",
             data: null,
             error: {
               message: `Supplied ID ${invalidId} is not a valid ObjectId`,
             },
           };
-          return response;
         }
 
         const baseOrder = await BaseOrderModel.create({
@@ -71,32 +66,31 @@ export const baseOrderResolver: Resolvers = {
         });
 
         if (!baseOrder) {
-          const response: BaseOrderResponse = {
+          return {
+            __typename: "BaseOrderResponse",
             data: null,
             error: {
               message: 'Unable to create BaseOrder',
             },
           };
-          return response;
         }
 
         const populatedBaseOrder: BaseOrder =
           await baseOrder.populate('items');
 
-        const response: BaseOrderResponse = {
+        return {
+          __typename: "BaseOrderResponse",
           data: [populatedBaseOrder],
           error: null,
         };
-
-        return response;
       } catch (error) {
-        const response: BaseOrderResponse = {
+        return {
+          __typename: "BaseOrderResponse",
           data: null,
           error: {
             message: `Error when trying to set BaseOrder: ${error}`,
           },
         };
-        return response;
       }
     },
   },

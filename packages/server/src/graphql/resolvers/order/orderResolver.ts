@@ -1,12 +1,7 @@
-import { isValidObjectId } from 'mongoose';
-import { checkIfIdsAreValid } from '../../../helpers/helpers';
-import {
-  Order,
-  OrderResponse,
-  OrderStatus,
-  Resolvers,
-} from '../../../generated/graphql';
-import { Order as OrderModel } from '../../../models/Order/order';
+import {isValidObjectId} from 'mongoose';
+import {checkIfIdsAreValid} from '../../../helpers/helpers';
+import {Order, OrderResponse, OrderStatus, Resolvers,} from '../../../generated/graphql';
+import {Order as OrderModel} from '../../../models/Order/order';
 
 export const orderResolver: Resolvers = {
   Query: {
@@ -16,21 +11,18 @@ export const orderResolver: Resolvers = {
       );
 
       if (!orders) {
-        const response: OrderResponse = {
+        return {
           data: null,
           error: {
             message: 'Unable to fetch orders',
           },
         };
-        return response;
       }
 
-      const response: OrderResponse = {
+      return {
         data: orders,
         error: null,
       };
-
-      return response;
     },
     GetCurrentOrder: async (_, { id }): Promise<OrderResponse> => {
       const order = (await OrderModel.findById(id).populate(
@@ -38,53 +30,47 @@ export const orderResolver: Resolvers = {
       )) as Order;
 
       if (!order) {
-        const response: OrderResponse = {
+        return {
           data: null,
           error: {
             message: 'Unable to find order with supplied ID',
           },
         };
-        return response;
       }
 
-      const response: OrderResponse = {
+      return {
         data: [order],
         error: null,
       };
-
-      return response;
     },
     GetOrder: async (_, { id }): Promise<OrderResponse> => {
       const isIdValid = isValidObjectId(id);
       if (!isIdValid) {
-        const response: OrderResponse = {
+        return {
           data: null,
           error: {
             message: 'Supplied ID is not a valid MongoDb ObjectId',
           },
         };
-        return response;
       }
 
       const order = await OrderModel.findById(id);
 
       if (!order) {
-        const response: OrderResponse = {
+        return {
           data: null,
           error: {
             message: 'No order found with supplied ID.',
           },
         };
-        return response;
       }
 
       const populatedOrder: Order = await order.populate('items');
 
-      const response: OrderResponse = {
+      return {
         data: [populatedOrder],
         error: null,
       };
-      return response;
     },
   },
   Mutation: {
@@ -94,13 +80,12 @@ export const orderResolver: Resolvers = {
           newOrder.items as string[],
         );
         if (invalidId) {
-          const response: OrderResponse = {
+          return {
             data: null,
             error: {
               message: `Supplied ID ${invalidId} is not a valid ObjectId`,
             },
           };
-          return response;
         }
 
         const order = await OrderModel.create({
@@ -112,31 +97,27 @@ export const orderResolver: Resolvers = {
         });
 
         if (!order) {
-          const response: OrderResponse = {
+          return {
             data: null,
             error: {
               message: 'Unable to save new order',
             },
           };
-          return response;
         }
 
         const populatedOrder: Order = await order.populate('items');
 
-        const response: OrderResponse = {
+        return {
           data: [populatedOrder],
           error: null,
         };
-
-        return response;
       } catch (error) {
-        const response: OrderResponse = {
+        return {
           data: null,
           error: {
             message: `Unable to save new order: ${error}`,
           },
         };
-        return response;
       }
     },
   },
