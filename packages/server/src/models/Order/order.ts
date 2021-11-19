@@ -8,8 +8,8 @@ export const OrderSchema = new Schema({
     default: 'PENDING',
   },
   items: [{ type: SchemaTypes.ObjectId, ref: 'Item' }],
-  creationDate: Number,
-  endDate: Number,
+  creationDate: { type: Number, required: true },
+  endDate: { type: Number, required: true },
   isBaseOrder: Boolean,
 });
 
