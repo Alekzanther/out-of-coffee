@@ -1,2 +1,2 @@
 export * from './SimpleList';
-export * from './ComplicatedList';
+export * from './ComplicatedListItem';
