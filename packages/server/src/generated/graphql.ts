@@ -96,8 +96,8 @@ export type NewOrder = {
 export type Order = {
   __typename?: 'Order';
   _id: Scalars['String'];
-  creationDate?: Maybe<Scalars['Float']>;
-  endDate?: Maybe<Scalars['Float']>;
+  creationDate: Scalars['Float'];
+  endDate: Scalars['Float'];
   items?: Maybe<Array<Item>>;
   status: OrderStatus;
 };
@@ -529,12 +529,12 @@ export type OrderResolvers<
 > = {
   _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   creationDate?: Resolver<
-    Maybe<ResolversTypes['Float']>,
+    ResolversTypes['Float'],
     ParentType,
     ContextType
   >;
   endDate?: Resolver<
-    Maybe<ResolversTypes['Float']>,
+    ResolversTypes['Float'],
     ParentType,
     ContextType
   >;
@@ -662,8 +662,8 @@ export type ItemDbObject = {
 
 export type OrderDbObject = {
   _id: ObjectId;
-  creationDate?: Maybe<number>;
-  endDate?: Maybe<number>;
+  creationDate: number;
+  endDate: number;
   items?: Maybe<Array<ItemDbObject['_id']>>;
   status: string;
 };
