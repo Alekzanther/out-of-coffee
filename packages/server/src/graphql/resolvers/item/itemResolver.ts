@@ -1,72 +1,44 @@
 import { isValidObjectId } from 'mongoose';
-import {
-  Item,
-  ItemResponse,
-  Resolvers,
-} from '../../../generated/graphql';
+import { Item, Resolvers } from '../../../generated/graphql';
 import { scrapeProductUrl } from '../../../scraper';
 import { Item as ItemModel } from '../../../models/Item/item';
 
 export const itemResolver: Resolvers = {
   Query: {
-    GetItems: async (): Promise<ItemResponse> => {
+    GetItems: async (): Promise<Item[]> => {
       const items: Item[] = await ItemModel.find();
-
-      return {
-        __typename: 'ItemResponse',
-        data: items,
-        error: null,
-      };
+      if (items.length === 0) {
+        throw new Error('No items found');
+      }
+      return items;
     },
-    GetItem: async (_, { id }): Promise<ItemResponse> => {
+    GetItem: async (_, { id }): Promise<Item> => {
       const isIdValid = isValidObjectId(id);
 
       if (!isIdValid) {
-        return {
-          __typename: 'ItemResponse',
-          data: null,
-          error: {
-            __typename: 'ErrorResponse',
-            message: 'Supplied ID is not a valid MongoDb ObjectId',
-          },
-        };
+        throw new Error(
+          'Supplied ID is not a valid MongoDb ObjectId',
+        );
       }
 
       const item = await ItemModel.findById(id);
       if (!item) {
-        return {
-          __typename: 'ItemResponse',
-          data: null,
-          error: {
-            __typename: 'ErrorResponse',
-            message: 'No item found with supplied ID.',
-          },
-        };
+        throw new Error('No item found with supplied ID.');
       }
-      return {
-        __typename: 'ItemResponse',
-        data: [item],
-        error: null,
-      };
+      return item;
     },
   },
   Mutation: {
-    CreateItem: async (_, { newItem }): Promise<ItemResponse> => {
+    CreateItem: async (_, { newItem }): Promise<Item> => {
       try {
         const productImageUrl = await scrapeProductUrl(
           newItem.productUrl,
         );
 
         if (!productImageUrl) {
-          return {
-            __typename: 'ItemResponse',
-            data: null,
-            error: {
-              __typename: 'ErrorResponse',
-              message:
-                'Unable to fetch productImage from supplied product URL',
-            },
-          };
+          throw new Error(
+            'Unable to fetch productImage from supplied product URL',
+          );
         }
         const item = await ItemModel.create({
           name: newItem?.name,
@@ -74,20 +46,9 @@ export const itemResolver: Resolvers = {
           productImageUrl,
         });
 
-        return {
-          __typename: 'ItemResponse',
-          data: [item],
-          error: null,
-        };
+        return item;
       } catch (error) {
-        return {
-          __typename: 'ItemResponse',
-          data: null,
-          error: {
-            __typename: 'ErrorResponse',
-            message: `Unable to create a new Item: ${error}`,
-          },
-        };
+        throw new Error(`Unable to create a new Item: ${error}`);
       }
     },
   },

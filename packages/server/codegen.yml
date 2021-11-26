@@ -3,6 +3,6 @@ schema: 'src/*graphql/typedefinitions/**/*.graphql'
 generates:
   src/generated/graphql.ts:
     plugins:
-      - 'typescript'
-      - 'typescript-resolvers'
-      - 'typescript-mongodb'
+      - typescript
+      - typescript-resolvers
+      - typescript-mongodb

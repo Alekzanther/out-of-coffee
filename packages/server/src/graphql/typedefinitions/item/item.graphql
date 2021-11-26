@@ -5,21 +5,16 @@ type Item @entity {
   productImageUrl: String @column
 }
 
-type ItemResponse {
-  data: [Item!]
-  error: ErrorResponse
-}
-
 input NewItem {
   name: String!
   productUrl: String!
 }
 
 type Mutation {
-  CreateItem(newItem: NewItem!): ItemResponse!
+  CreateItem(newItem: NewItem!): Item!
 }
 
 type Query {
-  GetItem(id: ID!): ItemResponse!
-  GetItems: ItemResponse!
+  GetItem(id: ID!): Item!
+  GetItems: [Item!]!
 }

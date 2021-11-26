@@ -26,12 +26,6 @@ export type BaseOrder = {
   items?: Maybe<Array<Maybe<Item>>>;
 };
 
-export type BaseOrderResponse = {
-  __typename: 'BaseOrderResponse';
-  data?: Maybe<Array<Maybe<BaseOrder>>>;
-  error?: Maybe<ErrorResponse>;
-};
-
 export type ErrorResponse = {
   __typename: 'ErrorResponse';
   code?: Maybe<Scalars['String']>;
@@ -47,17 +41,11 @@ export type Item = {
   productUrl: Scalars['String'];
 };
 
-export type ItemResponse = {
-  __typename: 'ItemResponse';
-  data?: Maybe<Array<Item>>;
-  error?: Maybe<ErrorResponse>;
-};
-
 export type Mutation = {
   __typename: 'Mutation';
-  CreateItem: ItemResponse;
-  CreateOrder: OrderResponse;
-  SetBaseOrder: BaseOrderResponse;
+  CreateItem: Item;
+  CreateOrder: Order;
+  SetBaseOrder: BaseOrder;
 };
 
 
@@ -94,14 +82,8 @@ export type Order = {
   _id: Scalars['String'];
   creationDate: Scalars['Float'];
   endDate: Scalars['Float'];
-  items?: Maybe<Array<Item>>;
+  items: Array<Item>;
   status: OrderStatus;
-};
-
-export type OrderResponse = {
-  __typename: 'OrderResponse';
-  data?: Maybe<Array<Order>>;
-  error?: Maybe<ErrorResponse>;
 };
 
 export enum OrderStatus {
@@ -111,12 +93,12 @@ export enum OrderStatus {
 
 export type Query = {
   __typename: 'Query';
-  GetBaseOrder: BaseOrderResponse;
-  GetCurrentOrder: OrderResponse;
-  GetItem: ItemResponse;
-  GetItems: ItemResponse;
-  GetOrder: OrderResponse;
-  GetOrders: OrderResponse;
+  GetBaseOrder: BaseOrder;
+  GetCurrentOrder: Order;
+  GetItem: Item;
+  GetItems: Array<Item>;
+  GetOrder: Order;
+  GetOrders: Array<Order>;
 };
 
 
@@ -328,48 +310,52 @@ export enum __TypeKind {
 export type GetBaseOrderQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBaseOrderQuery = { __typename: 'Query', GetBaseOrder: { __typename: 'BaseOrderResponse', data?: Array<{ __typename: 'BaseOrder', _id: string, active: boolean, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined> | null | undefined, error?: { __typename: 'ErrorResponse', message: string, code?: string | null | undefined } | null | undefined } };
+export type GetBaseOrderQuery = { __typename: 'Query', GetBaseOrder: { __typename: 'BaseOrder', _id: string, active: boolean, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined } | null | undefined> | null | undefined } };
 
 export type GetItemQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetItemQuery = { __typename: 'Query', GetItem: { __typename: 'ItemResponse', data?: Array<{ __typename: 'Item', name: string, productUrl: string, productImageUrl?: string | null | undefined }> | null | undefined } };
+export type GetItemQuery = { __typename: 'Query', GetItem: { __typename: 'Item', name: string, productUrl: string, productImageUrl?: string | null | undefined } };
 
 export type GetItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetItemsQuery = { __typename: 'Query', GetItems: { __typename: 'ItemResponse', data?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined }> | null | undefined } };
+export type GetItemsQuery = { __typename: 'Query', GetItems: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined }> };
+
+export type ItemFragmentFragment = { __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined };
 
 export type GetOrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetOrdersQuery = { __typename: 'Query', GetOrders: { __typename: 'OrderResponse', data?: Array<{ __typename: 'Order', _id: string, status: OrderStatus, creationDate: number, endDate: number, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined }> | null | undefined }> | null | undefined } };
+export type GetOrdersQuery = { __typename: 'Query', GetOrders: Array<{ __typename: 'Order', _id: string, status: OrderStatus, creationDate: number, endDate: number, items: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined }> }> };
 
 export type GetSchemaQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetSchemaQuery = { __typename: 'Query', __schema: { __typename: '__Schema' } };
 
-
+export const ItemFragmentFragmentDoc = gql`
+    fragment ItemFragment on Item {
+  _id
+  name
+  productUrl
+  productImageUrl
+  __typename
+}
+    `;
 export const GetBaseOrderDocument = gql`
     query getBaseOrder {
   GetBaseOrder {
-    data {
+    _id
+    active
+    items {
       _id
-      active
-      items {
-        _id
-        name
-        productUrl
-        productImageUrl
-        __typename
-      }
-    }
-    error {
-      message
-      code
+      name
+      productUrl
+      productImageUrl
+      __typename
     }
   }
 }
@@ -404,11 +390,9 @@ export type GetBaseOrderQueryResult = Apollo.QueryResult<GetBaseOrderQuery, GetB
 export const GetItemDocument = gql`
     query getItem($id: ID!) {
   GetItem(id: $id) {
-    data {
-      name
-      productUrl
-      productImageUrl
-    }
+    name
+    productUrl
+    productImageUrl
   }
 }
     `;
@@ -443,12 +427,10 @@ export type GetItemQueryResult = Apollo.QueryResult<GetItemQuery, GetItemQueryVa
 export const GetItemsDocument = gql`
     query getItems {
   GetItems {
-    data {
-      _id
-      name
-      productUrl
-      productImageUrl
-    }
+    _id
+    name
+    productUrl
+    productImageUrl
   }
 }
     `;
@@ -482,23 +464,17 @@ export type GetItemsQueryResult = Apollo.QueryResult<GetItemsQuery, GetItemsQuer
 export const GetOrdersDocument = gql`
     query getOrders {
   GetOrders {
-    data {
-      _id
-      status
-      items {
-        _id
-        name
-        productUrl
-        productImageUrl
-        __typename
-      }
-      creationDate
-      endDate
-      __typename
+    _id
+    status
+    items {
+      ...ItemFragment
     }
+    creationDate
+    endDate
+    __typename
   }
 }
-    `;
+    ${ItemFragmentFragmentDoc}`;
 
 /**
  * __useGetOrdersQuery__

@@ -2,7 +2,6 @@ import { isValidObjectId } from 'mongoose';
 import { checkIfIdsAreValid } from '../../../helpers/helpers';
 import {
   Order,
-  OrderResponse,
   OrderStatus,
   Resolvers,
 } from '../../../generated/graphql';
@@ -10,100 +9,62 @@ import { Order as OrderModel } from '../../../models/Order/order';
 
 export const orderResolver: Resolvers = {
   Query: {
-    GetOrders: async (): Promise<OrderResponse> => {
-      const orders: Order[] = await OrderModel.find().populate(
-        'items',
-      );
+    GetOrders: async (): Promise<Order[]> => {
+      try {
+        const orders: Order[] = await OrderModel.find().populate(
+          'items',
+        );
 
-      if (!orders) {
-        return {
-          __typename: 'OrderResponse',
-          data: null,
-          error: {
-            __typename: 'ErrorResponse',
-            message: 'Unable to fetch orders',
-          },
-        };
+        if (!orders) {
+          // This might be a very bad idea
+          return [] as Order[];
+        }
+
+        return orders;
+      } catch (error) {
+        throw new Error('no Orders');
       }
-
-      return {
-        __typename: 'OrderResponse',
-        data: orders,
-        error: null,
-      };
     },
-    GetCurrentOrder: async (_, { id }): Promise<OrderResponse> => {
+    GetCurrentOrder: async (_, { id }): Promise<Order> => {
       const order = (await OrderModel.findById(id).populate(
         'items',
       )) as Order;
 
       if (!order) {
-        return {
-          __typename: 'OrderResponse',
-          data: null,
-          error: {
-            __typename: 'ErrorResponse',
-            message: 'Unable to find order with supplied ID',
-          },
-        };
+        throw new Error('No order');
       }
 
-      return {
-        __typename: 'OrderResponse',
-        data: [order],
-        error: null,
-      };
+      return order;
     },
-    GetOrder: async (_, { id }): Promise<OrderResponse> => {
+    GetOrder: async (_, { id }): Promise<Order> => {
       const isIdValid = isValidObjectId(id);
       if (!isIdValid) {
-        return {
-          __typename: 'OrderResponse',
-          data: null,
-          error: {
-            __typename: 'ErrorResponse',
-            message: 'Supplied ID is not a valid MongoDb ObjectId',
-          },
-        };
+        throw new Error(
+          'Supplied ID is not a valid MongoDb ObjectId',
+        );
       }
 
       const order = await OrderModel.findById(id);
 
       if (!order) {
-        return {
-          __typename: 'OrderResponse',
-          data: null,
-          error: {
-            __typename: 'ErrorResponse',
-            message: 'No order found with supplied ID.',
-          },
-        };
+        throw new Error('No order found with supplied ID.');
       }
 
       const populatedOrder: Order = await order.populate('items');
 
-      return {
-        __typename: 'OrderResponse',
-        data: [populatedOrder],
-        error: null,
-      };
+      return populatedOrder;
     },
   },
   Mutation: {
-    CreateOrder: async (_, { newOrder }): Promise<OrderResponse> => {
+    CreateOrder: async (_, { newOrder }): Promise<Order> => {
       try {
         const invalidId = checkIfIdsAreValid(
           newOrder.items as string[],
         );
         if (invalidId) {
-          return {
-            __typename: 'OrderResponse',
-            data: null,
-            error: {
-              __typename: 'ErrorResponse',
-              message: `Supplied ID ${invalidId} is not a valid ObjectId`,
-            },
-          };
+          throw new Error(
+            `Supplied ID ${invalidId} is not a valid ObjectId`,
+          );
         }
 
         const order = await OrderModel.create({
@@ -115,32 +76,14 @@ export const orderResolver: Resolvers = {
         });
 
         if (!order) {
-          return {
-            __typename: 'OrderResponse',
-            data: null,
-            error: {
-              __typename: 'ErrorResponse',
-              message: 'Unable to save new order',
-            },
-          };
+          throw new Error('Unable to save new order');
         }
 
         const populatedOrder: Order = await order.populate('items');
 
-        return {
-          __typename: 'OrderResponse',
-          data: [populatedOrder],
-          error: null,
-        };
+        return populatedOrder;
       } catch (error) {
-        return {
-          __typename: 'OrderResponse',
-          data: null,
-          error: {
-            __typename: 'ErrorResponse',
-            message: `Unable to save new order: ${error}`,
-          },
-        };
+        throw new Error(`Unable to save new order: ${error}`);
       }
     },
   },

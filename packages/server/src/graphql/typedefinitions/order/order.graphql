@@ -6,14 +6,9 @@ enum OrderStatus {
 type Order @entity {
   _id: String! @id
   status: OrderStatus! @column
-  items: [Item!] @link
+  items: [Item!]! @link
   creationDate: Float! @column
   endDate: Float! @column
-}
-
-type OrderResponse {
-  data: [Order!]
-  error: ErrorResponse
 }
 
 input NewOrder {
@@ -21,11 +16,11 @@ input NewOrder {
 }
 
 type Query {
-  GetCurrentOrder(id: ID!): OrderResponse!
-  GetOrder(id: ID!): OrderResponse!
-  GetOrders: OrderResponse!
+  GetCurrentOrder(id: ID!): Order!
+  GetOrder(id: ID!): Order!
+  GetOrders: [Order!]!
 }
 
 type Mutation {
-  CreateOrder(newOrder: NewOrder!): OrderResponse!
+  CreateOrder(newOrder: NewOrder!): Order!
 }

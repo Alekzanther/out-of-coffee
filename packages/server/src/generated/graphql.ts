@@ -33,12 +33,6 @@ export type BaseOrder = {
   items?: Maybe<Array<Maybe<Item>>>;
 };
 
-export type BaseOrderResponse = {
-  __typename?: 'BaseOrderResponse';
-  data?: Maybe<Array<Maybe<BaseOrder>>>;
-  error?: Maybe<ErrorResponse>;
-};
-
 export type ErrorResponse = {
   __typename?: 'ErrorResponse';
   code?: Maybe<Scalars['String']>;
@@ -54,17 +48,11 @@ export type Item = {
   productUrl: Scalars['String'];
 };
 
-export type ItemResponse = {
-  __typename?: 'ItemResponse';
-  data?: Maybe<Array<Item>>;
-  error?: Maybe<ErrorResponse>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
-  CreateItem: ItemResponse;
-  CreateOrder: OrderResponse;
-  SetBaseOrder: BaseOrderResponse;
+  CreateItem: Item;
+  CreateOrder: Order;
+  SetBaseOrder: BaseOrder;
 };
 
 export type MutationCreateItemArgs = {
@@ -98,14 +86,8 @@ export type Order = {
   _id: Scalars['String'];
   creationDate: Scalars['Float'];
   endDate: Scalars['Float'];
-  items?: Maybe<Array<Item>>;
+  items: Array<Item>;
   status: OrderStatus;
-};
-
-export type OrderResponse = {
-  __typename?: 'OrderResponse';
-  data?: Maybe<Array<Order>>;
-  error?: Maybe<ErrorResponse>;
 };
 
 export enum OrderStatus {
@@ -115,12 +97,12 @@ export enum OrderStatus {
 
 export type Query = {
   __typename?: 'Query';
-  GetBaseOrder: BaseOrderResponse;
-  GetCurrentOrder: OrderResponse;
-  GetItem: ItemResponse;
-  GetItems: ItemResponse;
-  GetOrder: OrderResponse;
-  GetOrders: OrderResponse;
+  GetBaseOrder: BaseOrder;
+  GetCurrentOrder: Order;
+  GetItem: Item;
+  GetItems: Array<Item>;
+  GetOrder: Order;
+  GetOrders: Array<Order>;
 };
 
 export type QueryGetCurrentOrderArgs = {
@@ -270,18 +252,15 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   BaseOrder: ResolverTypeWrapper<BaseOrder>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  BaseOrderResponse: ResolverTypeWrapper<BaseOrderResponse>;
   ErrorResponse: ResolverTypeWrapper<ErrorResponse>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Item: ResolverTypeWrapper<Item>;
-  ItemResponse: ResolverTypeWrapper<ItemResponse>;
   Mutation: ResolverTypeWrapper<{}>;
   NewBaseOrder: NewBaseOrder;
   NewItem: NewItem;
   NewOrder: NewOrder;
   Order: ResolverTypeWrapper<Order>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
-  OrderResponse: ResolverTypeWrapper<OrderResponse>;
   OrderStatus: OrderStatus;
   Query: ResolverTypeWrapper<{}>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
@@ -298,18 +277,15 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   BaseOrder: BaseOrder;
   Boolean: Scalars['Boolean'];
-  BaseOrderResponse: BaseOrderResponse;
   ErrorResponse: ErrorResponse;
   Int: Scalars['Int'];
   Item: Item;
-  ItemResponse: ItemResponse;
   Mutation: {};
   NewBaseOrder: NewBaseOrder;
   NewItem: NewItem;
   NewOrder: NewOrder;
   Order: Order;
   Float: Scalars['Float'];
-  OrderResponse: OrderResponse;
   Query: {};
   ID: Scalars['ID'];
   Response:
@@ -424,23 +400,6 @@ export type BaseOrderResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type BaseOrderResponseResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['BaseOrderResponse'] = ResolversParentTypes['BaseOrderResponse'],
-> = {
-  data?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['BaseOrder']>>>,
-    ParentType,
-    ContextType
-  >;
-  error?: Resolver<
-    Maybe<ResolversTypes['ErrorResponse']>,
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type ErrorResponseResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['ErrorResponse'] = ResolversParentTypes['ErrorResponse'],
@@ -482,41 +441,24 @@ export type ItemResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ItemResponseResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['ItemResponse'] = ResolversParentTypes['ItemResponse'],
-> = {
-  data?: Resolver<
-    Maybe<Array<ResolversTypes['Item']>>,
-    ParentType,
-    ContextType
-  >;
-  error?: Resolver<
-    Maybe<ResolversTypes['ErrorResponse']>,
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type MutationResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation'],
 > = {
   CreateItem?: Resolver<
-    ResolversTypes['ItemResponse'],
+    ResolversTypes['Item'],
     ParentType,
     ContextType,
     RequireFields<MutationCreateItemArgs, 'newItem'>
   >;
   CreateOrder?: Resolver<
-    ResolversTypes['OrderResponse'],
+    ResolversTypes['Order'],
     ParentType,
     ContextType,
     RequireFields<MutationCreateOrderArgs, 'newOrder'>
   >;
   SetBaseOrder?: Resolver<
-    ResolversTypes['BaseOrderResponse'],
+    ResolversTypes['BaseOrder'],
     ParentType,
     ContextType,
     RequireFields<MutationSetBaseOrderArgs, 'newBaseOrder'>
@@ -539,7 +481,7 @@ export type OrderResolvers<
     ContextType
   >;
   items?: Resolver<
-    Maybe<Array<ResolversTypes['Item']>>,
+    Array<ResolversTypes['Item']>,
     ParentType,
     ContextType
   >;
@@ -551,57 +493,40 @@ export type OrderResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type OrderResponseResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['OrderResponse'] = ResolversParentTypes['OrderResponse'],
-> = {
-  data?: Resolver<
-    Maybe<Array<ResolversTypes['Order']>>,
-    ParentType,
-    ContextType
-  >;
-  error?: Resolver<
-    Maybe<ResolversTypes['ErrorResponse']>,
-    ParentType,
-    ContextType
-  >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type QueryResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query'],
 > = {
   GetBaseOrder?: Resolver<
-    ResolversTypes['BaseOrderResponse'],
+    ResolversTypes['BaseOrder'],
     ParentType,
     ContextType
   >;
   GetCurrentOrder?: Resolver<
-    ResolversTypes['OrderResponse'],
+    ResolversTypes['Order'],
     ParentType,
     ContextType,
     RequireFields<QueryGetCurrentOrderArgs, 'id'>
   >;
   GetItem?: Resolver<
-    ResolversTypes['ItemResponse'],
+    ResolversTypes['Item'],
     ParentType,
     ContextType,
     RequireFields<QueryGetItemArgs, 'id'>
   >;
   GetItems?: Resolver<
-    ResolversTypes['ItemResponse'],
+    Array<ResolversTypes['Item']>,
     ParentType,
     ContextType
   >;
   GetOrder?: Resolver<
-    ResolversTypes['OrderResponse'],
+    ResolversTypes['Order'],
     ParentType,
     ContextType,
     RequireFields<QueryGetOrderArgs, 'id'>
   >;
   GetOrders?: Resolver<
-    ResolversTypes['OrderResponse'],
+    Array<ResolversTypes['Order']>,
     ParentType,
     ContextType
   >;
@@ -620,13 +545,10 @@ export type ResponseResolvers<
 
 export type Resolvers<ContextType = any> = {
   BaseOrder?: BaseOrderResolvers<ContextType>;
-  BaseOrderResponse?: BaseOrderResponseResolvers<ContextType>;
   ErrorResponse?: ErrorResponseResolvers<ContextType>;
   Item?: ItemResolvers<ContextType>;
-  ItemResponse?: ItemResponseResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Order?: OrderResolvers<ContextType>;
-  OrderResponse?: OrderResponseResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Response?: ResponseResolvers<ContextType>;
 };
@@ -664,6 +586,6 @@ export type OrderDbObject = {
   _id: ObjectId;
   creationDate: number;
   endDate: number;
-  items?: Maybe<Array<ItemDbObject['_id']>>;
+  items: Array<ItemDbObject['_id']>;
   status: string;
 };
