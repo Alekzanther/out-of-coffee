@@ -56,7 +56,7 @@ const listWrapperStyle = css`
 export const Favorites: React.FC = () => {
   const { data } = useGetBaseOrderQuery();
 
-  const items = data?.GetBaseOrder.data?.[0]?.items || [];
+  const items = data?.GetBaseOrder?.items || [];
 
   return (
     <div css={wrapperStyle}>
