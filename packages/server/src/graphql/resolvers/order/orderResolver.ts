@@ -15,14 +15,13 @@ export const orderResolver: Resolvers = {
           'items',
         );
 
-        if (!orders) {
-          // This might be a very bad idea
-          return [] as Order[];
+        if (!orders || orders.length === 0) {
+          throw new Error('No orders found');
         }
 
         return orders;
       } catch (error) {
-        throw new Error('no Orders');
+        throw new Error('No Orders');
       }
     },
     GetCurrentOrder: async (_, { id }): Promise<Order> => {
