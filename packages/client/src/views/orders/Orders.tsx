@@ -1,8 +1,4 @@
-import {
-  BorderCard,
-  ComplicatedListItem,
-  SimpleList,
-} from 'components';
+import { BorderCard, ComplicatedList, SimpleList } from 'components';
 import {
   GetItemsQuery,
   GetOrdersQuery,
@@ -41,7 +37,7 @@ export const OrdersContent = (props: OrdersContentProps) => {
     <div className={styles.ordersContainer}>
       <BorderCard subTitle="Produkter" style={{ width: '400px' }}>
         {props.items?.GetItems?.map((item) => (
-          <ComplicatedListItem key={item._id} title={item.name} />
+          <ComplicatedList key={item._id} title={item.name} />
         ))}
       </BorderCard>
       <button> Lägg till ny vara </button>
