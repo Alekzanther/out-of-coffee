@@ -53,12 +53,16 @@ export const itemResolver: Resolvers = {
     },
     SetFavorite: async (_, { id }): Promise<boolean> => {
       try {
+        const item = await ItemModel.findById(id).lean();
+        if (!item) {
+          throw new Error('No item found');
+        }
         const result = await ItemModel.updateOne(
           {
             _id: id,
           },
           {
-            $set: { isFavorite: { $not: '$isFavorite' } },
+            $set: { isFavorite: !item.isFavorite },
           },
         );
 
