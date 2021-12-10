@@ -1,1 +1,1 @@
-export * from './Favorites';
+export { Favorites } from './components';

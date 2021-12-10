@@ -3,6 +3,7 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@reach/tabs';
 import { Orders, Favorites } from '../../views';
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 
 const StyledTabList = styled(TabList)`
   justify-content: space-evenly;
@@ -26,13 +27,17 @@ const StyledTabs = styled(Tabs)`
   grid-area: content;
   display: grid;
   grid-template-areas:
-    'nav nav nav'
-    'a b c';
+    'nav nav'
+    'a a';
   grid-auto-rows: auto 1fr;
   grid-auto-columns: 1fr;
 `;
 const StyledTabPanels = styled(TabPanels)`
   display: contents;
+`;
+
+const gridAreaA = css`
+  grid-area: a;
 `;
 
 export const Nav = () => {
@@ -44,10 +49,10 @@ export const Nav = () => {
       </StyledTabList>
 
       <StyledTabPanels>
-        <TabPanel>
+        <TabPanel css={gridAreaA}>
           <Orders />
         </TabPanel>
-        <TabPanel>
+        <TabPanel css={gridAreaA}>
           <Favorites />
         </TabPanel>
       </StyledTabPanels>

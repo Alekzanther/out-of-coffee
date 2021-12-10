@@ -1,5 +1,4 @@
 import { Global, ThemeProvider } from '@emotion/react';
-import { useGetItemsQuery } from 'generated/graphql';
 import { globalStyles } from 'globalStyles';
 import styled from '@emotion/styled';
 
@@ -11,10 +10,10 @@ const Main = styled.div`
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  grid-template-areas: 
-            "snack snack snack"
-            "header header header"
-            "content content content";
+  grid-template-areas:
+    'snack snack snack'
+    'header header header'
+    'content content content';
   grid-auto-rows: auto auto 1fr;
   grid-auto-columns: 1fr;
   justify-content: center;
@@ -28,21 +27,17 @@ const SnackBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
 function App() {
-  const { data: items } = useGetItemsQuery();
-  console.log(`data`, items);
   return (
     <ThemeProvider theme={theme}>
       <Main>
         <Global styles={globalStyles} />
-          <SnackBar> 
-            <p>Beställ innan torsdag 25 september  kl 12:00! 🎉</p>
-          </SnackBar>
-        <Header>
-          Müsl.io
-        </Header>
+        <SnackBar>
+          <p>Beställ innan torsdag 25 september kl 12:00! 🎉</p>
+        </SnackBar>
+        <Header>Müsl.io</Header>
         <Nav />
       </Main>
     </ThemeProvider>
