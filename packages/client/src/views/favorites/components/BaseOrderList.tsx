@@ -4,7 +4,7 @@ import { useGetBaseOrderQuery } from 'generated/graphql';
 
 import { listWrapperStyle } from '../styles';
 
-export const BaseOrdersList = () => {
+export const BaseOrderList = () => {
   const { data } = useGetBaseOrderQuery();
 
   const items = data?.GetBaseOrder?.items || [];

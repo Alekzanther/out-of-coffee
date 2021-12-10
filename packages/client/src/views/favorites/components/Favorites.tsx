@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { wrapperStyle } from '../styles';
 
-import { BaseOrdersList } from './BaseOrdersList';
+import { BaseOrderList } from './BaseOrderList';
 import { FavoritesList } from './FavoritesList';
 
 export const Favorites = () => {
   return (
     <div css={wrapperStyle}>
-      <BaseOrdersList />
+      <BaseOrderList />
       <FavoritesList />
     </div>
   );
