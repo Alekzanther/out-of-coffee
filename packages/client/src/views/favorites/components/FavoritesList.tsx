@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { SimpleList } from 'components';
+import { BorderCard, SimpleList } from 'components';
 
 import { listWrapperStyle } from '../styles';
 
@@ -21,15 +21,17 @@ const favoriteItems: FavoriteItem[] = [
 
 export const FavoritesList = () => {
   return (
-    <div css={listWrapperStyle}>
-      <h2>Favoriter</h2>
-      {favoriteItems.map((item, index) => (
-        <SimpleList
-          title={item.title}
-          newItem={item.new}
-          key={index}
-        />
-      ))}
-    </div>
+    <BorderCard subTitle="Favoriter" style={{ width: '400px' }}>
+      <div css={listWrapperStyle}>
+        <h2>Favoriter</h2>
+        {favoriteItems.map((item, index) => (
+          <SimpleList
+            title={item.title}
+            newItem={item.new}
+            key={index}
+          />
+        ))}
+      </div>
+    </BorderCard>
   );
 };
