@@ -3,6 +3,7 @@ type Item @entity {
   name: String! @column
   productUrl: String! @column
   productImageUrl: String @column
+  isFavorite: Boolean @column
 }
 
 input NewItem {
@@ -12,6 +13,7 @@ input NewItem {
 
 type Mutation {
   CreateItem(newItem: NewItem!): Item!
+  SetFavorite(id: ID!): Boolean!
 }
 
 type Query {

@@ -5,6 +5,7 @@ export const ItemSchema = new Schema({
   name: String,
   productUrl: String,
   productImageUrl: String,
+  isFavorite: Boolean,
 });
 
 export const Item = model<ItemDbObject>('Item', ItemSchema);

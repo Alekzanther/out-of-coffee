@@ -7,6 +7,7 @@ export const getItemsQuery = gql`
       name
       productUrl
       productImageUrl
+      isFavorite
     }
   }
 `;

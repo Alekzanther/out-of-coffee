@@ -12,6 +12,7 @@ import styles from './Orders.module.css';
 export const Orders = () => {
   const { data: items, error: itemsError } = useGetItemsQuery();
   const { data: orders, error: ordersError } = useGetOrdersQuery();
+  console.log({items})
 
   if (itemsError || ordersError) {
     return <div>Error</div>;

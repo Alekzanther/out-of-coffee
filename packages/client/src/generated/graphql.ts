@@ -36,6 +36,7 @@ export type ErrorResponse = {
 export type Item = {
   __typename: 'Item';
   _id: Scalars['String'];
+  isFavorite?: Maybe<Scalars['Boolean']>;
   name: Scalars['String'];
   productImageUrl?: Maybe<Scalars['String']>;
   productUrl: Scalars['String'];
@@ -46,6 +47,7 @@ export type Mutation = {
   CreateItem: Item;
   CreateOrder: Order;
   SetBaseOrder: BaseOrder;
+  SetFavorite: Scalars['Boolean'];
 };
 
 
@@ -61,6 +63,11 @@ export type MutationCreateOrderArgs = {
 
 export type MutationSetBaseOrderArgs = {
   newBaseOrder: NewBaseOrder;
+};
+
+
+export type MutationSetFavoriteArgs = {
+  id: Scalars['ID'];
 };
 
 export type NewBaseOrder = {
@@ -317,12 +324,12 @@ export type GetItemQueryVariables = Exact<{
 }>;
 
 
-export type GetItemQuery = { __typename: 'Query', GetItem: { __typename: 'Item', name: string, productUrl: string, productImageUrl?: string | null | undefined } };
+export type GetItemQuery = { __typename: 'Query', GetItem: { __typename: 'Item', name: string, productUrl: string, productImageUrl?: string | null | undefined, isFavorite?: boolean | null | undefined } };
 
 export type GetItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetItemsQuery = { __typename: 'Query', GetItems: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined }> };
+export type GetItemsQuery = { __typename: 'Query', GetItems: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined, isFavorite?: boolean | null | undefined }> };
 
 export type ItemFragmentFragment = { __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined };
 
@@ -393,6 +400,7 @@ export const GetItemDocument = gql`
     name
     productUrl
     productImageUrl
+    isFavorite
   }
 }
     `;
@@ -431,6 +439,7 @@ export const GetItemsDocument = gql`
     name
     productUrl
     productImageUrl
+    isFavorite
   }
 }
     `;

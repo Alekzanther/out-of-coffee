@@ -17,15 +17,15 @@ db.createCollection("orders")
 db.createCollection("items")
 db.createCollection("baseorders")
 let itemsArr = [
-  { "name": "russin", "productUrl": "https://www.mat.se/butik/russin-krav-salta-kvarn-500g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/42660-280.jpg" },
-  { "name": "bananer", "productUrl": "https://www.mat.se/butik/banan-rattvisemarkt-ca-850g", "productImageUrl": "https://www.mat.se/butik/gront-te-krav-kung-markatt-20p" },
-  { "name": "grönt te", "productUrl": "https://www.mat.se/butik/gront-te-krav-kung-markatt-20p", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/23843-280.jpg" },
-  { "name": "kanel", "productUrl": "https://www.mat.se/butik/kanel-malen-garant-eko-43g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/102251-280.jpg" },
-  { "name": "havredryck", "productUrl": "https://www.mat.se/butik/havredryck-deluxe-oatly-1l", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/100219-280.jpg" },
-  { "name": "start", "productUrl": "https://www.mat.se/butik/start-naturell-granola-start-11kg", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/127624-280.jpg" },
-  { "name": "kaffe", "productUrl": "https://www.mat.se/butik/bryggkaffe-mellan-classic-500g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/7056-280.jpg" },
-  { "name": "smör", "productUrl": "https://www.mat.se/butik/ekologiskt-82-svenskt-smor-fran-arla-500g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/4858-280.jpg" },
-  { "name": "blåbärsylt", "productUrl": "https://www.mat.se/butik/blabarssylt-garant-eko-400g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/91225-280.jpg" }
+  { "name": "russin", "productUrl": "https://www.mat.se/butik/russin-krav-salta-kvarn-500g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/42660-280.jpg", isFavorite: false },
+  { "name": "bananer", "productUrl": "https://www.mat.se/butik/banan-rattvisemarkt-ca-850g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/23843-560.jpg", isFavorite: false },
+  { "name": "grönt te", "productUrl": "https://www.mat.se/butik/gront-te-krav-kung-markatt-20p", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/23843-280.jpg", isFavorite: false },
+  { "name": "kanel", "productUrl": "https://www.mat.se/butik/kanel-malen-garant-eko-43g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/102251-280.jpg", isFavorite: false },
+  { "name": "havredryck", "productUrl": "https://www.mat.se/butik/havredryck-deluxe-oatly-1l", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/100219-280.jpg", isFavorite: false },
+  { "name": "start", "productUrl": "https://www.mat.se/butik/start-naturell-granola-start-11kg", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/127624-280.jpg", isFavorite: false },
+  { "name": "kaffe", "productUrl": "https://www.mat.se/butik/bryggkaffe-mellan-classic-500g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/7056-280.jpg", isFavorite: false },
+  { "name": "smör", "productUrl": "https://www.mat.se/butik/ekologiskt-82-svenskt-smor-fran-arla-500g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/4858-280.jpg", isFavorite: false },
+  { "name": "blåbärsylt", "productUrl": "https://www.mat.se/butik/blabarssylt-garant-eko-400g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/91225-280.jpg", isFavorite: false }
 ]
 
 db.items.insertMany(itemsArr)

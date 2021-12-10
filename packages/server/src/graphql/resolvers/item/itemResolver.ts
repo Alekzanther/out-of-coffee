@@ -51,5 +51,21 @@ export const itemResolver: Resolvers = {
         throw new Error(`Unable to create a new Item: ${error}`);
       }
     },
+    SetFavorite: async (_, { id }): Promise<boolean> => {
+      try {
+        const result = await ItemModel.updateOne(
+          {
+            _id: id,
+          },
+          {
+            $set: { isFavorite: { $not: '$isFavorite' } },
+          },
+        );
+
+        return result.acknowledged;
+      } catch (error) {
+        throw new Error(`Unable to create a new Item: ${error}`);
+      }
+    },
   },
 };
