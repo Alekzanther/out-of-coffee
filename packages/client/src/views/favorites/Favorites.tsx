@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from 'react';
+import React from 'react';
 import { css } from '@emotion/react';
 
 import { SimpleList } from '../../components';
@@ -14,25 +14,6 @@ const favoriteItems: FavoriteItem[] = [
   { title: 'Honung, 250 gram', new: false },
   { title: 'Honung, 250 gram', new: false },
   { title: 'Honung, 250 gram', new: true },
-  { title: 'Honung, 250 gram', new: false },
-  { title: 'Honung, 250 gram', new: false },
-  { title: 'Honung, 250 gram', new: false },
-  { title: 'Honung, 250 gram', new: false },
-];
-
-const baseorderItems: FavoriteItem[] = [
-  { title: 'Honung, 250 gram', new: false },
-  { title: 'Honung, 250 gram', new: false },
-  { title: 'Honung, 250 gram', new: true },
-  { title: 'Honung, 250 gram', new: false },
-  { title: 'Honung, 250 gram', new: false },
-  { title: 'Honung, 250 gram', new: false },
-  { title: 'Honung, 250 gram', new: false },
-  { title: 'Honung, 250 gram', new: false },
-  { title: 'Honung, 250 gram', new: false },
-  { title: 'Honung, 250 gram', new: false },
-  { title: 'Honung, 250 gram', new: false },
-  { title: 'Honung, 250 gram', new: false },
   { title: 'Honung, 250 gram', new: false },
   { title: 'Honung, 250 gram', new: false },
   { title: 'Honung, 250 gram', new: false },
@@ -77,22 +58,34 @@ export const Favorites: React.FC = () => {
             ? items.map((item, index) => (
                 <li key={index}>
                   <p>{item?.name}</p>
-                  {item?.productImageUrl && (
-                    <img
-                      style={{ height: '20px', width: '400px' }}
-                      src={item?.productImageUrl}
-                      alt={item.name}
-                    />
-                  )}
-                  {item?.productUrl && (
+                  {item?.productImageUrl ? (
                     <a
                       style={{
                         textDecoration: 'none',
                       }}
                       href={item?.productUrl}
+                      target="_blank"
+                      rel="noreferrer"
                     >
-                      Gå till skiten
+                      <img
+                        style={{ height: '50px', width: '50px' }}
+                        src={item?.productImageUrl}
+                        alt={item.name}
+                      />
                     </a>
+                  ) : (
+                    <>
+                      {item?.productUrl && (
+                        <a
+                          style={{
+                            textDecoration: 'none',
+                          }}
+                          href={item?.productUrl}
+                        >
+                          {`Gå till ${item.name}`}
+                        </a>
+                      )}
+                    </>
                   )}
                 </li>
               ))
