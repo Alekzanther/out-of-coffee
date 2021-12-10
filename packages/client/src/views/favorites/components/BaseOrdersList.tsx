@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useGetBaseOrderQuery } from 'generated/graphql';
 
-import { listWrapperStyle } from '.';
+import { listWrapperStyle } from '../styles';
 
 export const BaseOrdersList = () => {
   const { data } = useGetBaseOrderQuery();
