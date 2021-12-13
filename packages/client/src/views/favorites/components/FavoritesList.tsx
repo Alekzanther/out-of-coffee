@@ -21,7 +21,7 @@ const favoriteItems: FavoriteItem[] = [
 
 export const FavoritesList = () => {
   return (
-    <BorderCard subTitle="Favoriter" style={{ width: '400px' }}>
+    <BorderCard subTitle="Favoriter" style={{ width: '600px' }}>
       <div css={listWrapperStyle}>
         <h2>Favoriter</h2>
         {favoriteItems.map((item, index) => (

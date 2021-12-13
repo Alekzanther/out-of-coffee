@@ -1,4 +1,8 @@
-import { BorderCard, ComplicatedList, SimpleList } from 'components';
+import {
+  BorderCard,
+  ComplicatedListItem,
+  SimpleList,
+} from 'components';
 import {
   GetItemsQuery,
   GetOrdersQuery,
@@ -12,7 +16,6 @@ import styles from './Orders.module.css';
 export const Orders = () => {
   const { data: items, error: itemsError } = useGetItemsQuery();
   const { data: orders, error: ordersError } = useGetOrdersQuery();
-  console.log({items})
 
   if (itemsError || ordersError) {
     return <div>Error</div>;
@@ -38,7 +41,7 @@ export const OrdersContent = (props: OrdersContentProps) => {
     <div className={styles.ordersContainer}>
       <BorderCard subTitle="Produkter" style={{ width: '400px' }}>
         {props.items?.GetItems?.map((item) => (
-          <ComplicatedList key={item._id} title={item.name} />
+          <ComplicatedListItem key={item._id} item={item} />
         ))}
       </BorderCard>
       <button> Lägg till ny vara </button>

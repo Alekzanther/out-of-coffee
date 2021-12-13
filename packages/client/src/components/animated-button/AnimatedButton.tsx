@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { useToggle } from './hooks';
 const kinds = {
   plusToCheck: 'a',
   outlineHeartToFilledHeart: 'P',
@@ -33,23 +32,21 @@ interface AnimatedButtonProps {
   onClick?: () => void;
   ariaLabel?: string;
   buttonColor?: string;
+  isToggled?: boolean | null;
 }
 
 export const AnimatedButton: React.FC<AnimatedButtonProps> = (
   props,
 ) => {
-  const [isToggled, toggle] = useToggle(false);
-
   const handleClick = () => {
     props?.onClick?.();
-    toggle();
   };
 
   return (
     <div>
       <StyledButton
         onClick={handleClick}
-        isFavourited={isToggled}
+        isFavourited={props.isToggled || false}
         aria-label={props.ariaLabel}
         color={props.buttonColor}
       >
