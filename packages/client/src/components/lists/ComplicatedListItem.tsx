@@ -5,11 +5,11 @@ import { css } from '@emotion/react';
 import { AnimatedButton } from '../animated-button';
 import { ReactComponent as New } from '../../assets/new.svg';
 import { ReactComponent as Trashcan } from '../../assets/trashcan.svg';
+import { Item, useSetFavoriteMutation } from 'generated/graphql';
 
 type ComplicatedListItemProps = {
-  title: string;
+  item: Item;
   newItem?: boolean;
-  iLoveIt?: () => void;
   throwItInTheTrash?: () => void;
   incrementAndDecrementItems?: () => number;
 };
@@ -47,79 +47,120 @@ const nakedButtonStyles = css`
   }
 `;
 
-export const ComplicatedList: React.FC<ComplicatedListItemProps> = ({
-  title,
-  newItem,
-  iLoveIt,
-  throwItInTheTrash,
-  incrementAndDecrementItems,
-}) => {
-  const [numberOfItems, setNumberOfItems] = useState(0);
+const linkStyle = css`
+  padding-right: 14px;
+  text-decoration: 'none';
+`;
 
-  const increaseCount = () => {
-    setNumberOfItems((prevCount) => ++prevCount);
-  };
-
-  const decreaseCount = () => {
-    setNumberOfItems((prevCount) => {
-      const newCount = prevCount - 1;
-      return Math.max(newCount, 0);
+export const ComplicatedListItem: React.FC<ComplicatedListItemProps> =
+  ({
+    item,
+    newItem,
+    throwItInTheTrash,
+    incrementAndDecrementItems,
+  }) => {
+    const [numberOfItems, setNumberOfItems] = useState(0);
+    const [setFave] = useSetFavoriteMutation({
+      variables: {
+        id: item._id,
+        value: Boolean(item.isFavorite),
+      },
     });
-  };
 
-  return (
-    <div css={style}>
-      {newItem ? <New /> : null}
-      <p
-        css={(theme) => ({
-          color: newItem
-            ? theme.colors.greenLantern
-            : theme.colors.pitchBlack,
-        })}
-      >
-        {title}
-      </p>
-      <div css={actionsContainer}>
-        {!incrementAndDecrementItems && (
-          <div css={incrementContainerStyles}>
-            <button
-              aria-label="decrease"
-              css={nakedButtonStyles}
-              onClick={decreaseCount}
-            >
-              -
-            </button>
-            <p aria-label={`${numberOfItems} ${title}`} tabIndex={0}>
-              {numberOfItems}
-            </p>
-            <button
-              aria-label="increase"
-              css={nakedButtonStyles}
-              onClick={increaseCount}
-            >
-              +
-            </button>
-          </div>
+    const increaseCount = () => {
+      setNumberOfItems((prevCount) => ++prevCount);
+    };
+
+    const decreaseCount = () => {
+      setNumberOfItems((prevCount) => {
+        const newCount = prevCount - 1;
+        return Math.max(newCount, 0);
+      });
+    };
+
+    const setFavorite = () => {
+      setFave();
+    };
+
+    return (
+      <div css={style}>
+        {newItem ? <New /> : null}
+        {item?.productImageUrl ? (
+          <a
+            css={linkStyle}
+            href={item?.productUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              style={{ height: '50px', width: '50px' }}
+              src={item?.productImageUrl}
+              alt={item.name}
+            />
+          </a>
+        ) : (
+          <>
+            {item?.productUrl && (
+              <a css={linkStyle} href={item?.productUrl}>
+                {`Gå till ${item.name}`}
+              </a>
+            )}
+          </>
         )}
-        {throwItInTheTrash && (
+        <p
+          css={(theme) => ({
+            color: newItem
+              ? theme.colors.greenLantern
+              : theme.colors.pitchBlack,
+          })}
+        >
+          {item.name}
+        </p>
+        <div css={actionsContainer}>
+          {!incrementAndDecrementItems && (
+            <div css={incrementContainerStyles}>
+              <button
+                aria-label="decrease"
+                css={nakedButtonStyles}
+                onClick={decreaseCount}
+              >
+                -
+              </button>
+              <p
+                aria-label={`${numberOfItems} ${item.name}`}
+                tabIndex={0}
+              >
+                {numberOfItems}
+              </p>
+              <button
+                aria-label="increase"
+                css={nakedButtonStyles}
+                onClick={increaseCount}
+              >
+                +
+              </button>
+            </div>
+          )}
+          {throwItInTheTrash && (
+            <div css={incrementContainerStyles}>
+              <button
+                type="button"
+                css={nakedButtonStyles}
+                aria-label="remove"
+              >
+                <Trashcan style={{ cursor: 'pointer' }} />
+              </button>
+            </div>
+          )}
           <div css={incrementContainerStyles}>
-            <button
-              type="button"
-              css={nakedButtonStyles}
-              aria-label="remove"
-            >
-              <Trashcan style={{ cursor: 'pointer' }} />
-            </button>
+            <AnimatedButton
+              kind="outlineHeartToFilledHeart"
+              onClick={setFavorite}
+              ariaLabel="favorite"
+              isToggled={item.isFavorite}
+            />
           </div>
-        )}
-        <div css={incrementContainerStyles}>
-          <AnimatedButton
-            kind="outlineHeartToFilledHeart"
-            onClick={iLoveIt}
-            ariaLabel="favorite"
-          />
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
