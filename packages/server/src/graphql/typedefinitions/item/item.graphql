@@ -13,10 +13,11 @@ input NewItem {
 
 type Mutation {
   CreateItem(newItem: NewItem!): Item!
-  SetFavorite(id: ID!): Boolean!
+  SetFavorite(id: ID!, value: Boolean): Item!
 }
 
 type Query {
   GetItem(id: ID!): Item!
   GetItems: [Item!]!
+  GetFavoriteItems: [Item!]!
 }

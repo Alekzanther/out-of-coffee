@@ -1,3 +1,4 @@
+import { Dialog } from 'components/dialog';
 import {
   BorderCard,
   ComplicatedListItem,
@@ -10,6 +11,7 @@ import {
   useGetOrdersQuery,
 } from 'generated/graphql';
 import { getLatestOrder } from 'helpers/getLatestOrder';
+import { useState } from 'react';
 
 import styles from './Orders.module.css';
 
@@ -36,6 +38,7 @@ type OrdersContentProps = {
 
 export const OrdersContent = (props: OrdersContentProps) => {
   const [currentOrder] = getLatestOrder(props?.orders.GetOrders);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   return (
     <div className={styles.ordersContainer}>
@@ -44,7 +47,7 @@ export const OrdersContent = (props: OrdersContentProps) => {
           <ComplicatedListItem key={item._id} item={item} />
         ))}
       </BorderCard>
-      <button> Lägg till ny vara </button>
+      <button type="button" onClick={() => setDialogOpen(true)}> Lägg till ny vara </button>
       <BorderCard
         title="Nästa order"
         subTitle={new Date(currentOrder.endDate).toDateString()}
@@ -55,6 +58,7 @@ export const OrdersContent = (props: OrdersContentProps) => {
         ))}
         <br />
       </BorderCard>
+      <Dialog isOpen={dialogOpen} onDismiss={() => setDialogOpen(false)} />
     </div>
   );
 };

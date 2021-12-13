@@ -12,6 +12,15 @@ export const itemResolver: Resolvers = {
       }
       return items;
     },
+    GetFavoriteItems: async (): Promise<Item[]> => {
+      const items: Item[] = await ItemModel.find({
+        isFavorite: true,
+      });
+      if (items.length === 0) {
+        throw new Error('No favorite items found');
+      }
+      return items;
+    },
     GetItem: async (_, { id }): Promise<Item> => {
       const isIdValid = isValidObjectId(id);
 
@@ -51,22 +60,21 @@ export const itemResolver: Resolvers = {
         throw new Error(`Unable to create a new Item: ${error}`);
       }
     },
-    SetFavorite: async (_, { id }): Promise<boolean> => {
+    SetFavorite: async (_, { id, value }): Promise<Item> => {
       try {
-        const item = await ItemModel.findById(id).lean();
-        if (!item) {
-          throw new Error('No item found');
-        }
-        const result = await ItemModel.updateOne(
+        const result = await ItemModel.findOneAndUpdate(
           {
             _id: id,
           },
           {
-            $set: { isFavorite: !item.isFavorite },
+            $set: { isFavorite: !value },
           },
+          { new: true },
         );
-
-        return result.acknowledged;
+        if (!result) {
+          throw new Error('SetFavorite failed: no item found');
+        }
+        return result;
       } catch (error) {
         throw new Error(`Unable to create a new Item: ${error}`);
       }

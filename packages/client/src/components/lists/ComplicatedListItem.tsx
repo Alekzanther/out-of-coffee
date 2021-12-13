@@ -63,8 +63,10 @@ export const ComplicatedListItem: React.FC<ComplicatedListItemProps> =
     const [setFave] = useSetFavoriteMutation({
       variables: {
         id: item._id,
+        value: Boolean(item.isFavorite),
       },
     });
+
     const increaseCount = () => {
       setNumberOfItems((prevCount) => ++prevCount);
     };

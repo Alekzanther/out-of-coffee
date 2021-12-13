@@ -31,7 +31,7 @@ export const BaseOrderList = () => {
   const actualItems = getAmountOfItemsInOrder(items as Item[]);
 
   return (
-    <BorderCard subTitle="Bas order" style={{ width: '600px' }}>
+    <BorderCard subTitle="Basorder" style={{ width: '600px' }}>
       <div css={listWrapperStyle}>
         <h2>Basorder</h2>
         <ul css={listStyle}>
