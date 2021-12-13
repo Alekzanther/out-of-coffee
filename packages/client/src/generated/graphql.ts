@@ -47,7 +47,7 @@ export type Mutation = {
   CreateItem: Item;
   CreateOrder: Order;
   SetBaseOrder: BaseOrder;
-  SetFavorite: Scalars['Boolean'];
+  SetFavorite: Item;
 };
 
 
@@ -68,6 +68,7 @@ export type MutationSetBaseOrderArgs = {
 
 export type MutationSetFavoriteArgs = {
   id: Scalars['ID'];
+  value?: Maybe<Scalars['Boolean']>;
 };
 
 export type NewBaseOrder = {
@@ -316,10 +317,11 @@ export enum __TypeKind {
 
 export type SetFavoriteMutationVariables = Exact<{
   id: Scalars['ID'];
+  value?: Maybe<Scalars['Boolean']>;
 }>;
 
 
-export type SetFavoriteMutation = { __typename: 'Mutation', SetFavorite: boolean };
+export type SetFavoriteMutation = { __typename: 'Mutation', SetFavorite: { __typename: 'Item', _id: string, name: string, isFavorite?: boolean | null | undefined, productUrl: string, productImageUrl?: string | null | undefined } };
 
 export type GetBaseOrderQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -360,8 +362,14 @@ export const ItemFragmentFragmentDoc = gql`
 }
     `;
 export const SetFavoriteDocument = gql`
-    mutation setFavorite($id: ID!) {
-  SetFavorite(id: $id)
+    mutation setFavorite($id: ID!, $value: Boolean) {
+  SetFavorite(id: $id, value: $value) {
+    _id
+    name
+    isFavorite
+    productUrl
+    productImageUrl
+  }
 }
     `;
 export type SetFavoriteMutationFn = Apollo.MutationFunction<SetFavoriteMutation, SetFavoriteMutationVariables>;
@@ -380,6 +388,7 @@ export type SetFavoriteMutationFn = Apollo.MutationFunction<SetFavoriteMutation,
  * const [setFavoriteMutation, { data, loading, error }] = useSetFavoriteMutation({
  *   variables: {
  *      id: // value for 'id'
+ *      value: // value for 'value'
  *   },
  * });
  */
