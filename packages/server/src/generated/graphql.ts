@@ -106,6 +106,7 @@ export type Query = {
   __typename?: 'Query';
   GetBaseOrder: BaseOrder;
   GetCurrentOrder: Order;
+  GetFavoriteItems: Array<Item>;
   GetItem: Item;
   GetItems: Array<Item>;
   GetOrder: Order;
@@ -525,6 +526,11 @@ export type QueryResolvers<
     ParentType,
     ContextType,
     RequireFields<QueryGetCurrentOrderArgs, 'id'>
+  >;
+  GetFavoriteItems?: Resolver<
+    Array<ResolversTypes['Item']>,
+    ParentType,
+    ContextType
   >;
   GetItem?: Resolver<
     ResolversTypes['Item'],

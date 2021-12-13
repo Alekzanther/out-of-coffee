@@ -12,6 +12,15 @@ export const itemResolver: Resolvers = {
       }
       return items;
     },
+    GetFavoriteItems: async (): Promise<Item[]> => {
+      const items: Item[] = await ItemModel.find({
+        isFavorite: true,
+      });
+      if (items.length === 0) {
+        throw new Error('No favorite items found');
+      }
+      return items;
+    },
     GetItem: async (_, { id }): Promise<Item> => {
       const isIdValid = isValidObjectId(id);
 

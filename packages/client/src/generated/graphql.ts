@@ -103,6 +103,7 @@ export type Query = {
   __typename: 'Query';
   GetBaseOrder: BaseOrder;
   GetCurrentOrder: Order;
+  GetFavoriteItems: Array<Item>;
   GetItem: Item;
   GetItems: Array<Item>;
   GetOrder: Order;
@@ -328,6 +329,11 @@ export type GetBaseOrderQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetBaseOrderQuery = { __typename: 'Query', GetBaseOrder: { __typename: 'BaseOrder', _id: string, active: boolean, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined } | null | undefined> | null | undefined } };
 
+export type GetFavoriteItemsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFavoriteItemsQuery = { __typename: 'Query', GetFavoriteItems: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined, isFavorite?: boolean | null | undefined }> };
+
 export type GetItemQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -441,6 +447,44 @@ export function useGetBaseOrderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetBaseOrderQueryHookResult = ReturnType<typeof useGetBaseOrderQuery>;
 export type GetBaseOrderLazyQueryHookResult = ReturnType<typeof useGetBaseOrderLazyQuery>;
 export type GetBaseOrderQueryResult = Apollo.QueryResult<GetBaseOrderQuery, GetBaseOrderQueryVariables>;
+export const GetFavoriteItemsDocument = gql`
+    query getFavoriteItems {
+  GetFavoriteItems {
+    _id
+    name
+    productUrl
+    productImageUrl
+    isFavorite
+  }
+}
+    `;
+
+/**
+ * __useGetFavoriteItemsQuery__
+ *
+ * To run a query within a React component, call `useGetFavoriteItemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFavoriteItemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFavoriteItemsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetFavoriteItemsQuery(baseOptions?: Apollo.QueryHookOptions<GetFavoriteItemsQuery, GetFavoriteItemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetFavoriteItemsQuery, GetFavoriteItemsQueryVariables>(GetFavoriteItemsDocument, options);
+      }
+export function useGetFavoriteItemsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFavoriteItemsQuery, GetFavoriteItemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetFavoriteItemsQuery, GetFavoriteItemsQueryVariables>(GetFavoriteItemsDocument, options);
+        }
+export type GetFavoriteItemsQueryHookResult = ReturnType<typeof useGetFavoriteItemsQuery>;
+export type GetFavoriteItemsLazyQueryHookResult = ReturnType<typeof useGetFavoriteItemsLazyQuery>;
+export type GetFavoriteItemsQueryResult = Apollo.QueryResult<GetFavoriteItemsQuery, GetFavoriteItemsQueryVariables>;
 export const GetItemDocument = gql`
     query getItem($id: ID!) {
   GetItem(id: $id) {
