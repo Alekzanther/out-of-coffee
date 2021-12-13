@@ -4,7 +4,7 @@ import { VisuallyHidden } from '@reach/visually-hidden';
 import { BorderCard } from 'components';
 import styled from '@emotion/styled';
 
-interface DialogProps extends DialogOverlayProps {}
+interface DialogProps extends DialogOverlayProps { }
 
 const StyledReachDialog = styled(ReachDialog)`
   display: flex;
@@ -26,9 +26,9 @@ const StyledReachDialog = styled(ReachDialog)`
 
 export const Dialog = (props: DialogProps) => {
   return (
-    <StyledReachDialog onDismiss={props.onDismiss} isOpen={props.isOpen || true}>
+    <StyledReachDialog onDismiss={props.onDismiss} isOpen={props.isOpen}>
       <BorderCard subTitle='Hello there'>
-      <button className="close-button" onClick={props.onDismiss}>
+        <button className="close-button" onClick={props.onDismiss}>
           <VisuallyHidden>Close</VisuallyHidden>
           <span aria-hidden>×</span>
         </button>
