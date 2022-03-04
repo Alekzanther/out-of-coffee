@@ -1,6 +1,7 @@
 {
   "name": "root",
   "private": true,
+  "packageManager": "pnpm@6.32.2",
   "scripts": {
     "start": "pnpm start --prefix packages/client/",
     "serve": "pnpm start --prefix packages/server/",
