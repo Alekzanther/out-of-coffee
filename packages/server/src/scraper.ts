@@ -9,8 +9,9 @@ export async function scrapeProductUrl(targetUrl: string) {
   try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-
-    await page.goto(targetUrl);
+    await page.goto(targetUrl, {
+      waitUntil: 'networkidle2',
+    });
 
     const btn = await page.evaluate(() =>
       document.querySelector('button[type="submit"]'),
