@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { css } from '@emotion/react';
 import New from '../../assets/new.svg';
 
 type SimpleListItem = {
   title: string;
   newItem?: boolean;
+  id: string;
 };
 
 const style = css`
@@ -20,22 +21,21 @@ const style = css`
   }
 `;
 
-export const SimpleList: React.FC<SimpleListItem> = ({
-  title,
-  newItem,
-}) => {
-  return (
-    <div css={style}>
-      {newItem ? <New /> : null}
-      <p
-        css={(theme) => ({
-          color: newItem
-            ? theme.colors.greenLantern
-            : theme.colors.pitchBlack,
-        })}
-      >
-        {title}
-      </p>
-    </div>
-  );
-};
+export const SimpleList = forwardRef<HTMLDivElement, SimpleListItem>(
+  ({ title, newItem, id }, ref) => {
+    return (
+      <div ref={ref} id={id} css={style}>
+        {newItem ? <New /> : null}
+        <p
+          css={(theme) => ({
+            color: newItem
+              ? theme.colors.greenLantern
+              : theme.colors.pitchBlack,
+          })}
+        >
+          {title}
+        </p>
+      </div>
+    );
+  },
+);

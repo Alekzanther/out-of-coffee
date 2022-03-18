@@ -11,7 +11,7 @@ import {
   useGetOrdersQuery,
 } from 'generated/graphql';
 import { getLatestOrder } from 'helpers/getLatestOrder';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import styles from './Orders.module.css';
 
@@ -39,12 +39,38 @@ type OrdersContentProps = {
 export const OrdersContent = (props: OrdersContentProps) => {
   const [currentOrder] = getLatestOrder(props?.orders.GetOrders);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [currentNodes, setCurrentNodes] = useState<
+    { id: string; x: number; y: number }[]
+  >([]);
+  const [selectedProduct, setSelectedProduct] = useState('');
+
+  const measuredRef = useCallback((node) => {
+    if (node !== null) {
+      const x = node.getBoundingClientRect().x;
+      const y = node.getBoundingClientRect().y;
+      const id = node.id;
+      setCurrentNodes((prevNodes) => [...prevNodes, { id, x, y }]);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(currentNodes.find((n) => n.id === selectedProduct));
+  }, [selectedProduct]);
+
+  const handleCoolAnimation = (id: string) => {
+    return setSelectedProduct(id);
+  };
 
   return (
     <div className={styles.ordersContainer}>
       <BorderCard subTitle="Produkter" style={{ width: '400px' }}>
         {props.items?.GetItems?.map((item) => (
-          <ComplicatedListItem key={item._id} item={item} />
+          <ComplicatedListItem
+            id={item._id}
+            key={item._id}
+            item={item}
+            setSelectedProduct={handleCoolAnimation}
+          />
         ))}
       </BorderCard>
       <button type="button" onClick={() => setDialogOpen(true)}>
@@ -56,7 +82,12 @@ export const OrdersContent = (props: OrdersContentProps) => {
         style={{ width: '400px' }}
       >
         {currentOrder.items.map((item) => (
-          <SimpleList key={item._id} title={item.name} />
+          <SimpleList
+            ref={measuredRef}
+            id={item._id}
+            key={item._id}
+            title={item.name}
+          />
         ))}
         <br />
       </BorderCard>

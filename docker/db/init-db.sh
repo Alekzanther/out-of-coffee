@@ -25,7 +25,6 @@ let itemsArr = [
   { "name": "start", "productUrl": "https://www.mat.se/butik/start-naturell-granola-start-11kg", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/127624-280.jpg", isFavorite: false },
   { "name": "kaffe", "productUrl": "https://www.mat.se/butik/bryggkaffe-mellan-classic-500g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/7056-280.jpg", isFavorite: false },
   { "name": "smör", "productUrl": "https://www.mat.se/butik/ekologiskt-82-svenskt-smor-fran-arla-500g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/4858-280.jpg", isFavorite: false },
-  { "name": "blåbärsylt", "productUrl": "https://www.mat.se/butik/blabarssylt-garant-eko-400g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/91225-280.jpg", isFavorite: false }
 ]
 
 db.items.insertMany(itemsArr)

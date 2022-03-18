@@ -12,6 +12,8 @@ type ComplicatedListItemProps = {
   newItem?: boolean;
   throwItInTheTrash?: () => void;
   incrementAndDecrementItems?: () => number;
+  id: string;
+  setSelectedProduct: (id: string) => void;
 };
 
 const style = css`
@@ -59,6 +61,8 @@ export const ComplicatedListItem: React.FC<
   newItem,
   throwItInTheTrash,
   incrementAndDecrementItems,
+  id,
+  setSelectedProduct,
 }) => {
   const [numberOfItems, setNumberOfItems] = useState(0);
   const [setFave] = useSetFavoriteMutation({
@@ -84,7 +88,7 @@ export const ComplicatedListItem: React.FC<
   };
 
   return (
-    <div css={style}>
+    <div id={id} css={style}>
       {newItem ? <New /> : null}
       {item?.productImageUrl ? (
         <a
@@ -118,7 +122,7 @@ export const ComplicatedListItem: React.FC<
         {item.name}
       </p>
       <div css={actionsContainer}>
-        {!incrementAndDecrementItems && (
+        {/* {!incrementAndDecrementItems && (
           <div css={incrementContainerStyles}>
             <button
               aria-label="decrease"
@@ -141,7 +145,10 @@ export const ComplicatedListItem: React.FC<
               +
             </button>
           </div>
-        )}
+        )} */}
+        <button onClick={() => setSelectedProduct(id)}>
+          Lägg till
+        </button>
         {throwItInTheTrash && (
           <div css={incrementContainerStyles}>
             <button
