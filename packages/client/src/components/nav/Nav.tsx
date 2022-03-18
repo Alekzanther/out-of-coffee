@@ -32,6 +32,7 @@ const StyledTabs = styled(Tabs)`
   grid-auto-rows: auto 1fr;
   grid-auto-columns: 1fr;
 `;
+
 const StyledTabPanels = styled(TabPanels)`
   display: contents;
 `;

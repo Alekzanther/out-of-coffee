@@ -11,9 +11,16 @@ h5 {
   position: relative;
   min-width: 200px;
   margin-top: 48px;
-  border: 1px solid black;
-  border-top: black 1px solid;
   background-color: white;
+  border-image: linear-gradient(
+      0deg,
+      black 0 15%,
+      white 15% 85%,
+      black 85% 100%
+    )
+    1;
+  border-style: solid;
+  border-width: 1px;
 }
 
 .cardTitlesContainer {
