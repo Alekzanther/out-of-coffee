@@ -2,7 +2,9 @@
 
 html {
   font-size: 18px;
+  --scrollbarBG: url('https://cutewallpaper.org/21/nyan-cat-background-gif/Nyan-Cat-Album-on-Imgur.gif');
 }
+
 @media screen and (min-width: 320px) {
   html {
     font-size: calc(18px + 6 * ((100vw - 320px) / 680));
@@ -19,4 +21,51 @@ body {
   font-family: 'Noto Sans Display', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+
+*::-webkit-scrollbar {
+  scrollbar-width: thin;
+  width: 68px;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/cat.gif'),
+    linear-gradient(
+      90deg,
+      transparent,
+      magenta,
+      red,
+      yellow,
+      limegreen,
+      turquoise,
+      blue,
+      magenta,
+      transparent
+    );
+  background-position: center bottom, center -40px;
+  background-repeat: no-repeat, no-repeat;
+  background-size: contain, contain;
+}
+*::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+  transform: rotate(-30deg);
+}
+*::-webkit-scrollbar-thumb {
+  width: 68px;
+  scrollbar-width: thin;
+  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/cat.gif'),
+    linear-gradient(
+      90deg,
+      transparent,
+      magenta,
+      red,
+      yellow,
+      limegreen,
+      turquoise,
+      blue,
+      magenta,
+      transparent
+    );
+  background-position: center bottom, center -40px;
+  background-repeat: no-repeat, no-repeat;
+  background-size: contain, contain;
 }

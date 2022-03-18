@@ -21,6 +21,8 @@ h5 {
     1;
   border-style: solid;
   border-width: 1px;
+  height: 600px;
+  overflow: auto;
 }
 
 .cardTitlesContainer {
@@ -28,43 +30,14 @@ h5 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 0;
+  top: 45px;
   left: 0;
   width: 100%;
   transform: translateY(-50%);
+  z-index: 2;
 }
 
 .cardTitles {
   background-color: white;
   padding: 0 8px;
-}
-
-.leftSideWhite {
-  position: absolute;
-  left: -2px;
-  width: 3px;
-  height: 50%;
-  background-color: white;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.rightSideWhite {
-  position: absolute;
-  right: -2px;
-  width: 3px;
-  height: 50%;
-  background-color: white;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.bottomSideWhite {
-  position: absolute;
-  width: 50%;
-  height: 3px;
-  background-color: white;
-  bottom: -2px;
-  right: 50%;
-  transform: translatex(50%);
 }

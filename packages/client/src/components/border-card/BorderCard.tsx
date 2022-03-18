@@ -15,7 +15,7 @@ export const BorderCard: React.FC<Props> = ({
   const padding = title ? '48px' : '16px';
 
   return (
-    <div className={styles.borderCard} style={{ padding, ...style }}>
+    <div style={{ position: 'relative' }}>
       <div className={styles.cardTitlesContainer}>
         <div className={styles.cardTitles}>
           {/* TODO: Add typography component */}
@@ -23,7 +23,12 @@ export const BorderCard: React.FC<Props> = ({
           <h3>{subTitle}</h3>
         </div>
       </div>
-      <div className={styles.content}>{children}</div>
+      <div
+        className={styles.borderCard}
+        style={{ padding, ...style }}
+      >
+        <div>{children}</div>
+      </div>
     </div>
   );
 };

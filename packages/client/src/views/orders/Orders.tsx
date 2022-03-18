@@ -47,7 +47,9 @@ export const OrdersContent = (props: OrdersContentProps) => {
           <ComplicatedListItem key={item._id} item={item} />
         ))}
       </BorderCard>
-      <button type="button" onClick={() => setDialogOpen(true)}> Lägg till ny vara </button>
+      <button type="button" onClick={() => setDialogOpen(true)}>
+        Lägg till ny vara
+      </button>
       <BorderCard
         title="Nästa order"
         subTitle={new Date(currentOrder.endDate).toDateString()}
@@ -58,7 +60,10 @@ export const OrdersContent = (props: OrdersContentProps) => {
         ))}
         <br />
       </BorderCard>
-      <Dialog isOpen={dialogOpen} onDismiss={() => setDialogOpen(false)} />
+      <Dialog
+        isOpen={dialogOpen}
+        onDismiss={() => setDialogOpen(false)}
+      />
     </div>
   );
 };
