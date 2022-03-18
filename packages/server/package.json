@@ -12,7 +12,8 @@
     "start": "nodemon ./src/server.ts",
     "generate": "graphql-codegen --config codegen.yml",
     "generate:watch": "graphql-codegen --watch 'src/*graphql/typedefinitions/**/*.graphql'",
-    "dev": "pnpm start"
+    "dev": "pnpm start",
+    "tsc": "tsc --noEmit"
   },
   "author": "",
   "license": "ISC",

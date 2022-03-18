@@ -10,6 +10,7 @@ const port = 8008;
 async function initServer() {
   try {
     const app = express();
+    console.log('hej fron  extress');
 
     await connectToDb();
 

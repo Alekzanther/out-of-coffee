@@ -1,8 +1,8 @@
 import { Global, ThemeProvider } from '@emotion/react';
-import { globalStyles } from 'globalStyles';
+import { globalStyles } from './globalStyles';
 import styled from '@emotion/styled';
 
-import { theme } from 'theme';
+import { theme } from './theme';
 import { Header, Nav } from './components';
 
 const Main = styled.div`

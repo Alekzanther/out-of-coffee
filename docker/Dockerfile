@@ -16,20 +16,20 @@ COPY . .
 EXPOSE 8008
 EXPOSE 3000
 
-RUN npm install -g pnpm
+# RUN npm install -g pnpm
 
 #bootstrap lerna
 # RUN mv ./node_modules ./node_modules.tmp \
 #   && mv ./node_modules.tmp ./node_modules \
 #   && pnpm set progress=false && pnpm install 
-RUN cd /usr/src/app/packages/client && pnpm install && pnpm build && cd ../server && pnpm install
+# RUN cd /usr/src/app/packages/client && pnpm install && pnpm build && cd ../server && pnpm install
 
 # RUN pnpm set progress=false && pnpm run bootstrap 
 ## RUN pnpm set progress=false && npm run start
 # RUN pnpm set progress=false && pnpm run build
 
 #ALL start
-WORKDIR /usr/src/app/packages/client
+# WORKDIR /usr/src/app/packages/client
 #CMD ["pnpm", "run", "start"]
 #WORKDIR /usr/src/app/packages/server
-ENTRYPOINT ["pnpm", "run", "start"]
+# ENTRYPOINT ["pnpm", "run", "start"]

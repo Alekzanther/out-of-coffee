@@ -6,7 +6,7 @@ export const globalStyles = css`
     font-weight: 400;
   }
   p {
-    weight: 400;
+    font-weight: 400;
     font-size: 14px;
     margin: 0;
   }

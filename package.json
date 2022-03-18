@@ -7,6 +7,7 @@
     "serve": "pnpm start --prefix packages/server/",
     "dev": "pnpm recursive run dev --filter ./packages/server --filter ./packages/client",
     "dev:client": "pnpm recursive run dev --filter ./packages/client",
-    "dev:server": "pnpm recursive run dev --filter ./packages/server"
+    "dev:server": "pnpm recursive run dev --filter ./packages/server",
+    "tsc": "pnpm recursive run tsc"
   }
 }
