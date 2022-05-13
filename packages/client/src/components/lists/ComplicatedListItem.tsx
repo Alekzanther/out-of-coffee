@@ -112,69 +112,14 @@ export const ComplicatedListItem = forwardRef<
       () => clearTimeout(timer);
     }, [animating]);
 
-    // console.log('ref.current', ref.current);
-
-    const increaseCount = () => {
-      setNumberOfItems((prevCount) => ++prevCount);
-    };
-
-    const decreaseCount = () => {
-      setNumberOfItems((prevCount) => {
-        const newCount = prevCount - 1;
-        return Math.max(newCount, 0);
-      });
-    };
-
     const setFavorite = () => {
       setFave();
     };
 
     const handleOnAdd = () => {
-      createElement();
       setAnimating(true);
       setSelectedProduct(id);
     };
-
-    const transformCss =
-      transform && transform.id === item._id
-        ? `translate(${transform.x - Number(position[0])}px, ${
-            transform.y - Number(position[1])
-          }px)`
-        : '';
-
-    const createElement = () => {
-      const element = document.createElement('img');
-      element.src = item.productImageUrl || '';
-      element.id = `${item._id}dummy`;
-      element.style.cssText = `position:absolute;left:${position[0]}px;top:${position[1]}px;height:50px;width:50px;`;
-      console.log('transformCss', transformCss);
-      element.style.cssText += `transform:${transformCss};position:absolute;transition:transform 4s;left:${position[0]}px;top:${position[1]}px;height:50px;width:50px;`;
-      document.body.appendChild(element);
-    };
-
-    useEffect(() => {
-      const elements = document.body.getElementsByTagName('img');
-      console.log('elements', elements);
-      if (transform && transform.id === item._id) {
-        const element = document.getElementById(`${item._id}dummy`);
-        if (element) {
-          element.style.cssText = `transform:${transformCss};position:absolute;transition:transform 4s;left:${position[0]}px;top:${position[1]}px;height:50px;width:50px;`;
-        }
-      }
-    }, [transform]);
-
-    // useEffect(() => {
-    //   console.log('transform', transform);
-    //   if (transform && transform.id === item._id) {
-    //     const element = document.createElement('img');
-    //     element.src = item.productImageUrl || '';
-    //     element.id = `${item._id}dummy`;
-    //     element.style.cssText = `position:absolute;left:${position[0]}px;top:${position[1]}px;height:50px;width:50px;transition:transform 4s;`;
-    //     console.log('transformCss', transformCss);
-    //     document.body.appendChild(element);
-    //     element.style.cssText += `transform:${transformCss};position:absolute;transition:transform 4s;left:${position[0]}px;top:${position[1]}px;height:50px;width:50px;`;
-    //   }
-    // }, [transform]);
 
     return (
       <div id={id} css={style}>
