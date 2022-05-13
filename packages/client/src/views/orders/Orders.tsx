@@ -36,13 +36,20 @@ type OrdersContentProps = {
   orders: GetOrdersQuery;
 };
 
+export type NodeType = {
+  id: string;
+  x: number;
+  y: number;
+};
+
 export const OrdersContent = (props: OrdersContentProps) => {
   const [currentOrder] = getLatestOrder(props?.orders.GetOrders);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [currentNodes, setCurrentNodes] = useState<
-    { id: string; x: number; y: number }[]
-  >([]);
+  const [currentNodes, setCurrentNodes] = useState<NodeType[]>([]);
   const [selectedProduct, setSelectedProduct] = useState('');
+  const [matchingNode, setMatchingNode] = useState<NodeType>();
+
+  console.log('currentNodes', currentNodes);
 
   const measuredRef = useCallback((node) => {
     if (node !== null) {
@@ -54,13 +61,20 @@ export const OrdersContent = (props: OrdersContentProps) => {
   }, []);
 
   useEffect(() => {
-    console.log(currentNodes.find((n) => n.id === selectedProduct));
+    const matchingNode = currentNodes.find(
+      (n) => n.id === selectedProduct,
+    );
+    console.log(matchingNode);
+    if (matchingNode) {
+      console.log('matchingNode', matchingNode);
+      setMatchingNode(matchingNode);
+    }
   }, [selectedProduct]);
 
   const handleCoolAnimation = (id: string) => {
     return setSelectedProduct(id);
   };
-
+  // console.log('selectedProduct', selectedProduct);
   return (
     <div className={styles.ordersContainer}>
       <BorderCard subTitle="Produkter" style={{ width: '400px' }}>
@@ -69,7 +83,9 @@ export const OrdersContent = (props: OrdersContentProps) => {
             id={item._id}
             key={item._id}
             item={item}
+            ref={measuredRef}
             setSelectedProduct={handleCoolAnimation}
+            transform={matchingNode}
           />
         ))}
       </BorderCard>

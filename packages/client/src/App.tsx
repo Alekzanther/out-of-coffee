@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 
 import { theme } from './theme';
 import { Header, Nav } from './components';
+import React, { MouseEventHandler, useState } from 'react';
 
 const Main = styled.div``;
 
@@ -17,6 +18,17 @@ const SnackBar = styled.div`
 `;
 
 function App() {
+  const [cursor, setCursor] = useState<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
+
+  const onMouseMove = (event: any): void => {
+    setCursor({ x: event.screenX, y: event.screenY });
+  };
+
+  // console.log('cursor', cursor);
+
   return (
     <ThemeProvider theme={theme}>
       <Main>

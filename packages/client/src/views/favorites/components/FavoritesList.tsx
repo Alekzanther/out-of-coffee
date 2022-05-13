@@ -8,7 +8,6 @@ import { listWrapperStyle } from '../styles';
 export const FavoritesList = () => {
   const { data } = useGetFavoriteItemsQuery();
   const favorites = data?.GetFavoriteItems || [];
-  console.log('rerender me', favorites);
 
   return (
     <BorderCard subTitle="Favoriter" style={{ width: '600px' }}>
@@ -19,6 +18,7 @@ export const FavoritesList = () => {
             <SimpleList
               title={item.name}
               // newItem={item.new}
+              id={item._id}
               key={index}
             />
           ))}
