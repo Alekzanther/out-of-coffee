@@ -592,15 +592,14 @@ export type DirectiveResolvers<ContextType = any> = {
   map?: MapDirectiveResolver<any, any, ContextType>;
 };
 
-import { ObjectId } from 'mongodb';
 export type BaseOrderDbObject = {
-  _id: ObjectId;
+  _id: string;
   active: boolean;
   items?: Maybe<Array<Maybe<ItemDbObject['_id']>>>;
 };
 
 export type ItemDbObject = {
-  _id: ObjectId;
+  _id: string;
   isFavorite?: Maybe<boolean>;
   name: string;
   productImageUrl?: Maybe<string>;
@@ -608,7 +607,7 @@ export type ItemDbObject = {
 };
 
 export type OrderDbObject = {
-  _id: ObjectId;
+  _id: string;
   creationDate: number;
   endDate: number;
   items: Array<ItemDbObject['_id']>;

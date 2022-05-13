@@ -5,11 +5,12 @@ import React, {
   useRef,
   useState,
   forwardRef,
-  useId,
 } from 'react';
+import { createPortal } from 'react-dom';
 import { css } from '@emotion/react';
 
 import { AnimatedButton } from '../animated-button';
+import { AnimationComponent } from '../../views/favorites/components/AnimationComponent';
 import New from '../../assets/new.svg';
 import Trashcan from '../../assets/trashcan.svg';
 import { Item, useSetFavoriteMutation } from 'generated/graphql';
@@ -76,14 +77,13 @@ export const ComplicatedListItem = forwardRef<
     setSelectedProduct,
     transform,
   }) => {
-    const [numberOfItems, setNumberOfItems] = useState(0);
+    const [images, setImages] = useState<any[]>([]);
     const [setFave] = useSetFavoriteMutation({
       variables: {
         id: item._id,
         value: Boolean(item.isFavorite),
       },
     });
-    const uniqueId = useId();
     const [animating, setAnimating] = useState(false);
 
     const [position, setPosition] = useState<string[]>([]);
@@ -97,29 +97,33 @@ export const ComplicatedListItem = forwardRef<
       }
     }, []);
 
-    useEffect(() => {
-      let timer: number;
-      if (animating) {
-        timer = setTimeout(() => {
-          const element = document.getElementById(`${id}dummy`);
-          if (element) {
-            element.style.cssText += `transition: opacity 3s; opacity: 0%;`;
-          }
-          setNumberOfItems((prev) => prev + 1);
-          return setAnimating(false);
-        }, 5000);
-      }
-      () => clearTimeout(timer);
-    }, [animating]);
-
     const setFavorite = () => {
       setFave();
+    };
+
+    const destroyYou = (id: any) => {
+      setImages((prev) => prev.filter((el) => el.id !== id));
     };
 
     const handleOnAdd = () => {
       setAnimating(true);
       setSelectedProduct(id);
+      const componentId = Math.floor(Math.random() * 1000000);
+      setImages((prev) => {
+        return [
+          ...prev,
+          {
+            position,
+            transform,
+            item,
+            destroyMe: destroyYou,
+            id: componentId,
+          },
+        ];
+      });
     };
+
+    console.log({ images });
 
     return (
       <div id={id} css={style}>
@@ -202,6 +206,9 @@ export const ComplicatedListItem = forwardRef<
             />
           </div>
         </div>
+        {images.map((img) => (
+          <AnimationComponent key={img.id} {...img} />
+        ))}
       </div>
     );
   },
