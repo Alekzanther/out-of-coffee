@@ -1,16 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  forwardRef,
-} from 'react';
-import { createPortal } from 'react-dom';
+import { useCallback, useState, forwardRef } from 'react';
 import { css } from '@emotion/react';
 
 import { AnimatedButton } from '../animated-button';
-import { AnimationComponent } from '../../views/favorites/components/AnimationComponent';
 import New from '../../assets/new.svg';
 import Trashcan from '../../assets/trashcan.svg';
 import { Item, useSetFavoriteMutation } from 'generated/graphql';
@@ -22,8 +14,11 @@ type ComplicatedListItemProps = {
   throwItInTheTrash?: () => void;
   incrementAndDecrementItems?: () => number;
   id: string;
-  setSelectedProduct: (id: string) => void;
-  transform: NodeType;
+  setSelectedProduct: (
+    id: string,
+    position: string[],
+    item: Item,
+  ) => void;
 };
 
 const style = css`
@@ -75,16 +70,13 @@ export const ComplicatedListItem = forwardRef<
     incrementAndDecrementItems,
     id,
     setSelectedProduct,
-    transform,
   }) => {
-    const [images, setImages] = useState<any[]>([]);
     const [setFave] = useSetFavoriteMutation({
       variables: {
         id: item._id,
         value: Boolean(item.isFavorite),
       },
     });
-    const [animating, setAnimating] = useState(false);
 
     const [position, setPosition] = useState<string[]>([]);
     // console.log('position', position);
@@ -101,29 +93,9 @@ export const ComplicatedListItem = forwardRef<
       setFave();
     };
 
-    const destroyYou = (id: any) => {
-      setImages((prev) => prev.filter((el) => el.id !== id));
-    };
-
     const handleOnAdd = () => {
-      setAnimating(true);
-      setSelectedProduct(id);
-      const componentId = Math.floor(Math.random() * 1000000);
-      setImages((prev) => {
-        return [
-          ...prev,
-          {
-            position,
-            transform,
-            item,
-            destroyMe: destroyYou,
-            id: componentId,
-          },
-        ];
-      });
+      setSelectedProduct(id, position, item);
     };
-
-    console.log({ images });
 
     return (
       <div id={id} css={style}>
@@ -206,9 +178,6 @@ export const ComplicatedListItem = forwardRef<
             />
           </div>
         </div>
-        {images.map((img) => (
-          <AnimationComponent key={img.id} {...img} />
-        ))}
       </div>
     );
   },

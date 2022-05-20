@@ -7,13 +7,15 @@ import {
 import {
   GetItemsQuery,
   GetOrdersQuery,
+  Item,
   useGetItemsQuery,
   useGetOrdersQuery,
 } from 'generated/graphql';
 import { getLatestOrder } from 'helpers/getLatestOrder';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import styles from './Orders.module.css';
+import { AnimationComponent } from 'views/favorites/components/AnimationComponent';
 
 export const Orders = () => {
   const { data: items, error: itemsError } = useGetItemsQuery();
@@ -46,8 +48,7 @@ export const OrdersContent = (props: OrdersContentProps) => {
   const [currentOrder] = getLatestOrder(props?.orders.GetOrders);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [currentNodes, setCurrentNodes] = useState<NodeType[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState('');
-  const [matchingNode, setMatchingNode] = useState<NodeType>();
+  const [images, setImages] = useState<any[]>([]);
 
   console.log('currentNodes', currentNodes);
 
@@ -60,20 +61,34 @@ export const OrdersContent = (props: OrdersContentProps) => {
     }
   }, []);
 
-  useEffect(() => {
-    const matchingNode = currentNodes.find(
-      (n) => n.id === selectedProduct,
-    );
-    console.log(matchingNode);
-    if (matchingNode) {
-      console.log('matchingNode', matchingNode);
-      setMatchingNode(matchingNode);
-    }
-  }, [selectedProduct]);
-
-  const handleCoolAnimation = (id: string) => {
-    return setSelectedProduct(id);
+  const destroyYou = (id: number) => {
+    setImages((prev) => prev.filter((el) => el.id !== id));
   };
+
+  const handleCoolAnimation = (
+    id: string,
+    position: string[],
+    item: Item,
+  ) => {
+    const componentId = Math.floor(Math.random() * 1000000);
+    const matchingNode = currentNodes.find((n) => n.id === id);
+
+    if (matchingNode) {
+      setImages((prev) => {
+        return [
+          ...prev,
+          {
+            position,
+            transform: matchingNode,
+            item,
+            destroyMe: destroyYou,
+            id: componentId,
+          },
+        ];
+      });
+    }
+  };
+
   // console.log('selectedProduct', selectedProduct);
   return (
     <div className={styles.ordersContainer}>
@@ -85,7 +100,6 @@ export const OrdersContent = (props: OrdersContentProps) => {
             item={item}
             ref={measuredRef}
             setSelectedProduct={handleCoolAnimation}
-            transform={matchingNode}
           />
         ))}
       </BorderCard>
@@ -111,6 +125,9 @@ export const OrdersContent = (props: OrdersContentProps) => {
         isOpen={dialogOpen}
         onDismiss={() => setDialogOpen(false)}
       />
+      {images.map((img) => (
+        <AnimationComponent key={img.id} {...img} />
+      ))}
     </div>
   );
 };

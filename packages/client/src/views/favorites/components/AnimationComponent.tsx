@@ -1,6 +1,6 @@
 import { Item } from 'generated/graphql';
 import { Portal } from 'react-portal';
-import React, { useEffect, useId, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRef } from 'react';
 
 type AnimationComponentProps = {
@@ -16,7 +16,6 @@ const ANIMATION_TIME = 5000;
 export const AnimationComponent = React.memo(
   (props: AnimationComponentProps) => {
     const { position, item, transform, destroyMe, id } = props;
-    const [haveRan, setHaveRan] = useState<boolean>(false);
     const [style, setStyle] = useState<React.CSSProperties>({
       position: 'absolute',
       left: `${position[0]}px`,
@@ -25,7 +24,6 @@ export const AnimationComponent = React.memo(
       width: '50px',
     });
     const ref = useRef(null);
-    const uniqueId = useId();
 
     useEffect(() => {
       const timer = setTimeout(() => {
@@ -49,7 +47,8 @@ export const AnimationComponent = React.memo(
     }, []);
 
     useEffect(() => {
-      if (transform && transform.id === item._id && !haveRan) {
+      console.log('transform', transform);
+      if (transform) {
         setStyle({
           transform: `translate(${
             transform.x - Number(position[0])
@@ -61,15 +60,14 @@ export const AnimationComponent = React.memo(
           width: '50px',
           height: '50px',
         });
-        setHaveRan(true);
       }
     }, [transform]);
 
     return (
-      <Portal key={uniqueId}>
+      <Portal key={props.id}>
         <img
           src={`${item.productImageUrl}`}
-          id={uniqueId}
+          id={props.id.toString()}
           style={style}
           ref={ref}
         />

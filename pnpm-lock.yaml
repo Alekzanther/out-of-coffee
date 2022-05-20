@@ -27,6 +27,7 @@ importers:
       '@types/node': ^12.20.36
       '@types/react': ^18.0.9
       '@types/react-dom': ^18.0.4
+      '@types/react-portal': ^4.0.4
       '@vitejs/plugin-react': ^1.2.0
       '@vitejs/plugin-react-refresh': ^1.3.6
       graphql: ^15.6.1
@@ -69,6 +70,7 @@ importers:
       '@graphql-codegen/typescript': 2.2.4_graphql@15.7.2
       '@graphql-codegen/typescript-operations': 2.1.8_graphql@15.7.2
       '@graphql-codegen/typescript-react-apollo': 3.1.6_graphql@15.7.2
+      '@types/react-portal': 4.0.4
 
   packages/server:
     specifiers:
@@ -2968,7 +2970,6 @@ packages:
 
   /@types/prop-types/15.7.4:
     resolution: {integrity: sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==}
-    dev: false
 
   /@types/q/1.5.5:
     resolution: {integrity: sha512-L28j2FcJfSZOnL1WBjDYp2vUHCeIFlyYI/53EwD/rKUBQ7MtUUfbQWiyKJGpcnv4/WgrhWsFKrcPstcAt/J0tQ==}
@@ -2986,17 +2987,21 @@ packages:
       '@types/react': 18.0.9
     dev: false
 
+  /@types/react-portal/4.0.4:
+    resolution: {integrity: sha512-ecVWngYHeSymq5XdrQOXRpIb9ay5SM4Stm/ur6+wc0Z+r05gafZ5SuMRbXKYsj4exNJa+4CTKK6J7qcTKm9K5g==}
+    dependencies:
+      '@types/react': 18.0.9
+    dev: true
+
   /@types/react/18.0.9:
     resolution: {integrity: sha512-9bjbg1hJHUm4De19L1cHiW0Jvx3geel6Qczhjd0qY5VKVE2X5+x77YxAepuCwVh4vrgZJdgEJw48zrhRIeF4Nw==}
     dependencies:
       '@types/prop-types': 15.7.4
       '@types/scheduler': 0.16.2
       csstype: 3.0.9
-    dev: false
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
-    dev: false
 
   /@types/serve-static/1.13.10:
     resolution: {integrity: sha512-nCkHGI4w7ZgAdNkrEu0bv+4xNV/XDqW+DydknebMOQwkpDGx8G+HTlj7R7ABI8i8nKxVw0wtKPi1D+lPOkh4YQ==}
@@ -3715,7 +3720,7 @@ packages:
       normalize-path: 3.0.0
       readdirp: 3.6.0
     optionalDependencies:
-      fsevents: nuget.antura.se/fsevents/2.3.2
+      fsevents: 2.3.2
     dev: true
 
   /chownr/1.1.4:
@@ -3993,7 +3998,6 @@ packages:
 
   /csstype/3.0.9:
     resolution: {integrity: sha512-rpw6JPxK6Rfg1zLOYCSwle2GFOOsnjmDYDaBwEcwoOg4qlsIVCN789VkBZDJAGi4T07gI4YSutR43t9Zz4Lzuw==}
-    dev: false
 
   /dataloader/2.0.0:
     resolution: {integrity: sha512-YzhyDAwA4TaQIhM5go+vCLmU0UikghC/t9DTQYZR2M/UvZ1MdOhPezSDZcjj9uqQJOMqjLcpWtyW2iNINdlatQ==}
@@ -4271,32 +4275,212 @@ packages:
       is-symbol: 1.0.4
     dev: false
 
+  /esbuild-android-64/0.14.25:
+    resolution: {integrity: sha512-L5vCUk7TzFbBnoESNoXjU3x9+/+7TDIE/1mTfy/erAfvZAqC+S3sp/Qa9wkypFMcFvN9FzvESkTlpeQDolREtQ==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [android]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-android-arm64/0.14.25:
+    resolution: {integrity: sha512-4jv5xPjM/qNm27T5j3ZEck0PvjgQtoMHnz4FzwF5zNP56PvY2CT0WStcAIl6jNlsuDdN63rk2HRBIsO6xFbcFw==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [android]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-darwin-64/0.14.25:
+    resolution: {integrity: sha512-TGp8tuudIxOyWd1+8aYPxQmC1ZQyvij/AfNBa35RubixD0zJ1vkKHVAzo0Zao1zcG6pNqiSyzfPto8vmg0s7oA==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-darwin-arm64/0.14.25:
+    resolution: {integrity: sha512-oTcDgdm0MDVEmw2DWu8BV68pYuImpFgvWREPErBZmNA4MYKGuBRaCiJqq6jZmBR1x+3y1DWCjez+5uLtuAm6mw==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-freebsd-64/0.14.25:
+    resolution: {integrity: sha512-ueAqbnMZ8arnuLH8tHwTCQYeptnHOUV7vA6px6j4zjjQwDx7TdP7kACPf3TLZLdJQ3CAD1XCvQ2sPhX+8tacvQ==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [freebsd]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-freebsd-arm64/0.14.25:
+    resolution: {integrity: sha512-+ZVWud2HKh+Ob6k/qiJWjBtUg4KmJGGmbvEXXW1SNKS7hW7HU+Zq2ZCcE1akFxOPkVB+EhOty/sSek30tkCYug==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [freebsd]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-linux-32/0.14.25:
+    resolution: {integrity: sha512-3OP/lwV3kCzEz45tobH9nj+uE4ubhGsfx+tn0L26WAGtUbmmcRpqy7XRG/qK7h1mClZ+eguIANcQntYMdYklfw==}
+    engines: {node: '>=12'}
+    cpu: [ia32]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-linux-64/0.14.25:
+    resolution: {integrity: sha512-+aKHdHZmX9qwVlQmu5xYXh7GsBFf4TWrePgeJTalhXHOG7NNuUwoHmketGiZEoNsWyyqwH9rE5BC+iwcLY30Ug==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-linux-arm/0.14.25:
+    resolution: {integrity: sha512-aTLcE2VBoLydL943REcAcgnDi3bHtmULSXWLbjtBdtykRatJVSxKMjK9YlBXUZC4/YcNQfH7AxwVeQr9fNxPhw==}
+    engines: {node: '>=12'}
+    cpu: [arm]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-linux-arm64/0.14.25:
+    resolution: {integrity: sha512-UxfenPx/wSZx55gScCImPtXekvZQLI2GW3qe5dtlmU7luiqhp5GWPzGeQEbD3yN3xg/pHc671m5bma5Ns7lBHw==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-linux-mips64le/0.14.25:
+    resolution: {integrity: sha512-wLWYyqVfYx9Ur6eU5RT92yJVsaBGi5RdkoWqRHOqcJ38Kn60QMlcghsKeWfe9jcYut8LangYZ98xO1LxIoSXrQ==}
+    engines: {node: '>=12'}
+    cpu: [mips64el]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-linux-ppc64le/0.14.25:
+    resolution: {integrity: sha512-0dR6Csl6Zas3g4p9ULckEl8Mo8IInJh33VCJ3eaV1hj9+MHGdmDOakYMN8MZP9/5nl+NU/0ygpd14cWgy8uqRw==}
+    engines: {node: '>=12'}
+    cpu: [ppc64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-linux-riscv64/0.14.25:
+    resolution: {integrity: sha512-J4d20HDmTrgvhR0bdkDhvvJGaikH3LzXQnNaseo8rcw9Yqby9A90gKUmWpfwqLVNRILvNnAmKLfBjCKU9ajg8w==}
+    engines: {node: '>=12'}
+    cpu: [riscv64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-linux-s390x/0.14.25:
+    resolution: {integrity: sha512-YI2d5V6nTE73ZnhEKQD7MtsPs1EtUZJ3obS21oxQxGbbRw1G+PtJKjNyur+3t6nzHP9oTg6GHQ3S3hOLLmbDIQ==}
+    engines: {node: '>=12'}
+    cpu: [s390x]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-netbsd-64/0.14.25:
+    resolution: {integrity: sha512-TKIVgNWLUOkr+Exrye70XTEE1lJjdQXdM4tAXRzfHE9iBA7LXWcNtVIuSnphTqpanPzTDFarF0yqq4kpbC6miA==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [netbsd]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-openbsd-64/0.14.25:
+    resolution: {integrity: sha512-QgFJ37A15D7NIXBTYEqz29+uw3nNBOIyog+3kFidANn6kjw0GHZ0lEYQn+cwjyzu94WobR+fes7cTl/ZYlHb1A==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [openbsd]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-sunos-64/0.14.25:
+    resolution: {integrity: sha512-rmWfjUItYIVlqr5EnTH1+GCxXiBOC42WBZ3w++qh7n2cS9Xo0lO5pGSG2N+huOU2fX5L+6YUuJ78/vOYvefeFw==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [sunos]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-windows-32/0.14.25:
+    resolution: {integrity: sha512-HGAxVUofl3iUIz9W10Y9XKtD0bNsK9fBXv1D55N/ljNvkrAYcGB8YCm0v7DjlwtyS6ws3dkdQyXadbxkbzaKOA==}
+    engines: {node: '>=12'}
+    cpu: [ia32]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-windows-64/0.14.25:
+    resolution: {integrity: sha512-TirEohRkfWU9hXLgoDxzhMQD1g8I2mOqvdQF2RS9E/wbkORTAqJHyh7wqGRCQAwNzdNXdg3JAyhQ9/177AadWA==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /esbuild-windows-arm64/0.14.25:
+    resolution: {integrity: sha512-4ype9ERiI45rSh+R8qUoBtaj6kJvUOI7oVLhKqPEpcF4Pa5PpT3hm/mXAyotJHREkHpM87PAJcA442mLnbtlNA==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
   /esbuild/0.14.25:
     resolution: {integrity: sha512-4JHEIOMNFvK09ziiL+iVmldIhLbn49V4NAVo888tcGFKedEZY/Y8YapfStJ6zSE23tzYPKxqKwQBnQoIO0BI/Q==}
     engines: {node: '>=12'}
     hasBin: true
     requiresBuild: true
     optionalDependencies:
-      esbuild-android-64: nuget.antura.se/esbuild-android-64/0.14.25
-      esbuild-android-arm64: nuget.antura.se/esbuild-android-arm64/0.14.25
-      esbuild-darwin-64: nuget.antura.se/esbuild-darwin-64/0.14.25
-      esbuild-darwin-arm64: nuget.antura.se/esbuild-darwin-arm64/0.14.25
-      esbuild-freebsd-64: nuget.antura.se/esbuild-freebsd-64/0.14.25
-      esbuild-freebsd-arm64: nuget.antura.se/esbuild-freebsd-arm64/0.14.25
-      esbuild-linux-32: nuget.antura.se/esbuild-linux-32/0.14.25
-      esbuild-linux-64: nuget.antura.se/esbuild-linux-64/0.14.25
-      esbuild-linux-arm: nuget.antura.se/esbuild-linux-arm/0.14.25
-      esbuild-linux-arm64: nuget.antura.se/esbuild-linux-arm64/0.14.25
-      esbuild-linux-mips64le: nuget.antura.se/esbuild-linux-mips64le/0.14.25
-      esbuild-linux-ppc64le: nuget.antura.se/esbuild-linux-ppc64le/0.14.25
-      esbuild-linux-riscv64: nuget.antura.se/esbuild-linux-riscv64/0.14.25
-      esbuild-linux-s390x: nuget.antura.se/esbuild-linux-s390x/0.14.25
-      esbuild-netbsd-64: nuget.antura.se/esbuild-netbsd-64/0.14.25
-      esbuild-openbsd-64: nuget.antura.se/esbuild-openbsd-64/0.14.25
-      esbuild-sunos-64: nuget.antura.se/esbuild-sunos-64/0.14.25
-      esbuild-windows-32: nuget.antura.se/esbuild-windows-32/0.14.25
-      esbuild-windows-64: nuget.antura.se/esbuild-windows-64/0.14.25
-      esbuild-windows-arm64: nuget.antura.se/esbuild-windows-arm64/0.14.25
+      esbuild-android-64: 0.14.25
+      esbuild-android-arm64: 0.14.25
+      esbuild-darwin-64: 0.14.25
+      esbuild-darwin-arm64: 0.14.25
+      esbuild-freebsd-64: 0.14.25
+      esbuild-freebsd-arm64: 0.14.25
+      esbuild-linux-32: 0.14.25
+      esbuild-linux-64: 0.14.25
+      esbuild-linux-arm: 0.14.25
+      esbuild-linux-arm64: 0.14.25
+      esbuild-linux-mips64le: 0.14.25
+      esbuild-linux-ppc64le: 0.14.25
+      esbuild-linux-riscv64: 0.14.25
+      esbuild-linux-s390x: 0.14.25
+      esbuild-netbsd-64: 0.14.25
+      esbuild-openbsd-64: 0.14.25
+      esbuild-sunos-64: 0.14.25
+      esbuild-windows-32: 0.14.25
+      esbuild-windows-64: 0.14.25
+      esbuild-windows-arm64: 0.14.25
     dev: false
 
   /escalade/3.1.1:
@@ -4556,6 +4740,13 @@ packages:
 
   /fs.realpath/1.0.0:
     resolution: {integrity: sha1-FQStJSMVjKpA20onh8sBQRmU6k8=}
+
+  /fsevents/2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+    requiresBuild: true
+    optional: true
 
   /function-bind/1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
@@ -6475,7 +6666,7 @@ packages:
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
-      fsevents: nuget.antura.se/fsevents/2.3.2
+      fsevents: 2.3.2
     dev: false
 
   /run-async/2.4.1:
@@ -7241,7 +7432,7 @@ packages:
       resolve: 1.22.0
       rollup: 2.69.0
     optionalDependencies:
-      fsevents: nuget.antura.se/fsevents/2.3.2
+      fsevents: 2.3.2
     dev: false
 
   /web-vitals/1.1.2:
@@ -7471,235 +7662,6 @@ packages:
   /zen-observable/0.8.15:
     resolution: {integrity: sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ==}
     dev: false
-
-  nuget.antura.se/esbuild-android-64/0.14.25:
-    resolution: {integrity: sha1-1TLTjLX+CuRRZ8419LvHhMY2vkA=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-android-64/-/esbuild-android-64-0.14.25.tgz}
-    name: esbuild-android-64
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [x64]
-    os: [android]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-android-arm64/0.14.25:
-    resolution: {integrity: sha1-nFuzNmqr/RShxybTaXi3lEHfy24=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-android-arm64/-/esbuild-android-arm64-0.14.25.tgz}
-    name: esbuild-android-arm64
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [arm64]
-    os: [android]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-darwin-64/0.14.25:
-    resolution: {integrity: sha1-BdzbbYhPQnA5/+5ekv+XUn5Wwm0=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-darwin-64/-/esbuild-darwin-64-0.14.25.tgz}
-    name: esbuild-darwin-64
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [x64]
-    os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-darwin-arm64/0.14.25:
-    resolution: {integrity: sha1-KOCA2k6gz+lJgHHn+AYEmMruGpU=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-darwin-arm64/-/esbuild-darwin-arm64-0.14.25.tgz}
-    name: esbuild-darwin-arm64
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [arm64]
-    os: [darwin]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-freebsd-64/0.14.25:
-    resolution: {integrity: sha1-IA02ZKO5Rbyf3LpzYUtJoR69HPo=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-freebsd-64/-/esbuild-freebsd-64-0.14.25.tgz}
-    name: esbuild-freebsd-64
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [x64]
-    os: [freebsd]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-freebsd-arm64/0.14.25:
-    resolution: {integrity: sha1-YksIxdpgE73DEqqiPE/0CVgPXDw=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-freebsd-arm64/-/esbuild-freebsd-arm64-0.14.25.tgz}
-    name: esbuild-freebsd-arm64
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [arm64]
-    os: [freebsd]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-linux-32/0.14.25:
-    resolution: {integrity: sha1-Ajjll+sLYKoGx+mPzLv9a7mg1sU=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-linux-32/-/esbuild-linux-32-0.14.25.tgz}
-    name: esbuild-linux-32
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [ia32]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-linux-64/0.14.25:
-    resolution: {integrity: sha1-iouM9H384SfIWOcSKdmjhagsYug=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-linux-64/-/esbuild-linux-64-0.14.25.tgz}
-    name: esbuild-linux-64
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [x64]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-linux-arm/0.14.25:
-    resolution: {integrity: sha1-A0vRjpMQufAQyJ+Q738FcGaJYAs=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-linux-arm/-/esbuild-linux-arm-0.14.25.tgz}
-    name: esbuild-linux-arm
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [arm]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-linux-arm64/0.14.25:
-    resolution: {integrity: sha1-eslDcUGKJkC6QTvBcAqu3rJ5TlI=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-linux-arm64/-/esbuild-linux-arm64-0.14.25.tgz}
-    name: esbuild-linux-arm64
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [arm64]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-linux-mips64le/0.14.25:
-    resolution: {integrity: sha1-BfmKjPa1eOq2tOawqwlPN1MJNPQ=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-linux-mips64le/-/esbuild-linux-mips64le-0.14.25.tgz}
-    name: esbuild-linux-mips64le
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [mips64el]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-linux-ppc64le/0.14.25:
-    resolution: {integrity: sha1-Rv0K3Y2FNWeEOdepwodq0gBC2VI=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-linux-ppc64le/-/esbuild-linux-ppc64le-0.14.25.tgz}
-    name: esbuild-linux-ppc64le
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [ppc64]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-linux-riscv64/0.14.25:
-    resolution: {integrity: sha1-6i6Ybw8+Xfc8Y1E13XeAUXNPxgU=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-linux-riscv64/-/esbuild-linux-riscv64-0.14.25.tgz}
-    name: esbuild-linux-riscv64
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [riscv64]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-linux-s390x/0.14.25:
-    resolution: {integrity: sha1-7+iUhumhsVCJJQSAduPzpmmKpqM=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-linux-s390x/-/esbuild-linux-s390x-0.14.25.tgz}
-    name: esbuild-linux-s390x
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [s390x]
-    os: [linux]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-netbsd-64/0.14.25:
-    resolution: {integrity: sha1-Q5/ifY7jtYh1Ae5jmI6F+SAQfbY=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-netbsd-64/-/esbuild-netbsd-64-0.14.25.tgz}
-    name: esbuild-netbsd-64
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [x64]
-    os: [netbsd]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-openbsd-64/0.14.25:
-    resolution: {integrity: sha1-Mev2FqrfbmBnRGnyuSzskigNmTA=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-openbsd-64/-/esbuild-openbsd-64-0.14.25.tgz}
-    name: esbuild-openbsd-64
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [x64]
-    os: [openbsd]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-sunos-64/0.14.25:
-    resolution: {integrity: sha1-gV5Pk210lwKSpjzP1Xkf5eNWn18=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-sunos-64/-/esbuild-sunos-64-0.14.25.tgz}
-    name: esbuild-sunos-64
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [x64]
-    os: [sunos]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-windows-32/0.14.25:
-    resolution: {integrity: sha1-GJ4U3yR48sGTyGloqx+1Thzqr9I=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-windows-32/-/esbuild-windows-32-0.14.25.tgz}
-    name: esbuild-windows-32
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [ia32]
-    os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-windows-64/0.14.25:
-    resolution: {integrity: sha1-PV+/3DhWhQu0dDkpnjtg3Ri+ER8=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-windows-64/-/esbuild-windows-64-0.14.25.tgz}
-    name: esbuild-windows-64
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [x64]
-    os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/esbuild-windows-arm64/0.14.25:
-    resolution: {integrity: sha1-iyQ8u62Khs+YaX2pzLiMBd8u9Fg=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/esbuild-windows-arm64/-/esbuild-windows-arm64-0.14.25.tgz}
-    name: esbuild-windows-arm64
-    version: 0.14.25
-    engines: {node: '>=12'}
-    cpu: [arm64]
-    os: [win32]
-    requiresBuild: true
-    dev: false
-    optional: true
-
-  nuget.antura.se/fsevents/2.3.2:
-    resolution: {integrity: sha1-ilJveLj99GI7cJ4Ll1xSwkwC/Ro=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/fsevents/-/fsevents-2.3.2.tgz}
-    name: fsevents
-    version: 2.3.2
-    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
-    os: [darwin]
-    requiresBuild: true
-    optional: true
 
   nuget.antura.se/js-tokens/4.0.0:
     resolution: {integrity: sha1-GSA/tZmR35jjoocFDUZHzerzJJk=, registry: http://nuget/npm/antura-npms, tarball: http://nuget.antura.se/npm/antura-npms/js-tokens/-/js-tokens-4.0.0.tgz}

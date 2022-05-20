@@ -1,9 +1,11 @@
+import { ReactNode } from 'react';
 import styles from './BorderCard.module.css';
 
 interface Props {
   title?: string;
   style?: React.CSSProperties;
   subTitle: string;
+  children: ReactNode;
 }
 
 export const BorderCard: React.FC<Props> = ({

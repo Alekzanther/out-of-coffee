@@ -62,6 +62,7 @@
     "@graphql-codegen/cli": "2.2.1",
     "@graphql-codegen/typescript": "2.2.4",
     "@graphql-codegen/typescript-operations": "2.1.8",
-    "@graphql-codegen/typescript-react-apollo": "3.1.6"
+    "@graphql-codegen/typescript-react-apollo": "3.1.6",
+    "@types/react-portal": "^4.0.4"
   }
 }
