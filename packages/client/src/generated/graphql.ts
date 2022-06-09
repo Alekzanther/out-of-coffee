@@ -44,10 +44,16 @@ export type Item = {
 
 export type Mutation = {
   __typename: 'Mutation';
+  AddItemToOrder: Order;
   CreateItem: Item;
   CreateOrder: Order;
   SetBaseOrder: BaseOrder;
   SetFavorite: Item;
+};
+
+
+export type MutationAddItemToOrderArgs = {
+  item: Scalars['String'];
 };
 
 
@@ -77,6 +83,7 @@ export type NewBaseOrder = {
 };
 
 export type NewItem = {
+  _id: Scalars['String'];
   name: Scalars['String'];
   productUrl: Scalars['String'];
 };
@@ -316,6 +323,17 @@ export enum __TypeKind {
   NonNull = 'NON_NULL'
 }
 
+export type ItemFragmentFragment = { __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined };
+
+export type OrderFragmentFragment = { __typename: 'Order', _id: string, status: OrderStatus, creationDate: number, endDate: number, items: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined }> };
+
+export type AddItemToOrderMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type AddItemToOrderMutation = { __typename: 'Mutation', AddItemToOrder: { __typename: 'Order', _id: string, status: OrderStatus, creationDate: number, endDate: number, items: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined }> } };
+
 export type SetFavoriteMutationVariables = Exact<{
   id: Scalars['ID'];
   value?: Maybe<Scalars['Boolean']>;
@@ -346,8 +364,6 @@ export type GetItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetItemsQuery = { __typename: 'Query', GetItems: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined, isFavorite?: boolean | null | undefined }> };
 
-export type ItemFragmentFragment = { __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined };
-
 export type GetOrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -367,6 +383,51 @@ export const ItemFragmentFragmentDoc = gql`
   __typename
 }
     `;
+export const OrderFragmentFragmentDoc = gql`
+    fragment OrderFragment on Order {
+  _id
+  status
+  items {
+    ...ItemFragment
+  }
+  creationDate
+  endDate
+  __typename
+}
+    ${ItemFragmentFragmentDoc}`;
+export const AddItemToOrderDocument = gql`
+    mutation addItemToOrder($id: String!) {
+  AddItemToOrder(item: $id) {
+    ...OrderFragment
+  }
+}
+    ${OrderFragmentFragmentDoc}`;
+export type AddItemToOrderMutationFn = Apollo.MutationFunction<AddItemToOrderMutation, AddItemToOrderMutationVariables>;
+
+/**
+ * __useAddItemToOrderMutation__
+ *
+ * To run a mutation, you first call `useAddItemToOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddItemToOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addItemToOrderMutation, { data, loading, error }] = useAddItemToOrderMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAddItemToOrderMutation(baseOptions?: Apollo.MutationHookOptions<AddItemToOrderMutation, AddItemToOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddItemToOrderMutation, AddItemToOrderMutationVariables>(AddItemToOrderDocument, options);
+      }
+export type AddItemToOrderMutationHookResult = ReturnType<typeof useAddItemToOrderMutation>;
+export type AddItemToOrderMutationResult = Apollo.MutationResult<AddItemToOrderMutation>;
+export type AddItemToOrderMutationOptions = Apollo.BaseMutationOptions<AddItemToOrderMutation, AddItemToOrderMutationVariables>;
 export const SetFavoriteDocument = gql`
     mutation setFavorite($id: ID!, $value: Boolean) {
   SetFavorite(id: $id, value: $value) {

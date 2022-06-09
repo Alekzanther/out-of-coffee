@@ -11,16 +11,17 @@ type Order @entity {
   endDate: Float! @column
 }
 
-input NewOrder {
-  items: [String]!
-}
-
 type Query {
   GetCurrentOrder(id: ID!): Order!
   GetOrder(id: ID!): Order!
   GetOrders: [Order!]!
 }
 
+input NewOrder {
+  items: [String]!
+}
+
 type Mutation {
   CreateOrder(newOrder: NewOrder!): Order!
+  AddItemToOrder(item: String!): Order!
 }

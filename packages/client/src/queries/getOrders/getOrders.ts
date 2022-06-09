@@ -1,14 +1,5 @@
 import { gql } from '@apollo/client';
-
-const itemFragment = gql`
-  fragment ItemFragment on Item {
-    _id
-    name
-    productUrl
-    productImageUrl
-    __typename
-  }
-`;
+import { itemFragment } from '../../fragments/Item';
 
 export const getOrdersQuery = gql`
   query getOrders {

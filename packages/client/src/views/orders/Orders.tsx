@@ -8,6 +8,7 @@ import {
   GetItemsQuery,
   GetOrdersQuery,
   Item,
+  useAddItemToOrderMutation,
   useGetItemsQuery,
   useGetOrdersQuery,
 } from 'generated/graphql';
@@ -16,6 +17,8 @@ import { useCallback, useState } from 'react';
 
 import styles from './Orders.module.css';
 import { AnimationComponent } from 'views/favorites/components/AnimationComponent';
+import { addItemToOrderMutation } from 'mutations/addItemToOrder/addItemToOrder';
+import { aggregateItems } from 'helpers/aggregateItems';
 
 export const Orders = () => {
   const { data: items, error: itemsError } = useGetItemsQuery();
@@ -44,11 +47,21 @@ export type NodeType = {
   y: number;
 };
 
+interface Image {
+  position: string[];
+  transform: NodeType;
+  item: Item;
+  destroyMe: (id: number) => void;
+  id: number;
+}
+
 export const OrdersContent = (props: OrdersContentProps) => {
   const [currentOrder] = getLatestOrder(props?.orders.GetOrders);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [currentNodes, setCurrentNodes] = useState<NodeType[]>([]);
-  const [images, setImages] = useState<any[]>([]);
+  const [images, setImages] = useState<Image[]>([]);
+  const [addItemToOrderMutation, { data, loading, error }] =
+    useAddItemToOrderMutation();
 
   console.log('currentNodes', currentNodes);
 
@@ -73,6 +86,8 @@ export const OrdersContent = (props: OrdersContentProps) => {
     const componentId = Math.floor(Math.random() * 1000000);
     const matchingNode = currentNodes.find((n) => n.id === id);
 
+    addItemToOrderMutation({ variables: { id } });
+
     if (matchingNode) {
       setImages((prev) => {
         return [
@@ -86,10 +101,11 @@ export const OrdersContent = (props: OrdersContentProps) => {
           },
         ];
       });
+    } else {
     }
   };
+  const items = aggregateItems(currentOrder.items);
 
-  // console.log('selectedProduct', selectedProduct);
   return (
     <div className={styles.ordersContainer}>
       <BorderCard subTitle="Produkter" style={{ width: '400px' }}>
@@ -98,7 +114,6 @@ export const OrdersContent = (props: OrdersContentProps) => {
             id={item._id}
             key={item._id}
             item={item}
-            ref={measuredRef}
             setSelectedProduct={handleCoolAnimation}
           />
         ))}
@@ -111,12 +126,13 @@ export const OrdersContent = (props: OrdersContentProps) => {
         subTitle={new Date(currentOrder.endDate).toDateString()}
         style={{ width: '400px' }}
       >
-        {currentOrder.items.map((item) => (
+        {items.map((item) => (
           <SimpleList
             ref={measuredRef}
             id={item._id}
             key={item._id}
             title={item.name}
+            amount={item.amount}
           />
         ))}
         <br />

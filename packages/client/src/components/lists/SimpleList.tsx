@@ -7,6 +7,7 @@ type SimpleListItem = {
   title: string;
   newItem?: boolean;
   id: string;
+  amount: number;
 };
 
 const style = css`
@@ -22,7 +23,7 @@ const style = css`
 `;
 
 export const SimpleList = forwardRef<HTMLDivElement, SimpleListItem>(
-  ({ title, newItem, id }, ref) => {
+  ({ title, newItem, id, amount }, ref) => {
     return (
       <div ref={ref} id={id} css={style}>
         {newItem ? <New /> : null}
@@ -35,6 +36,7 @@ export const SimpleList = forwardRef<HTMLDivElement, SimpleListItem>(
         >
           {title}
         </p>
+        <p>{amount}</p>
       </div>
     );
   },

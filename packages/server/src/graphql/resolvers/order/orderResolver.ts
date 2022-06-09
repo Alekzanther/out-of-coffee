@@ -60,6 +60,7 @@ export const orderResolver: Resolvers = {
         const invalidId = checkIfIdsAreValid(
           newOrder.items as string[],
         );
+
         if (invalidId) {
           throw new Error(
             `Supplied ID ${invalidId} is not a valid ObjectId`,
@@ -81,6 +82,28 @@ export const orderResolver: Resolvers = {
         const populatedOrder: Order = await order.populate('items');
 
         return populatedOrder;
+      } catch (error) {
+        throw new Error(`Unable to save new order: ${error}`);
+      }
+    },
+    AddItemToOrder: async (_, { item }): Promise<Order> => {
+      try {
+        const order: Order = await OrderModel.findOneAndUpdate(
+          {
+            status: 'PENDING',
+          },
+          {
+            $push: { items: item },
+          },
+          { new: true },
+        ).populate('items');
+
+        console.log('updatedOrder', order);
+        if (!order) {
+          throw new Error('Could not find the current order');
+        }
+
+        return order;
       } catch (error) {
         throw new Error(`Unable to save new order: ${error}`);
       }
