@@ -24,4 +24,5 @@ input NewOrder {
 type Mutation {
   CreateOrder(newOrder: NewOrder!): Order!
   AddItemToOrder(item: String!): Order!
+  RemoveItemFromOrder(item: String!): Order!
 }

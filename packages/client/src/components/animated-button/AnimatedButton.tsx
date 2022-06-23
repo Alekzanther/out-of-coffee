@@ -1,3 +1,4 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 const kinds = {
   plusToCheck: 'a',
@@ -43,7 +44,7 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = (
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
       <StyledButton
         onClick={handleClick}
         isFavourited={props.isToggled || false}

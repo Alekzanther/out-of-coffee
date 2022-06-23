@@ -46,6 +46,7 @@ export type Mutation = {
   AddItemToOrder: Order;
   CreateItem: Item;
   CreateOrder: Order;
+  RemoveItemFromOrder: Order;
   SetBaseOrder: BaseOrder;
   SetFavorite: Item;
 };
@@ -63,6 +64,11 @@ export type MutationCreateItemArgs = {
 
 export type MutationCreateOrderArgs = {
   newOrder: NewOrder;
+};
+
+
+export type MutationRemoveItemFromOrderArgs = {
+  item: Scalars['String'];
 };
 
 
@@ -315,6 +321,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   AddItemToOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationAddItemToOrderArgs, 'item'>>;
   CreateItem?: Resolver<ResolversTypes['Item'], ParentType, ContextType, RequireFields<MutationCreateItemArgs, 'newItem'>>;
   CreateOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationCreateOrderArgs, 'newOrder'>>;
+  RemoveItemFromOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationRemoveItemFromOrderArgs, 'item'>>;
   SetBaseOrder?: Resolver<ResolversTypes['BaseOrder'], ParentType, ContextType, RequireFields<MutationSetBaseOrderArgs, 'newBaseOrder'>>;
   SetFavorite?: Resolver<ResolversTypes['Item'], ParentType, ContextType, RequireFields<MutationSetFavoriteArgs, 'id'>>;
 };

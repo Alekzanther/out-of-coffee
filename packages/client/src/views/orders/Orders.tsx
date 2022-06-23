@@ -11,13 +11,13 @@ import {
   useAddItemToOrderMutation,
   useGetItemsQuery,
   useGetOrdersQuery,
+  useRemoveItemFromOrderMutation,
 } from 'generated/graphql';
 import { getLatestOrder } from 'helpers/getLatestOrder';
 import { useCallback, useState } from 'react';
 
 import styles from './Orders.module.css';
 import { AnimationComponent } from 'views/favorites/components/AnimationComponent';
-import { addItemToOrderMutation } from 'mutations/addItemToOrder/addItemToOrder';
 import { aggregateItems } from 'helpers/aggregateItems';
 
 export const Orders = () => {
@@ -60,12 +60,26 @@ export const OrdersContent = (props: OrdersContentProps) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [currentNodes, setCurrentNodes] = useState<NodeType[]>([]);
   const [images, setImages] = useState<Image[]>([]);
-  const [addItemToOrderMutation, { data, loading, error }] =
-    useAddItemToOrderMutation();
+  const [
+    addItemToOrderMutation,
+    {
+      data: addItemData,
+      loading: addItemLoading,
+      error: addItemError,
+    },
+  ] = useAddItemToOrderMutation();
+  const [
+    removeItemFromOrderMutation,
+    {
+      data: removeItemData,
+      loading: removeItemLoading,
+      error: removeItemError,
+    },
+  ] = useRemoveItemFromOrderMutation();
 
   console.log('currentNodes', currentNodes);
 
-  const measuredRef = useCallback((node) => {
+  const measuredRef = useCallback((node: HTMLDivElement) => {
     if (node !== null) {
       const x = node.getBoundingClientRect().x;
       const y = node.getBoundingClientRect().y;
@@ -78,11 +92,7 @@ export const OrdersContent = (props: OrdersContentProps) => {
     setImages((prev) => prev.filter((el) => el.id !== id));
   };
 
-  const handleCoolAnimation = (
-    id: string,
-    position: string[],
-    item: Item,
-  ) => {
+  const addItem = (id: string, position: string[], item: Item) => {
     const componentId = Math.floor(Math.random() * 1000000);
     const matchingNode = currentNodes.find((n) => n.id === id);
 
@@ -104,6 +114,11 @@ export const OrdersContent = (props: OrdersContentProps) => {
     } else {
     }
   };
+
+  const removeItem = (id: string) => {
+    removeItemFromOrderMutation({ variables: { id } });
+  };
+
   const items = aggregateItems(currentOrder.items);
 
   return (
@@ -114,7 +129,7 @@ export const OrdersContent = (props: OrdersContentProps) => {
             id={item._id}
             key={item._id}
             item={item}
-            setSelectedProduct={handleCoolAnimation}
+            setSelectedProduct={addItem}
           />
         ))}
       </BorderCard>
@@ -133,6 +148,9 @@ export const OrdersContent = (props: OrdersContentProps) => {
             key={item._id}
             title={item.name}
             amount={item.amount}
+            name={item.name}
+            productImageUrl={item.productImageUrl}
+            removeItem={removeItem}
           />
         ))}
         <br />

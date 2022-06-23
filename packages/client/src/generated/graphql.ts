@@ -47,6 +47,7 @@ export type Mutation = {
   AddItemToOrder: Order;
   CreateItem: Item;
   CreateOrder: Order;
+  RemoveItemFromOrder: Order;
   SetBaseOrder: BaseOrder;
   SetFavorite: Item;
 };
@@ -64,6 +65,11 @@ export type MutationCreateItemArgs = {
 
 export type MutationCreateOrderArgs = {
   newOrder: NewOrder;
+};
+
+
+export type MutationRemoveItemFromOrderArgs = {
+  item: Scalars['String'];
 };
 
 
@@ -334,6 +340,13 @@ export type AddItemToOrderMutationVariables = Exact<{
 
 export type AddItemToOrderMutation = { __typename: 'Mutation', AddItemToOrder: { __typename: 'Order', _id: string, status: OrderStatus, creationDate: number, endDate: number, items: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined }> } };
 
+export type RemoveItemFromOrderMutationVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type RemoveItemFromOrderMutation = { __typename: 'Mutation', RemoveItemFromOrder: { __typename: 'Order', _id: string, status: OrderStatus, creationDate: number, endDate: number, items: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined }> } };
+
 export type SetFavoriteMutationVariables = Exact<{
   id: Scalars['ID'];
   value?: Maybe<Scalars['Boolean']>;
@@ -428,6 +441,39 @@ export function useAddItemToOrderMutation(baseOptions?: Apollo.MutationHookOptio
 export type AddItemToOrderMutationHookResult = ReturnType<typeof useAddItemToOrderMutation>;
 export type AddItemToOrderMutationResult = Apollo.MutationResult<AddItemToOrderMutation>;
 export type AddItemToOrderMutationOptions = Apollo.BaseMutationOptions<AddItemToOrderMutation, AddItemToOrderMutationVariables>;
+export const RemoveItemFromOrderDocument = gql`
+    mutation removeItemFromOrder($id: String!) {
+  RemoveItemFromOrder(item: $id) {
+    ...OrderFragment
+  }
+}
+    ${OrderFragmentFragmentDoc}`;
+export type RemoveItemFromOrderMutationFn = Apollo.MutationFunction<RemoveItemFromOrderMutation, RemoveItemFromOrderMutationVariables>;
+
+/**
+ * __useRemoveItemFromOrderMutation__
+ *
+ * To run a mutation, you first call `useRemoveItemFromOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveItemFromOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeItemFromOrderMutation, { data, loading, error }] = useRemoveItemFromOrderMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useRemoveItemFromOrderMutation(baseOptions?: Apollo.MutationHookOptions<RemoveItemFromOrderMutation, RemoveItemFromOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveItemFromOrderMutation, RemoveItemFromOrderMutationVariables>(RemoveItemFromOrderDocument, options);
+      }
+export type RemoveItemFromOrderMutationHookResult = ReturnType<typeof useRemoveItemFromOrderMutation>;
+export type RemoveItemFromOrderMutationResult = Apollo.MutationResult<RemoveItemFromOrderMutation>;
+export type RemoveItemFromOrderMutationOptions = Apollo.BaseMutationOptions<RemoveItemFromOrderMutation, RemoveItemFromOrderMutationVariables>;
 export const SetFavoriteDocument = gql`
     mutation setFavorite($id: ID!, $value: Boolean) {
   SetFavorite(id: $id, value: $value) {

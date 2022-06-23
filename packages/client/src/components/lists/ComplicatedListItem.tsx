@@ -77,7 +77,7 @@ export const ComplicatedListItem = ({
   const [position, setPosition] = useState<string[]>([]);
   // console.log('position', position);
 
-  const measuredRef = useCallback((node) => {
+  const measuredRef = useCallback((node: HTMLImageElement) => {
     if (node !== null) {
       const x = node.getBoundingClientRect().x;
       const y = node.getBoundingClientRect().y;

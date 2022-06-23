@@ -98,11 +98,44 @@ export const orderResolver: Resolvers = {
           { new: true },
         ).populate('items');
 
-        console.log('updatedOrder', order);
         if (!order) {
           throw new Error('Could not find the current order');
         }
 
+        return order;
+      } catch (error) {
+        throw new Error(`Unable to save new order: ${error}`);
+      }
+    },
+    RemoveItemFromOrder: async (_, { item }): Promise<Order> => {
+      try {
+        const order = await OrderModel.findOne({
+          status: 'PENDING',
+        }).lean();
+
+        if (order) {
+          const itemIndex = order.items.findIndex(
+            (i) => i.toString() === item,
+          );
+
+          if (itemIndex !== undefined && itemIndex > -1) {
+            order.items.splice(itemIndex, 1);
+          }
+
+          const newOrder: Order = await OrderModel.findOneAndUpdate(
+            {
+              status: 'PENDING',
+            },
+            order,
+            { new: true },
+          ).populate('items');
+          return newOrder;
+        }
+
+        console.log('updatedOrder', order);
+        if (!order) {
+          throw new Error('Could not find the current order');
+        }
         return order;
       } catch (error) {
         throw new Error(`Unable to save new order: ${error}`);
