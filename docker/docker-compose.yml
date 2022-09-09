@@ -23,6 +23,6 @@ services:
       # network: host
     restart: always
     environment:
-      VITE_REACT_APP_GRAPHQL_ENDPOINT: 'localhost:4443'
+      NEXT_PUBLIC: 'localhost:4443'
 volumes:
   db_data:

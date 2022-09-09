@@ -1,1 +1,0 @@
-export { Favorites } from './components';
