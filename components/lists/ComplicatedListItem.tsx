@@ -9,7 +9,7 @@ import styled, { css } from 'styled-components';
 import {
   Item,
   useSetFavoriteMutation,
-} from '../../apollo/generated/graphql';
+} from '../../apollo-shit/generated/client-graphql';
 
 type ComplicatedListItemProps = {
   item: Item;

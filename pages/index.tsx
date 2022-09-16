@@ -1,17 +1,17 @@
-import { initializeApollo } from '../apollo/client';
+import { initializeApollo } from '../apollo-two/client';
 
 const Index = () => {
   return <div>hej</div>;
 };
 
-export async function getStaticProps() {
-  const apolloClient = initializeApollo();
+// export async function getStaticProps() {
+//   const apolloClient = initializeApollo();
 
-  return {
-    props: {
-      initialApolloState: {},
-    },
-  };
-}
+//   return {
+//     props: {
+//       initialApolloState: {},
+//     },
+//   };
+// }
 
 export default Index;

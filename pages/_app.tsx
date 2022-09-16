@@ -3,10 +3,10 @@ import { GlobalStyles } from '../globalStyles';
 import './index.css';
 
 import { theme } from '../theme';
-import { Header, Nav } from '../components';
+import { Header } from '../components';
 import React, { MouseEventHandler, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { useApollo } from '../apollo/client';
+import { useApollo } from '../apollo-two/client';
 import { ApolloProvider } from '@apollo/client';
 
 // const Main = styled.div``;
@@ -30,7 +30,7 @@ function App({ Component, pageProps }) {
     setCursor({ x: event.screenX, y: event.screenY });
   };
 
-  const apolloClient = useApollo(pageProps.initialApolloState);
+  const apolloClient = useApollo({});
 
   return (
     <ApolloProvider client={apolloClient}>
@@ -41,8 +41,7 @@ function App({ Component, pageProps }) {
             <p>Beställ innan torsdag 25 september kl 12:00! 🎉</p>
           </div>
           <div>
-            <a href="/orders">orders</a>
-            <a href="/favorites">favorites</a>
+            <a href="/items">items</a>
             <a href="/">hem</a>
           </div>
           <Header>Müsl.io</Header>
