@@ -3,10 +3,10 @@ import { GlobalStyles } from '../globalStyles';
 import './index.css';
 
 import { theme } from '../theme';
-import { Header } from '../components';
+// import { Header } from '../components';
 import React, { MouseEventHandler, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { useApollo } from '../apollo-two/client';
+import { useApollo } from '../apollo-client/client';
 import { ApolloProvider } from '@apollo/client';
 
 // const Main = styled.div``;
@@ -21,15 +21,6 @@ import { ApolloProvider } from '@apollo/client';
 // `;
 
 function App({ Component, pageProps }) {
-  const [cursor, setCursor] = useState<{ x: number; y: number }>({
-    x: 0,
-    y: 0,
-  });
-
-  const onMouseMove = (event: any): void => {
-    setCursor({ x: event.screenX, y: event.screenY });
-  };
-
   const apolloClient = useApollo({});
 
   return (
@@ -44,7 +35,7 @@ function App({ Component, pageProps }) {
             <a href="/items">items</a>
             <a href="/">hem</a>
           </div>
-          <Header>Müsl.io</Header>
+          <h1>Müsl.io</h1>
           <Component {...pageProps} />
         </div>
       </ThemeProvider>

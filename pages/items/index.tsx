@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import { getItemsQuery } from '../../apollo-two/queries/getItems/getItems';
+import { getItemsQuery } from '../../apollo-client/queries/getItems/getItems';
 
 const Items = () => {
   const { data, loading } = useQuery(getItemsQuery);
@@ -9,7 +9,7 @@ const Items = () => {
     return (
       <div>
         <ul>
-          {data.items.map((item) => (
+          {data.GetItems.map((item) => (
             <li>{item.name}</li>
           ))}
         </ul>

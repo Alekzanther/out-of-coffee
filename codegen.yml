@@ -2,9 +2,8 @@ overwrite: true
 schema: 'http://localhost:3000/api/graphql'
 documents:
   [
-    './apollo/queries/**/*.ts',
-    './apollo/mutations/**/*.ts',
-    './apollo/fragments/*.ts',
+    './apollo-client/queries/**/*.ts',
+    './apollo-client/fragments/**/*.ts',
   ]
 generates:
   apollo/generated/client-graphql.ts:
@@ -12,13 +11,6 @@ generates:
       - typescript
       - typescript-operations
       - typescript-react-apollo
-  apollo/generated/server-graphql.ts:
-    plugins:
-      - typescript
-      - typescript-resolvers
-      - typescript-mongodb:
-          config:
-          objectIdType: ObjectId#mongodb
 config:
   withHooks: true
   withMutationFn: true

@@ -1,4 +1,4 @@
-import { initializeApollo } from '../apollo-two/client';
+import { initializeApollo } from '../apollo-client/client';
 
 const Index = () => {
   return <div>hej</div>;
