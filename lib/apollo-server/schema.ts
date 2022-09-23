@@ -15,6 +15,7 @@ const typesLoader = loadFilesSync(
 );
 
 const typeDefs = mergeTypeDefs(typesLoader);
+
 const resolvers = mergeResolvers([
   baseOrderResolver,
   itemResolver,
@@ -25,12 +26,3 @@ export const schema = makeExecutableSchema({
   typeDefs: [DIRECTIVES, typeDefs],
   resolvers,
 });
-
-// import { makeExecutableSchema } from '@graphql-tools/schema';
-// import { typeDefs } from './type-defs';
-// import { resolvers } from './resolvers-no';
-
-// export const schema = makeExecutableSchema({
-//   typeDefs,
-//   resolvers,
-// });

@@ -16,15 +16,4 @@ export const config = {
   },
 };
 
-// const handler = async (res, req) => {
-//   await connectToDb();
-//   await startServer;
-//   return await apolloServer.createHandler({ path: '/api/graphql' })(
-//     req,
-//     res,
-//   );
-// };
-
-// export default handler;
-
 export default apolloServer.createHandler({ path: '/api/graphql' });
