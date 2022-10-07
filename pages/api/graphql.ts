@@ -4,9 +4,11 @@ import connectToDb from '../../lib/db/db';
 
 const apolloServer = new ApolloServer({
   schema,
-  context: async ({ req }) => {
+  context: async ({ req, res }) => {
     await connectToDb();
-    return req;
+    console.log('req', req);
+    console.log('res', res);
+    return { req, res };
   },
 });
 

@@ -14,7 +14,9 @@ const typesLoader = loadFilesSync(
   ),
 );
 
-const typeDefs = mergeTypeDefs(typesLoader);
+const typeDefs = mergeTypeDefs(typesLoader, {
+  ignoreFieldConflicts: true,
+});
 
 const resolvers = mergeResolvers([
   baseOrderResolver,

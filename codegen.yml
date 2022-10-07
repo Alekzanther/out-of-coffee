@@ -11,6 +11,11 @@ generates:
       - typescript
       - typescript-operations
       - typescript-react-apollo
+  apollo/generated/server-graphql.ts:
+    plugins:
+      - typescript
+      - typescript-resolvers
+      - typescript-mongodb
 config:
   withHooks: true
   withMutationFn: true
