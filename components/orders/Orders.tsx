@@ -14,7 +14,7 @@ import { getLatestOrder } from '../../helpers/getLatestOrder';
 import { AnimationComponent } from '../AnimationComponent';
 
 import styles from './Orders.module.css';
-import { ComplicatedListItem } from '../ComplicatedListItem/ComplicatedListItem';
+import { ComplicatedListItem } from '../ComplicatedListItem';
 import { BorderCard } from '../BorderCard/BorderCard';
 import { SimpleList } from '../SimpleList';
 

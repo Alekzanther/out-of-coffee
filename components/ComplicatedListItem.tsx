@@ -1,6 +1,6 @@
 import { useCallback, useState, forwardRef } from 'react';
 
-import { AnimatedButton } from '../AnimatedButton';
+import { AnimatedButton } from './AnimatedButton';
 import New from '../../assets/new.svg';
 import Trashcan from '../../assets/trashcan.svg';
 // import { Item, useSetFavoriteMutation } from 'generated/graphql';
@@ -9,7 +9,7 @@ import styled, { css } from 'styled-components';
 import {
   Item,
   useSetFavoriteMutation,
-} from '../../apollo-generated/client-graphql';
+} from '../apollo-generated/client-graphql';
 
 type ComplicatedListItemProps = {
   item: Item;
