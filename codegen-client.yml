@@ -6,16 +6,11 @@ documents:
     './apollo-client/fragments/**/*.ts',
   ]
 generates:
-  apollo/generated/client-graphql.ts:
+  apollo-generated/client-graphql.ts:
     plugins:
       - typescript
       - typescript-operations
       - typescript-react-apollo
-  apollo/generated/server-graphql.ts:
-    plugins:
-      - typescript
-      - typescript-resolvers
-      - typescript-mongodb
 config:
   withHooks: true
   withMutationFn: true

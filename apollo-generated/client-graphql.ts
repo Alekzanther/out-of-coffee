@@ -1,10 +1,11 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -15,8 +16,8 @@ export type Scalars = {
 };
 
 export type AdditionalEntityFields = {
-  path?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
+  path?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
 };
 
 export type BaseOrder = {
@@ -80,7 +81,7 @@ export type MutationSetBaseOrderArgs = {
 
 export type MutationSetFavoriteArgs = {
   id: Scalars['ID'];
-  value?: Maybe<Scalars['Boolean']>;
+  value?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type NewBaseOrder = {
@@ -95,7 +96,7 @@ export type NewItem = {
 };
 
 export type NewOrder = {
-  items: Array<Maybe<Scalars['String']>>;
+  items: Array<InputMaybe<Scalars['String']>>;
 };
 
 export type Order = {
@@ -138,8 +139,6 @@ export type QueryGetOrderArgs = {
   id: Scalars['ID'];
 };
 
-export type Response = BaseOrder | ErrorResponse | Item | Order;
-
 /**
  * A Directive provides a way to describe alternate runtime execution and type validation behavior in a GraphQL document.
  *
@@ -161,7 +160,7 @@ export type __Directive = {
  * In some cases, you need to provide options to alter GraphQL's execution behavior in ways field arguments will not suffice, such as conditionally including or skipping a field. Directives provide this by describing additional information to the executor.
  */
 export type __DirectiveArgsArgs = {
-  includeDeprecated?: Maybe<Scalars['Boolean']>;
+  includeDeprecated?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies. */
@@ -229,7 +228,7 @@ export type __Field = {
 
 /** Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type. */
 export type __FieldArgsArgs = {
-  includeDeprecated?: Maybe<Scalars['Boolean']>;
+  includeDeprecated?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value. */
@@ -286,7 +285,7 @@ export type __Type = {
  * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByUrl`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
  */
 export type __TypeFieldsArgs = {
-  includeDeprecated?: Maybe<Scalars['Boolean']>;
+  includeDeprecated?: InputMaybe<Scalars['Boolean']>;
 };
 
 
@@ -296,7 +295,7 @@ export type __TypeFieldsArgs = {
  * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByUrl`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
  */
 export type __TypeEnumValuesArgs = {
-  includeDeprecated?: Maybe<Scalars['Boolean']>;
+  includeDeprecated?: InputMaybe<Scalars['Boolean']>;
 };
 
 
@@ -306,7 +305,7 @@ export type __TypeEnumValuesArgs = {
  * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByUrl`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
  */
 export type __TypeInputFieldsArgs = {
-  includeDeprecated?: Maybe<Scalars['Boolean']>;
+  includeDeprecated?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** An enum describing what kind of type a given `__Type` is. */
@@ -329,34 +328,34 @@ export enum __TypeKind {
   NonNull = 'NON_NULL'
 }
 
-export type ItemFragmentFragment = { __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined };
+export type ItemFragmentFragment = { __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null };
 
 export type GetBaseOrderQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBaseOrderQuery = { __typename: 'Query', GetBaseOrder: { __typename: 'BaseOrder', _id: string, active: boolean, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined } | null | undefined> | null | undefined } };
+export type GetBaseOrderQuery = { __typename: 'Query', GetBaseOrder: { __typename: 'BaseOrder', _id: string, active: boolean, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null } | null> | null } };
 
 export type GetFavoriteItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetFavoriteItemsQuery = { __typename: 'Query', GetFavoriteItems: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined, isFavorite?: boolean | null | undefined }> };
+export type GetFavoriteItemsQuery = { __typename: 'Query', GetFavoriteItems: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null, isFavorite?: boolean | null }> };
 
 export type GetItemQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type GetItemQuery = { __typename: 'Query', GetItem: { __typename: 'Item', name: string, productUrl: string, productImageUrl?: string | null | undefined, isFavorite?: boolean | null | undefined } };
+export type GetItemQuery = { __typename: 'Query', GetItem: { __typename: 'Item', name: string, productUrl: string, productImageUrl?: string | null, isFavorite?: boolean | null } };
 
 export type GetItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetItemsQuery = { __typename: 'Query', GetItems: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined, isFavorite?: boolean | null | undefined }> };
+export type GetItemsQuery = { __typename: 'Query', GetItems: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null, isFavorite?: boolean | null }> };
 
 export type GetOrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetOrdersQuery = { __typename: 'Query', GetOrders: Array<{ __typename: 'Order', _id: string, status: OrderStatus, creationDate: number, endDate: number, items: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null | undefined }> }> };
+export type GetOrdersQuery = { __typename: 'Query', GetOrders: Array<{ __typename: 'Order', _id: string, status: OrderStatus, creationDate: number, endDate: number, items: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null }> }> };
 
 export type GetSchemaQueryVariables = Exact<{ [key: string]: never; }>;
 

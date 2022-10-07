@@ -1,4 +1,4 @@
-import { Item } from 'generated/graphql';
+import { Item } from '../apollo-generated/client-graphql';
 
 export type ExtendedItem = Item & {
   amount: number;

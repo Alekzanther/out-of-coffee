@@ -3,15 +3,17 @@ import { isValidObjectId } from 'mongoose';
 import { checkIfIdsAreValid } from '../../../../helpers/helpers';
 import { Order as OrderModel } from '../../models/Order/order';
 
+import { Order } from '../../../../apollo-generated/server-graphql';
+
 enum StatusOrder {
   Pending = 'PENDING',
 }
 
 export const orderResolver: Resolvers = {
   Query: {
-    GetOrders: async (): Promise<any[]> => {
+    GetOrders: async (): Promise<Order[]> => {
       try {
-        const orders: any[] = await OrderModel.find().populate(
+        const orders: Order[] = await OrderModel.find().populate(
           'items',
         );
 
@@ -24,10 +26,10 @@ export const orderResolver: Resolvers = {
         throw new Error('No Orders');
       }
     },
-    GetCurrentOrder: async (_, { id }): Promise<any> => {
+    GetCurrentOrder: async (_, { id }): Promise<Order> => {
       const order = (await OrderModel.findById(id).populate(
         'items',
-      )) as any;
+      )) as Order;
 
       if (!order) {
         throw new Error('No order');
@@ -35,7 +37,7 @@ export const orderResolver: Resolvers = {
 
       return order;
     },
-    GetOrder: async (_, { id }): Promise<any> => {
+    GetOrder: async (_, { id }): Promise<Order> => {
       const isIdValid = isValidObjectId(id);
       if (!isIdValid) {
         throw new Error(
@@ -49,13 +51,13 @@ export const orderResolver: Resolvers = {
         throw new Error('No order found with supplied ID.');
       }
 
-      const populatedOrder: any = await order.populate('items');
+      const populatedOrder: Order = await order.populate('items');
 
       return populatedOrder;
     },
   },
   Mutation: {
-    CreateOrder: async (_, { newOrder }): Promise<any> => {
+    CreateOrder: async (_, { newOrder }): Promise<Order> => {
       try {
         const invalidId = checkIfIdsAreValid(
           newOrder.items as string[],
@@ -79,16 +81,16 @@ export const orderResolver: Resolvers = {
           throw new Error('Unable to save new order');
         }
 
-        const populatedOrder: any = await order.populate('items');
+        const populatedOrder: Order = await order.populate('items');
 
         return populatedOrder;
       } catch (error) {
         throw new Error(`Unable to save new order: ${error}`);
       }
     },
-    AddItemToOrder: async (_, { item }): Promise<any> => {
+    AddItemToOrder: async (_, { item }): Promise<Order> => {
       try {
-        const order: any = await OrderModel.findOneAndUpdate(
+        const order: Order[] = await OrderModel.findOneAndUpdate(
           {
             status: 'PENDING',
           },
@@ -101,13 +103,14 @@ export const orderResolver: Resolvers = {
         if (!order) {
           throw new Error('Could not find the current order');
         }
-
-        return order;
+        // TODO: Fix this monstrosity of selection. I don't think pending can be unique in theory (but in practice)
+        // or findOneAndUpdate always returns an array now? Idk
+        return order[0];
       } catch (error) {
         throw new Error(`Unable to save new order: ${error}`);
       }
     },
-    RemoveItemFromOrder: async (_, { item }): Promise<any> => {
+    RemoveItemFromOrder: async (_, { item }): Promise<Order> => {
       try {
         const order = await OrderModel.findOne({
           status: 'PENDING',
@@ -122,14 +125,16 @@ export const orderResolver: Resolvers = {
             order.items.splice(itemIndex, 1);
           }
 
-          const newOrder: any = await OrderModel.findOneAndUpdate(
+          const newOrder: Order[] = await OrderModel.findOneAndUpdate(
             {
               status: 'PENDING',
             },
             order,
             { new: true },
           ).populate('items');
-          return newOrder;
+          // TODO: Fix this monstrosity of selection. I don't think pending can be unique in theory (but in practice)
+          // or findOneAndUpdate always returns an array now? Idk
+          return newOrder[0];
         }
 
         console.log('updatedOrder', order);

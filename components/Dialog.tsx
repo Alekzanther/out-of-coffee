@@ -4,6 +4,7 @@ import {
 } from '@reach/dialog';
 import { VisuallyHidden } from '@reach/visually-hidden';
 import styled from 'styled-components';
+import { BorderCard } from './BorderCard/BorderCard';
 
 interface DialogProps extends DialogOverlayProps {}
 

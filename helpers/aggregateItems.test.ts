@@ -1,3 +1,4 @@
+import { Item } from '../apollo-generated/client-graphql';
 import { aggregateItems } from './aggregateItems';
 
 describe('aggregateItems()', () => {
@@ -21,7 +22,7 @@ describe('aggregateItems()', () => {
         productUrl: 'url',
         productImageUrl: 'imageurl',
       },
-    ];
+    ] as Item[];
     const result = [
       {
         _id: '1',

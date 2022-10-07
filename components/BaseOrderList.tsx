@@ -2,14 +2,12 @@ import styled, { css } from 'styled-components';
 import {
   useGetBaseOrderQuery,
   Item,
-} from '../apollo/generated/client-graphql';
-import { BorderCard } from '../../../components';
-import { getAmountOfItemsInOrder } from '../../../helpers/getAmountOfItemsInOrder';
+} from '../apollo-generated/client-graphql';
+import { getAmountOfItemsInOrder } from '../helpers/getAmountOfItemsInOrder';
+import { BorderCard } from './BorderCard/BorderCard';
 // import { BorderCard } from 'components';
 // import { Item, useGetBaseOrderQuery } from 'generated/graphql';
 // import { getAmountOfItemsInOrder } from 'helpers/getAmountOfItemsInOrder';
-
-import { listWrapperStyle } from '../styles';
 
 const ListItemStyle = styled.div(
   () => css`

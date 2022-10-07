@@ -3,10 +3,12 @@ import { checkIfIdsAreValid } from '../../../../helpers/helpers';
 
 import { BaseOrder as BaseOrderModel } from '../../models/BaseOrder/base_order';
 
+import { BaseOrder } from '../../../../apollo-generated/server-graphql';
+
 export const baseOrderResolver: Resolvers = {
   Query: {
     // TODO: Base order should maybe be unique?
-    GetBaseOrder: async () => {
+    GetBaseOrder: async (): Promise<BaseOrder> => {
       const baseOrder = await BaseOrderModel.findOne({
         active: true,
       });
@@ -15,14 +17,14 @@ export const baseOrderResolver: Resolvers = {
         throw new Error('Unable to get BaseOrder');
       }
 
-      const populatedBaseOrder: any = await baseOrder.populate(
+      const populatedBaseOrder: BaseOrder = await baseOrder.populate(
         'items',
       );
       return populatedBaseOrder;
     },
   },
   Mutation: {
-    SetBaseOrder: async (_, { newBaseOrder }) => {
+    SetBaseOrder: async (_, { newBaseOrder }): Promise<BaseOrder> => {
       try {
         const currentBaseOrder = await BaseOrderModel.findOne({
           active: true,

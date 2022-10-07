@@ -1,4 +1,4 @@
-import { Item } from 'generated/graphql';
+import { Item } from '../apollo-generated/client-graphql';
 
 type AggregatedItem = {
   productUrl: string;

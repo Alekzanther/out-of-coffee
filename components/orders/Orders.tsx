@@ -7,18 +7,16 @@ import {
   Item,
   useAddItemToOrderMutation,
   useRemoveItemFromOrderMutation,
-} from '../../apollo/generated/client-graphql';
-import {
-  BorderCard,
-  ComplicatedListItem,
-  SimpleList,
-} from '../../components';
-import { Dialog } from '../../components/dialog';
+} from '../../apollo-generated/client-graphql';
+import { Dialog } from '../Dialog';
 import { aggregateItems } from '../../helpers/aggregateItems';
 import { getLatestOrder } from '../../helpers/getLatestOrder';
-import { AnimationComponent } from '../favorites/components/AnimationComponent';
+import { AnimationComponent } from '../AnimationComponent';
 
 import styles from './Orders.module.css';
+import { ComplicatedListItem } from '../ComplicatedListItem/ComplicatedListItem';
+import { BorderCard } from '../BorderCard/BorderCard';
+import { SimpleList } from '../SimpleList';
 
 export const Orders = () => {
   const { data: items, error: itemsError } = useGetItemsQuery();

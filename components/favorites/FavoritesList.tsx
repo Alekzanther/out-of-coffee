@@ -1,6 +1,6 @@
-import { useGetFavoriteItemsQuery } from '../../apollo/generated/client-graphql';
-import { BorderCard, SimpleList } from '../../../components';
-import { listWrapperStyle } from '../styles';
+import { useGetFavoriteItemsQuery } from '../../apollo-generated/client-graphql';
+import { BorderCard } from '../BorderCard/BorderCard';
+import { SimpleList } from '../SimpleList';
 
 export const FavoritesList = () => {
   const { data } = useGetFavoriteItemsQuery();

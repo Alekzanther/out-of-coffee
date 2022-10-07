@@ -4,17 +4,19 @@ import { isValidObjectId } from 'mongoose';
 // import { scrapeProductUrl } from '../../../packages/server/lib/scraper';
 import { Item as ItemModel } from '../../models/Item/item';
 
+import { Item } from '../../../../apollo-generated/server-graphql';
+
 export const itemResolver: Resolvers = {
   Query: {
     GetItems: async () => {
-      const items: any[] = await ItemModel.find();
+      const items: Item[] = await ItemModel.find();
       if (items.length === 0) {
         throw new Error('No items found');
       }
       return items;
     },
-    GetFavoriteItems: async (): Promise<any[]> => {
-      const items: any[] = await ItemModel.find({
+    GetFavoriteItems: async (): Promise<Item[]> => {
+      const items: Item[] = await ItemModel.find({
         isFavorite: true,
       });
       if (items.length === 0) {
@@ -22,7 +24,7 @@ export const itemResolver: Resolvers = {
       }
       return items;
     },
-    GetItem: async (_, { id }): Promise<any> => {
+    GetItem: async (_, { id }): Promise<Item> => {
       const isIdValid = isValidObjectId(id);
 
       if (!isIdValid) {
@@ -39,7 +41,7 @@ export const itemResolver: Resolvers = {
     },
   },
   Mutation: {
-    CreateItem: async (_, { newItem }): Promise<any> => {
+    CreateItem: async (_, { newItem }): Promise<Item> => {
       try {
         // const productImageUrl = await scrapeProductUrl(
         //   newItem.productUrl,
@@ -61,7 +63,7 @@ export const itemResolver: Resolvers = {
         throw new Error(`Unable to create a new Item: ${error}`);
       }
     },
-    SetFavorite: async (_, { id, value }): Promise<any> => {
+    SetFavorite: async (_, { id, value }): Promise<Item> => {
       try {
         const result = await ItemModel.findOneAndUpdate(
           {

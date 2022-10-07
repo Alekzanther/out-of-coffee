@@ -1,6 +1,4 @@
-import { wrapperStyle } from '../styles';
-
-import { BaseOrderList } from './BaseOrderList';
+import { BaseOrderList } from '../BaseOrderList';
 import { FavoritesList } from './FavoritesList';
 
 const Favorites = () => {

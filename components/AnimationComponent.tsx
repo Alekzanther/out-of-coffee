@@ -1,4 +1,4 @@
-import { Item } from '../apollo/generated/client-graphql';
+import { Item } from '../apollo-generated/client-graphql';
 import { Portal } from 'react-portal';
 import React, { useEffect, useState } from 'react';
 import { useRef } from 'react';

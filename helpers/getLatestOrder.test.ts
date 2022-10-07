@@ -1,4 +1,7 @@
-import { Order, OrderStatus } from 'generated/graphql';
+import {
+  Order,
+  OrderStatus,
+} from '../apollo-generated/client-graphql';
 import { getLatestOrder } from './getLatestOrder';
 
 describe('getLatestOrder', () => {
