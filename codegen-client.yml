@@ -4,6 +4,7 @@ documents:
   [
     './apollo-client/queries/**/*.ts',
     './apollo-client/fragments/**/*.ts',
+    './apollo-client/mutations/**/*.ts',
   ]
 generates:
   apollo-generated/client-graphql.ts:
