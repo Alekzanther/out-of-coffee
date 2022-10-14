@@ -8,6 +8,7 @@ import React, { MouseEventHandler, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { useApollo } from '../apollo-client/client';
 import { ApolloProvider } from '@apollo/client';
+import Link from 'next/link';
 
 // const Main = styled.div``;
 
@@ -32,7 +33,8 @@ function App({ Component, pageProps }) {
             <p>Beställ innan torsdag 25 september kl 12:00! 🎉</p>
           </div>
           <div>
-            <a href="/items">items</a>
+            <Link href="/items">items</Link>
+            <Link href="/favorites">favorites</Link>
             <a href="/">hem</a>
           </div>
           <h1>Müsl.io</h1>
