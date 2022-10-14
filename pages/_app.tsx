@@ -35,7 +35,7 @@ function App({ Component, pageProps }) {
           <div>
             <Link href="/products">items</Link>
             <Link href="/favorites">favorites</Link>
-            <a href="/">hem</a>
+            <Link href="/">hem</Link>
           </div>
           <h1>Müsl.io</h1>
           <Component {...pageProps} />
