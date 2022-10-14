@@ -90,7 +90,6 @@ export type NewBaseOrder = {
 };
 
 export type NewItem = {
-  _id: Scalars['String'];
   name: Scalars['String'];
   productUrl: Scalars['String'];
 };
@@ -122,11 +121,6 @@ export type Query = {
   GetItems: Array<Item>;
   GetOrder: Order;
   GetOrders: Array<Order>;
-};
-
-
-export type QueryGetCurrentOrderArgs = {
-  id: Scalars['ID'];
 };
 
 
@@ -359,6 +353,11 @@ export type GetBaseOrderQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetBaseOrderQuery = { __typename: 'Query', GetBaseOrder: { __typename: 'BaseOrder', _id: string, active: boolean, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null } | null> | null } };
 
+export type GetCurrentOrderQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCurrentOrderQuery = { __typename: 'Query', GetCurrentOrder: { __typename: 'Order', _id: string, items: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null }> } };
+
 export type GetFavoriteItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -553,6 +552,47 @@ export function useGetBaseOrderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetBaseOrderQueryHookResult = ReturnType<typeof useGetBaseOrderQuery>;
 export type GetBaseOrderLazyQueryHookResult = ReturnType<typeof useGetBaseOrderLazyQuery>;
 export type GetBaseOrderQueryResult = Apollo.QueryResult<GetBaseOrderQuery, GetBaseOrderQueryVariables>;
+export const GetCurrentOrderDocument = gql`
+    query getCurrentOrder {
+  GetCurrentOrder {
+    _id
+    items {
+      _id
+      name
+      productUrl
+      productImageUrl
+      __typename
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCurrentOrderQuery__
+ *
+ * To run a query within a React component, call `useGetCurrentOrderQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCurrentOrderQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCurrentOrderQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCurrentOrderQuery(baseOptions?: Apollo.QueryHookOptions<GetCurrentOrderQuery, GetCurrentOrderQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCurrentOrderQuery, GetCurrentOrderQueryVariables>(GetCurrentOrderDocument, options);
+      }
+export function useGetCurrentOrderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCurrentOrderQuery, GetCurrentOrderQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCurrentOrderQuery, GetCurrentOrderQueryVariables>(GetCurrentOrderDocument, options);
+        }
+export type GetCurrentOrderQueryHookResult = ReturnType<typeof useGetCurrentOrderQuery>;
+export type GetCurrentOrderLazyQueryHookResult = ReturnType<typeof useGetCurrentOrderLazyQuery>;
+export type GetCurrentOrderQueryResult = Apollo.QueryResult<GetCurrentOrderQuery, GetCurrentOrderQueryVariables>;
 export const GetFavoriteItemsDocument = gql`
     query getFavoriteItems {
   GetFavoriteItems {

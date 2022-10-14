@@ -84,7 +84,6 @@ export type NewBaseOrder = {
 };
 
 export type NewItem = {
-  _id: Scalars['String'];
   name: Scalars['String'];
   productUrl: Scalars['String'];
 };
@@ -116,11 +115,6 @@ export type Query = {
   GetItems: Array<Item>;
   GetOrder: Order;
   GetOrders: Array<Order>;
-};
-
-
-export type QueryGetCurrentOrderArgs = {
-  id: Scalars['ID'];
 };
 
 
@@ -334,7 +328,7 @@ export type OrderResolvers<ContextType = any, ParentType extends ResolversParent
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   GetBaseOrder?: Resolver<ResolversTypes['BaseOrder'], ParentType, ContextType>;
-  GetCurrentOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<QueryGetCurrentOrderArgs, 'id'>>;
+  GetCurrentOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType>;
   GetFavoriteItems?: Resolver<Array<ResolversTypes['Item']>, ParentType, ContextType>;
   GetItem?: Resolver<ResolversTypes['Item'], ParentType, ContextType, RequireFields<QueryGetItemArgs, 'id'>>;
   GetItems?: Resolver<Array<ResolversTypes['Item']>, ParentType, ContextType>;
