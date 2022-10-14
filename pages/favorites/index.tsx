@@ -6,9 +6,12 @@ import { useQuery } from "@apollo/client";
 import { getFavoriteItemsQuery } from "../../apollo-client/queries/getFavoriteItems/getFavoriteItems";
 
 const Favorites = () => {
-  const { data, loading } = useQuery(getFavoriteItemsQuery);
+  const { data, error, loading } = useQuery(getFavoriteItemsQuery);
   console.log('data', data);
   console.log('loading', loading);
+  if (error) { 
+    return <div>{error.message}</div>;
+  }
   if (data) {
     return (
       <div>
