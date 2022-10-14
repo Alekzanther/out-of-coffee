@@ -64,6 +64,7 @@ export const itemResolver: Resolvers = {
         throw new Error(`Unable to create a new Item: ${error}`);
       }
     },
+    // TODO: REMOVE VALUE, CHANGE NAME TO TOGGLE
     SetFavorite: async (_, { id, value }): Promise<Item> => {
       let previousValue;
       if (value !== undefined) {
