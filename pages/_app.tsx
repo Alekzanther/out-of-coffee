@@ -33,9 +33,9 @@ function App({ Component, pageProps }) {
             <p>Beställ innan torsdag 25 september kl 12:00! 🎉</p>
           </div>
           <div>
-            <Link href="/products">items</Link>
-            <Link href="/favorites">favorites</Link>
-            <Link href="/">hem</Link>
+            <Link href="/products">Items</Link>
+            <Link href="/favorites">Favorites</Link>
+            <Link href="/">Hem</Link>
           </div>
           <h1>Müsl.io</h1>
           <Component {...pageProps} />
