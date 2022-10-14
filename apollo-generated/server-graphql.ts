@@ -85,6 +85,7 @@ export type NewBaseOrder = {
 
 export type NewItem = {
   name: Scalars['String'];
+  productImageUrl?: InputMaybe<Scalars['String']>;
   productUrl: Scalars['String'];
 };
 

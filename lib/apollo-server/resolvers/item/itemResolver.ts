@@ -55,7 +55,8 @@ export const itemResolver: Resolvers = {
         const item = await ItemModel.create({
           name: newItem?.name,
           productUrl: newItem?.productUrl,
-          productImageUrl: '',
+          productImageUrl: newItem.productImageUrl || '',
+          isFavorite: false,
         });
 
         return item;
@@ -63,14 +64,31 @@ export const itemResolver: Resolvers = {
         throw new Error(`Unable to create a new Item: ${error}`);
       }
     },
+    // TODO: REMOVE VALUE, CHANGE NAME TO TOGGLE
     SetFavorite: async (_, { id, value }): Promise<Item> => {
+      let previousValue;
+      if (value !== undefined) {
+        previousValue = value;
+      } else {
+        try {
+          const result: Item = await ItemModel.findOneAndUpdate({
+            _id: id,
+          });
+          if (!result) {
+            throw new Error('SetFavorite failed: no item found');
+          }
+          previousValue = result.isFavorite;
+        } catch (error) {
+          throw new Error(`Unable to find item: ${error}`);
+        }
+      }
       try {
         const result = await ItemModel.findOneAndUpdate(
           {
             _id: id,
           },
           {
-            $set: { isFavorite: !value },
+            $set: { isFavorite: !previousValue },
           },
           { new: true },
         );
@@ -79,7 +97,9 @@ export const itemResolver: Resolvers = {
         }
         return result;
       } catch (error) {
-        throw new Error(`Unable to create a new Item: ${error}`);
+        throw new Error(
+          `Unable to complete request findOneAndUpdate: ${error}`,
+        );
       }
     },
   },

@@ -9,6 +9,7 @@ type Item @entity {
 input NewItem {
   name: String!
   productUrl: String!
+  productImageUrl: String
 }
 
 type Mutation {

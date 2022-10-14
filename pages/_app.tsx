@@ -8,7 +8,6 @@ import { ThemeProvider } from 'styled-components';
 import { useApollo } from '../apollo-client/client';
 import { ApolloProvider } from '@apollo/client';
 import { Layout } from '../components/Layout';
-import Link from 'next/link';
 
 // const Main = styled.div``;
 
