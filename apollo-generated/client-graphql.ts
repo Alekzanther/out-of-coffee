@@ -124,6 +124,11 @@ export type Query = {
 };
 
 
+export type QueryGetCurrentOrderArgs = {
+  id: Scalars['ID'];
+};
+
+
 export type QueryGetItemArgs = {
   id: Scalars['ID'];
 };
@@ -353,11 +358,6 @@ export type GetBaseOrderQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetBaseOrderQuery = { __typename: 'Query', GetBaseOrder: { __typename: 'BaseOrder', _id: string, active: boolean, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null } | null> | null } };
 
-export type GetCurrentOrderQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetCurrentOrderQuery = { __typename: 'Query', GetCurrentOrder: { __typename: 'Order', _id: string, items: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null }> } };
-
 export type GetFavoriteItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -384,6 +384,13 @@ export type GetSchemaQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetSchemaQuery = { __typename: 'Query', __schema: { __typename: '__Schema' } };
+
+export type AddNewItemMutationVariables = Exact<{
+  newItem: NewItem;
+}>;
+
+
+export type AddNewItemMutation = { __typename: 'Mutation', CreateItem: { __typename: 'Item', name: string, productUrl: string } };
 
 export const ItemFragmentFragmentDoc = gql`
     fragment ItemFragment on Item {
@@ -552,47 +559,6 @@ export function useGetBaseOrderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetBaseOrderQueryHookResult = ReturnType<typeof useGetBaseOrderQuery>;
 export type GetBaseOrderLazyQueryHookResult = ReturnType<typeof useGetBaseOrderLazyQuery>;
 export type GetBaseOrderQueryResult = Apollo.QueryResult<GetBaseOrderQuery, GetBaseOrderQueryVariables>;
-export const GetCurrentOrderDocument = gql`
-    query getCurrentOrder {
-  GetCurrentOrder {
-    _id
-    items {
-      _id
-      name
-      productUrl
-      productImageUrl
-      __typename
-    }
-  }
-}
-    `;
-
-/**
- * __useGetCurrentOrderQuery__
- *
- * To run a query within a React component, call `useGetCurrentOrderQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetCurrentOrderQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetCurrentOrderQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetCurrentOrderQuery(baseOptions?: Apollo.QueryHookOptions<GetCurrentOrderQuery, GetCurrentOrderQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetCurrentOrderQuery, GetCurrentOrderQueryVariables>(GetCurrentOrderDocument, options);
-      }
-export function useGetCurrentOrderLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCurrentOrderQuery, GetCurrentOrderQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetCurrentOrderQuery, GetCurrentOrderQueryVariables>(GetCurrentOrderDocument, options);
-        }
-export type GetCurrentOrderQueryHookResult = ReturnType<typeof useGetCurrentOrderQuery>;
-export type GetCurrentOrderLazyQueryHookResult = ReturnType<typeof useGetCurrentOrderLazyQuery>;
-export type GetCurrentOrderQueryResult = Apollo.QueryResult<GetCurrentOrderQuery, GetCurrentOrderQueryVariables>;
 export const GetFavoriteItemsDocument = gql`
     query getFavoriteItems {
   GetFavoriteItems {
@@ -782,3 +748,37 @@ export function useGetSchemaLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetSchemaQueryHookResult = ReturnType<typeof useGetSchemaQuery>;
 export type GetSchemaLazyQueryHookResult = ReturnType<typeof useGetSchemaLazyQuery>;
 export type GetSchemaQueryResult = Apollo.QueryResult<GetSchemaQuery, GetSchemaQueryVariables>;
+export const AddNewItemDocument = gql`
+    mutation AddNewItem($newItem: NewItem!) {
+  CreateItem(newItem: $newItem) {
+    name
+    productUrl
+  }
+}
+    `;
+export type AddNewItemMutationFn = Apollo.MutationFunction<AddNewItemMutation, AddNewItemMutationVariables>;
+
+/**
+ * __useAddNewItemMutation__
+ *
+ * To run a mutation, you first call `useAddNewItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddNewItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addNewItemMutation, { data, loading, error }] = useAddNewItemMutation({
+ *   variables: {
+ *      newItem: // value for 'newItem'
+ *   },
+ * });
+ */
+export function useAddNewItemMutation(baseOptions?: Apollo.MutationHookOptions<AddNewItemMutation, AddNewItemMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddNewItemMutation, AddNewItemMutationVariables>(AddNewItemDocument, options);
+      }
+export type AddNewItemMutationHookResult = ReturnType<typeof useAddNewItemMutation>;
+export type AddNewItemMutationResult = Apollo.MutationResult<AddNewItemMutation>;
+export type AddNewItemMutationOptions = Apollo.BaseMutationOptions<AddNewItemMutation, AddNewItemMutationVariables>;
