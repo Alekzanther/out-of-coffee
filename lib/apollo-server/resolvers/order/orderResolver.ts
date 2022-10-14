@@ -26,16 +26,17 @@ export const orderResolver: Resolvers = {
         throw new Error('No Orders');
       }
     },
-    GetCurrentOrder: async (_, { id }): Promise<Order> => {
-      const order = (await OrderModel.findById(id).populate(
-        'items',
-      )) as Order;
+    GetCurrentOrder: async (): Promise<Order> => {
+      const order: Order[] = await OrderModel.find({
+        status: 'PENDING',
+      }).populate('items');
 
       if (!order) {
         throw new Error('No order');
       }
-
-      return order;
+      // TODO: Fix this monstrosity of selection. I don't think pending can be unique in theory (but in practice)
+      // or findOneAndUpdate always returns an array now? Idk
+      return order[0];
     },
     GetOrder: async (_, { id }): Promise<Order> => {
       const isIdValid = isValidObjectId(id);

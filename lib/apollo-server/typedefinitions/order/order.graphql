@@ -12,7 +12,7 @@ type Order @entity {
 }
 
 type Query {
-  GetCurrentOrder(id: ID!): Order!
+  GetCurrentOrder: Order!
   GetOrder(id: ID!): Order!
   GetOrders: [Order!]!
 }
