@@ -1,6 +1,9 @@
 import { useQuery } from '@apollo/client';
 import { getItemsQuery } from '../../apollo-client/queries/getItems/getItems';
 
+// ADD, REMOVE PRODUCTS TO CHOOSE FROM IN THE OTHER VIEW
+// LIST AVAILABLE STUFF
+
 const Items = () => {
   const { data, loading } = useQuery(getItemsQuery);
   console.log('data', data);
