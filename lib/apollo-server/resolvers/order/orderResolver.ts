@@ -3,7 +3,10 @@ import { isValidObjectId } from 'mongoose';
 import { checkIfIdsAreValid } from '../../../../helpers/helpers';
 import { Order as OrderModel } from '../../models/Order/order';
 
-import { Order } from '../../../../apollo-generated/server-graphql';
+import {
+  NewOrder,
+  Order,
+} from '../../../../apollo-generated/server-graphql';
 
 enum StatusOrder {
   Pending = 'PENDING',
@@ -58,7 +61,10 @@ export const orderResolver: Resolvers = {
     },
   },
   Mutation: {
-    CreateOrder: async (_, { newOrder }): Promise<Order> => {
+    CreateOrder: async (
+      _,
+      { newOrder }: { newOrder: NewOrder },
+    ): Promise<Order> => {
       try {
         const invalidId = checkIfIdsAreValid(
           newOrder.items as string[],
@@ -68,6 +74,17 @@ export const orderResolver: Resolvers = {
           throw new Error(
             `Supplied ID ${invalidId} is not a valid ObjectId`,
           );
+        }
+
+        try {
+          const currentOrder = await OrderModel.find({
+            status: 'PENDING',
+          });
+          if (currentOrder) {
+            throw new Error('A pending order already exists');
+          }
+        } catch (error) {
+          throw new Error(`Could not find order: ${error}`);
         }
 
         const order = await OrderModel.create({
