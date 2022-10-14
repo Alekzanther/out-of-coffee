@@ -1,4 +1,3 @@
-import { GlobalStyles } from '../globalStyles';
 // import styled from 'styled-components'
 import './index.css';
 
@@ -8,6 +7,8 @@ import React, { MouseEventHandler, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { useApollo } from '../apollo-client/client';
 import { ApolloProvider } from '@apollo/client';
+import { Layout } from '../components/Layout';
+import Link from 'next/link';
 
 // const Main = styled.div``;
 
@@ -26,18 +27,11 @@ function App({ Component, pageProps }) {
   return (
     <ApolloProvider client={apolloClient}>
       <ThemeProvider theme={theme}>
-        <div className="app">
-          <GlobalStyles />
-          <div>
-            <p>Beställ innan torsdag 25 september kl 12:00! 🎉</p>
+        <Layout>
+          <div className="app">
+            <Component {...pageProps} />
           </div>
-          <div>
-            <a href="/items">items</a>
-            <a href="/">hem</a>
-          </div>
-          <h1>Müsl.io</h1>
-          <Component {...pageProps} />
-        </div>
+        </Layout>
       </ThemeProvider>
     </ApolloProvider>
   );
