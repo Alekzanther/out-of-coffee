@@ -3,7 +3,14 @@ import { isValidObjectId } from 'mongoose';
 import { checkIfIdsAreValid } from '../../../../helpers/helpers';
 import { Order as OrderModel } from '../../models/Order/order';
 
-import { Order } from '../../../../apollo-generated/server-graphql';
+import {
+  Item,
+  MutationAddItemToOrderArgs,
+  MutationRemoveItemFromOrderArgs,
+  NewOrder,
+  Order,
+  QueryGetOrderArgs,
+} from '../../../../apollo-generated/server-graphql';
 
 enum StatusOrder {
   Pending = 'PENDING',
@@ -38,7 +45,10 @@ export const orderResolver: Resolvers = {
       // or findOneAndUpdate always returns an array now? Idk
       return order[0];
     },
-    GetOrder: async (_, { id }): Promise<Order> => {
+    GetOrder: async (
+      _,
+      { id }: QueryGetOrderArgs,
+    ): Promise<Order> => {
       const isIdValid = isValidObjectId(id);
       if (!isIdValid) {
         throw new Error(
@@ -58,7 +68,10 @@ export const orderResolver: Resolvers = {
     },
   },
   Mutation: {
-    CreateOrder: async (_, { newOrder }): Promise<Order> => {
+    CreateOrder: async (
+      _,
+      { newOrder }: { newOrder: NewOrder },
+    ): Promise<Order> => {
       try {
         const invalidId = checkIfIdsAreValid(
           newOrder.items as string[],
@@ -68,6 +81,17 @@ export const orderResolver: Resolvers = {
           throw new Error(
             `Supplied ID ${invalidId} is not a valid ObjectId`,
           );
+        }
+
+        try {
+          const currentOrder = await OrderModel.find({
+            status: 'PENDING',
+          });
+          if (currentOrder) {
+            throw new Error('A pending order already exists');
+          }
+        } catch (error) {
+          throw new Error(`Could not find order: ${error}`);
         }
 
         const order = await OrderModel.create({
@@ -89,9 +113,12 @@ export const orderResolver: Resolvers = {
         throw new Error(`Unable to save new order: ${error}`);
       }
     },
-    AddItemToOrder: async (_, { item }): Promise<Order> => {
+    AddItemToOrder: async (
+      _,
+      { item }: MutationAddItemToOrderArgs,
+    ): Promise<Order> => {
       try {
-        const order: Order[] = await OrderModel.findOneAndUpdate(
+        const order = (await OrderModel.findOneAndUpdate(
           {
             status: 'PENDING',
           },
@@ -99,19 +126,21 @@ export const orderResolver: Resolvers = {
             $push: { items: item },
           },
           { new: true },
-        ).populate('items');
+        ).populate('items')) as Order;
 
         if (!order) {
           throw new Error('Could not find the current order');
         }
-        // TODO: Fix this monstrosity of selection. I don't think pending can be unique in theory (but in practice)
-        // or findOneAndUpdate always returns an array now? Idk
-        return order[0];
+
+        return order;
       } catch (error) {
         throw new Error(`Unable to save new order: ${error}`);
       }
     },
-    RemoveItemFromOrder: async (_, { item }): Promise<Order> => {
+    RemoveItemFromOrder: async (
+      _,
+      { item }: MutationRemoveItemFromOrderArgs,
+    ): Promise<Order> => {
       try {
         const order = await OrderModel.findOne({
           status: 'PENDING',
@@ -126,19 +155,16 @@ export const orderResolver: Resolvers = {
             order.items.splice(itemIndex, 1);
           }
 
-          const newOrder: Order[] = await OrderModel.findOneAndUpdate(
+          const newOrder = (await OrderModel.findOneAndUpdate(
             {
               status: 'PENDING',
             },
             order,
             { new: true },
-          ).populate('items');
-          // TODO: Fix this monstrosity of selection. I don't think pending can be unique in theory (but in practice)
-          // or findOneAndUpdate always returns an array now? Idk
-          return newOrder[0];
+          ).populate('items')) as Order;
+          return newOrder;
         }
 
-        console.log('updatedOrder', order);
         if (!order) {
           throw new Error('Could not find the current order');
         }
