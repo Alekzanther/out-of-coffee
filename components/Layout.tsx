@@ -26,7 +26,8 @@ export const Layout = (props: LayoutProps) => {
       </div>
       <div>
         <Link href="/">hem</Link>
-        <Link href="products">products</Link>
+        <Link href="/products">products</Link>
+        <Link href="/favorites">favorites</Link>
       </div>
       <h1>Müsl.io</h1>
       <div>{props.children}</div>
