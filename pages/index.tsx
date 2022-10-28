@@ -10,7 +10,7 @@ import { Items } from '../components/Items/Items';
 
 const Index = () => {
   return (
-    <div>
+    <div style={{ display: 'flex' }}>
       <Items />
       <Order />
     </div>

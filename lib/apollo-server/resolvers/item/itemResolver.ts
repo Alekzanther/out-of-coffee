@@ -71,7 +71,7 @@ export const itemResolver: Resolvers = {
         previousValue = value;
       } else {
         try {
-          const result: Item = await ItemModel.findOneAndUpdate({
+          const result: Item = await ItemModel.findOne({
             _id: id,
           });
           if (!result) {

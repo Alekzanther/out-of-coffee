@@ -32,7 +32,7 @@ export const Order = () => {
             <ul>
               {aggregatedItems.map((item) => {
                 return (
-                  <li>
+                  <li key={item._id}>
                     {item.name} - {item.amount} -{' '}
                     <button
                       onClick={() =>
