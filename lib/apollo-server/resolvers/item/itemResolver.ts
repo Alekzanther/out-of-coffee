@@ -53,6 +53,7 @@ export const itemResolver: Resolvers = {
         //   );
         // }
         const item = await ItemModel.create({
+          mathemId: newItem?.mathemId,
           name: newItem?.name,
           productUrl: newItem?.productUrl,
           productImageUrl: newItem.productImageUrl || '',

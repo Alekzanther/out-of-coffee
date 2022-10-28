@@ -1,5 +1,6 @@
 type Item @entity {
   _id: String! @id
+  mathemId: String!
   name: String! @column
   productUrl: String! @column
   productImageUrl: String @column
@@ -7,6 +8,7 @@ type Item @entity {
 }
 
 input NewItem {
+  mathemId: String!
   name: String!
   productUrl: String!
   productImageUrl: String

@@ -17,14 +17,11 @@ db.createCollection("orders")
 db.createCollection("items")
 db.createCollection("baseorders")
 let itemsArr = [
-  { "name": "russin", "productUrl": "https://www.mat.se/butik/russin-krav-salta-kvarn-500g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/42660-280.jpg", isFavorite: false },
-  { "name": "bananer", "productUrl": "https://www.mat.se/butik/banan-rattvisemarkt-ca-850g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/23843-560.jpg", isFavorite: false },
-  { "name": "grönt te", "productUrl": "https://www.mat.se/butik/gront-te-krav-kung-markatt-20p", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/23843-280.jpg", isFavorite: false },
-  { "name": "kanel", "productUrl": "https://www.mat.se/butik/kanel-malen-garant-eko-43g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/102251-280.jpg", isFavorite: false },
-  { "name": "havredryck", "productUrl": "https://www.mat.se/butik/havredryck-deluxe-oatly-1l", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/100219-280.jpg", isFavorite: false },
-  { "name": "start", "productUrl": "https://www.mat.se/butik/start-naturell-granola-start-11kg", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/127624-280.jpg", isFavorite: false },
-  { "name": "kaffe", "productUrl": "https://www.mat.se/butik/bryggkaffe-mellan-classic-500g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/7056-280.jpg", isFavorite: false },
-  { "name": "smör", "productUrl": "https://www.mat.se/butik/ekologiskt-82-svenskt-smor-fran-arla-500g", "productImageUrl": "https://d1hr6nb56yyl1.cloudfront.net/product-images/4858-280.jpg", isFavorite: false },
+ {"name":"Snabbnudlar Kycklingsmak 85g Samyang","productUrl":"https://mathem.se/varor/snabbnudlar/snabbnudlar-kyckling-85g-samyang-95873","productImageUrl":"//static.mathem.se/shared/images/products/original/07350035210107_c1n1.jpg","isFavorite":false,"mathemId":"95873"},
+ {"name":"Chips Sourcream & Onion 275g Estrella","productUrl":"https://mathem.se/varor/chips-med-smak/chips-sourcream-o-onion-300g-estrella","productImageUrl":"//static.mathem.se/shared/images/products/original/chips-sourcream-o-onion-275g-estrella.jpeg","isFavorite":false,"mathemId":"14424"},
+ {"name":"Kaffe Brygg Mellanrost 450g Gevalia","productUrl":"https://mathem.se/varor/bryggkaffe/kaffe-brygg-mellanrost-500g-gevalia","productImageUrl":"//static.mathem.se/shared/images/products/original/08711000530085_c1r1.jpeg.jpg","isFavorite":false,"mathemId":"14804"},
+ {"name":"Färsk Mellanmjölk 1,5% 1,5L Arla","productUrl":"https://mathem.se/varor/mellanmjolk/mellanmjolk-1-5--1-5l-arla","productImageUrl":"//static.mathem.se/shared/images/products/original/farsk-mellanmjolk-1-5--1-5l-arla-2.jpg","isFavorite":false,"mathemId":"15664"},
+ {"name":"Ägg Frigående Inomhus 15-p S 762g Kronägg","productUrl":"https://mathem.se/varor/agg/agg-s-ib-15-p-kronagg-ab","productImageUrl":"//static.mathem.se/shared/images/products/original/agg-frigaende-inomhus-15-p-s-762g-kronagg-2.jpg","isFavorite":false,"mathemId":"99980"}
 ]
 
 db.items.insertMany(itemsArr)

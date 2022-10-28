@@ -28,6 +28,7 @@ export const Layout = (props: LayoutProps) => {
         <Link href="/">hem</Link>
         <Link href="/products">products</Link>
         <Link href="/favorites">favorites</Link>
+        <Link href="/stuff">stuff</Link>
       </div>
       <h1>Müsl.io</h1>
       <div>{props.children}</div>

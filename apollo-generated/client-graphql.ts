@@ -38,6 +38,7 @@ export type Item = {
   __typename: 'Item';
   _id: Scalars['String'];
   isFavorite?: Maybe<Scalars['Boolean']>;
+  mathemId: Scalars['String'];
   name: Scalars['String'];
   productImageUrl?: Maybe<Scalars['String']>;
   productUrl: Scalars['String'];
@@ -90,6 +91,7 @@ export type NewBaseOrder = {
 };
 
 export type NewItem = {
+  mathemId: Scalars['String'];
   name: Scalars['String'];
   productImageUrl?: InputMaybe<Scalars['String']>;
   productUrl: Scalars['String'];
@@ -369,12 +371,12 @@ export type GetItemQueryVariables = Exact<{
 }>;
 
 
-export type GetItemQuery = { __typename: 'Query', GetItem: { __typename: 'Item', name: string, productUrl: string, productImageUrl?: string | null, isFavorite?: boolean | null } };
+export type GetItemQuery = { __typename: 'Query', GetItem: { __typename: 'Item', mathemId: string, name: string, productUrl: string, productImageUrl?: string | null, isFavorite?: boolean | null } };
 
 export type GetItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetItemsQuery = { __typename: 'Query', GetItems: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null, isFavorite?: boolean | null }> };
+export type GetItemsQuery = { __typename: 'Query', GetItems: Array<{ __typename: 'Item', _id: string, mathemId: string, name: string, productUrl: string, productImageUrl?: string | null, isFavorite?: boolean | null }> };
 
 export type GetOrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -644,6 +646,7 @@ export type GetFavoriteItemsQueryResult = Apollo.QueryResult<GetFavoriteItemsQue
 export const GetItemDocument = gql`
     query getItem($id: ID!) {
   GetItem(id: $id) {
+    mathemId
     name
     productUrl
     productImageUrl
@@ -683,6 +686,7 @@ export const GetItemsDocument = gql`
     query getItems {
   GetItems {
     _id
+    mathemId
     name
     productUrl
     productImageUrl

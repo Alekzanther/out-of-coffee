@@ -32,6 +32,7 @@ export type Item = {
   __typename?: 'Item';
   _id: Scalars['String'];
   isFavorite?: Maybe<Scalars['Boolean']>;
+  mathemId: Scalars['String'];
   name: Scalars['String'];
   productImageUrl?: Maybe<Scalars['String']>;
   productUrl: Scalars['String'];
@@ -84,6 +85,7 @@ export type NewBaseOrder = {
 };
 
 export type NewItem = {
+  mathemId: Scalars['String'];
   name: Scalars['String'];
   productImageUrl?: InputMaybe<Scalars['String']>;
   productUrl: Scalars['String'];
@@ -303,6 +305,7 @@ export type ErrorResponseResolvers<ContextType = any, ParentType extends Resolve
 export type ItemResolvers<ContextType = any, ParentType extends ResolversParentTypes['Item'] = ResolversParentTypes['Item']> = {
   _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   isFavorite?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  mathemId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   productImageUrl?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   productUrl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;

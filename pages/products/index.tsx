@@ -55,7 +55,23 @@ const Items = (props: any) => {
         <div>
           <ul>
             {data.GetItems.map((item) => (
-              <li>{item.name}</li>
+              <li>
+                <div>
+                  <a target="_blank" href={item.productUrl}>
+                    {item.name}
+                  </a>
+                  <img
+                    src={item.productImageUrl}
+                    loading="lazy"
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      objectFit: 'contain',
+                    }}
+                  />
+                  <p>{item.mathemId}</p>
+                </div>
+              </li>
             ))}
           </ul>
         </div>
