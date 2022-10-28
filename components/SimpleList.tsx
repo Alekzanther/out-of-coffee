@@ -1,6 +1,7 @@
+/* eslint-disable react/display-name */
 import React, { forwardRef } from 'react';
-import { css } from 'styled-components';
 import New from '../assets/new.svg';
+import Image from 'next/image'
 
 type SimpleListItem = {
   title: string;
@@ -12,24 +13,7 @@ type SimpleListItem = {
   removeItem: (id: string) => void;
 };
 
-const style = css`
-  display: flex;
-  align-items: center;
-  padding: 11px 0;
-  position: relative;
-  justify-content: space-between;
 
-  svg {
-    position: absolute;
-    left: -30px;
-  }
-`;
-
-const spanStyle = css`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
 
 export const SimpleList = forwardRef<HTMLDivElement, SimpleListItem>(
   (
@@ -43,7 +27,7 @@ export const SimpleList = forwardRef<HTMLDivElement, SimpleListItem>(
       <div ref={ref} id={id}>
         <span>
           {newItem ? <New /> : null}
-          <img
+          <Image
             style={{ height: '50px', width: '50px' }}
             src={productImageUrl || ''}
             alt={name}

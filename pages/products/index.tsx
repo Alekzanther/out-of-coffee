@@ -1,5 +1,12 @@
 import { useQuery } from '@apollo/client';
-import { FormEvent, useState } from 'react';
+import {
+  FormEvent,
+  JSXElementConstructor,
+  ReactElement,
+  ReactFragment,
+  ReactPortal,
+  useState,
+} from 'react';
 import { getItemsQuery } from '../../apollo-client/queries/getItems/getItems';
 import {
   NewItem,
@@ -9,7 +16,7 @@ import {
 // ADD, REMOVE PRODUCTS TO CHOOSE FROM IN THE OTHER VIEW
 // LIST AVAILABLE STUFF
 
-const Items = (props: any) => {
+const Items = () => {
   const [item, setItem] = useState<NewItem>({
     name: '',
     productUrl: '',
@@ -33,10 +40,7 @@ const Items = (props: any) => {
     addNewItem({ variables: { newItem: item } });
   };
 
-  const [
-    addNewItem,
-    { data: newItemData, loading: newItemLoading, error },
-  ] = useAddNewItemMutation();
+  const [addNewItem, { data: newItemData }] = useAddNewItemMutation();
 
   console.log({ newItemData });
   return (
@@ -55,7 +59,7 @@ const Items = (props: any) => {
         <div>
           <ul>
             {data.GetItems.map((item) => (
-              <li>
+              <li key={item.mathemId}>
                 <div>
                   <a target="_blank" href={item.productUrl}>
                     {item.name}
