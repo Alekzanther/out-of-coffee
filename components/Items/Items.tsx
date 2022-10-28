@@ -18,7 +18,7 @@ export const Items = () => {
       {data &&
         data.GetItems.map((item) => {
           return (
-            <li>
+            <li key={item._id}>
               {item.name} -{' '}
               <button onClick={() => handleAddItemToOrder(item._id)}>
                 Add to Order

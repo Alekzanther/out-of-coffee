@@ -22,7 +22,7 @@ const Favorites = () => {
       <div>
         <ul>
           {data.GetFavoriteItems.map((item) => (
-            <li>
+            <li key={item._id}>
               {item.name}
               <AnimatedButton
                 kind="outlineHeartToFilledHeart"
