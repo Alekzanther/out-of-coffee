@@ -1,7 +1,7 @@
 // PAST ORDERS
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useAddNewItemMutation } from '../../apollo-generated/client-graphql';
+import { useAddItemToOrderMutation } from '../../apollo-generated/client-graphql';
 import { Order } from '../../components/Orders2/Orders';
 
 const Stuff = () => {
@@ -9,10 +9,7 @@ const Stuff = () => {
   // null === nudlar
   const [searchString, setSearchString] = useState(null);
 
-  const [
-    addNewItem,
-    { data: newItemData, loading: newItemLoading, error },
-  ] = useAddNewItemMutation();
+  const [addItem] = useAddItemToOrderMutation();
 
   useEffect(() => {
     const URL = `https://api.mathem.io/product-search/noauth/search/query?size=25&index=0&keyword=${searchString}&searchType=searchResult&sortTerm=popular&sortOrder=desc&storeId=19&type=p&append=false&badges=&brands=&categories=&q=${searchString}`;
@@ -31,9 +28,9 @@ const Stuff = () => {
     productImageUrl,
     mathemId,
   }) => {
-    return addNewItem({
+    return addItem({
       variables: {
-        newItem: {
+        item: {
           name,
           mathemId,
           productUrl,
@@ -86,7 +83,7 @@ const Stuff = () => {
                     })
                   }
                 >
-                  Plopp! + to databas
+                  ADD TO ORDER
                 </button>
               </div>
             ))}
@@ -115,7 +112,12 @@ const Image = ({ src }) => {
       style={{
         width: '100px',
         height: '100px',
-        backgroundColor: loaded ? 'transparent' : 'whitesmoke',
+        backgroundPosition: 'center center',
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat',
+        backgroundImage: loaded
+          ? 'none'
+          : "url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/cat.gif')",
       }}
     >
       <StyledImage

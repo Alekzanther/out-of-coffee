@@ -21,8 +21,15 @@ input NewOrder {
   items: [String]!
 }
 
+input NewItem {
+  mathemId: String!
+  name: String!
+  productUrl: String!
+  productImageUrl: String
+}
+
 type Mutation {
   CreateOrder(newOrder: NewOrder!): Order!
-  AddItemToOrder(id: String!): Order!
+  AddItemToOrder(item: NewItem!): Order!
   RemoveItemFromOrder(id: String!): Order!
 }

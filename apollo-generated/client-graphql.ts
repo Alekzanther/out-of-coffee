@@ -56,7 +56,7 @@ export type Mutation = {
 
 
 export type MutationAddItemToOrderArgs = {
-  id: Scalars['String'];
+  item: NewItem;
 };
 
 
@@ -330,7 +330,7 @@ export type ItemFragmentFragment = { __typename: 'Item', _id: string, name: stri
 export type OrderFragmentFragment = { __typename: 'Order', _id: string, status: OrderStatus, creationDate: number, endDate: number, items: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null }> };
 
 export type AddItemToOrderMutationVariables = Exact<{
-  id: Scalars['String'];
+  item: NewItem;
 }>;
 
 
@@ -417,8 +417,8 @@ export const OrderFragmentFragmentDoc = gql`
 }
     ${ItemFragmentFragmentDoc}`;
 export const AddItemToOrderDocument = gql`
-    mutation addItemToOrder($id: String!) {
-  AddItemToOrder(id: $id) {
+    mutation addItemToOrder($item: NewItem!) {
+  AddItemToOrder(item: $item) {
     ...OrderFragment
   }
 }
@@ -438,7 +438,7 @@ export type AddItemToOrderMutationFn = Apollo.MutationFunction<AddItemToOrderMut
  * @example
  * const [addItemToOrderMutation, { data, loading, error }] = useAddItemToOrderMutation({
  *   variables: {
- *      id: // value for 'id'
+ *      item: // value for 'item'
  *   },
  * });
  */

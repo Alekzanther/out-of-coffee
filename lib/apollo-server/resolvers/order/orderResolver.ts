@@ -2,6 +2,7 @@ import { Resolvers } from '@apollo/client';
 import { isValidObjectId } from 'mongoose';
 import { checkIfIdsAreValid } from '../../../../helpers/helpers';
 import { Order as OrderModel } from '../../models/Order/order';
+import { Item as ItemModel } from '../../models/Item/item';
 
 import {
   Item,
@@ -115,15 +116,25 @@ export const orderResolver: Resolvers = {
     },
     AddItemToOrder: async (
       _,
-      { id }: MutationAddItemToOrderArgs,
+      { item }: MutationAddItemToOrderArgs,
     ): Promise<Order> => {
       try {
+        const existingItem: Item = await ItemModel.findOne({
+          mathemId: item.mathemId,
+        });
+
+        const newItem = existingItem
+          ? null
+          : await ItemModel.create(item);
+
         const order = (await OrderModel.findOneAndUpdate(
           {
             status: 'PENDING',
           },
           {
-            $push: { items: id },
+            $push: {
+              items: existingItem ? existingItem._id : newItem.id,
+            },
           },
           { new: true },
         ).populate('items')) as Order;

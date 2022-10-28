@@ -50,7 +50,7 @@ export type Mutation = {
 
 
 export type MutationAddItemToOrderArgs = {
-  id: Scalars['String'];
+  item: NewItem;
 };
 
 
@@ -313,7 +313,7 @@ export type ItemResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  AddItemToOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationAddItemToOrderArgs, 'id'>>;
+  AddItemToOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationAddItemToOrderArgs, 'item'>>;
   CreateItem?: Resolver<ResolversTypes['Item'], ParentType, ContextType, RequireFields<MutationCreateItemArgs, 'newItem'>>;
   CreateOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationCreateOrderArgs, 'newOrder'>>;
   RemoveItemFromOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationRemoveItemFromOrderArgs, 'id'>>;
