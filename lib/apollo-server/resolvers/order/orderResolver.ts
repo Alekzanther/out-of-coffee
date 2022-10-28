@@ -115,7 +115,7 @@ export const orderResolver: Resolvers = {
     },
     AddItemToOrder: async (
       _,
-      { item }: MutationAddItemToOrderArgs,
+      { id }: MutationAddItemToOrderArgs,
     ): Promise<Order> => {
       try {
         const order = (await OrderModel.findOneAndUpdate(
@@ -123,7 +123,7 @@ export const orderResolver: Resolvers = {
             status: 'PENDING',
           },
           {
-            $push: { items: item },
+            $push: { items: id },
           },
           { new: true },
         ).populate('items')) as Order;
@@ -139,7 +139,7 @@ export const orderResolver: Resolvers = {
     },
     RemoveItemFromOrder: async (
       _,
-      { item }: MutationRemoveItemFromOrderArgs,
+      { id }: MutationRemoveItemFromOrderArgs,
     ): Promise<Order> => {
       try {
         const order = await OrderModel.findOne({
@@ -148,7 +148,7 @@ export const orderResolver: Resolvers = {
 
         if (order) {
           const itemIndex = order.items.findIndex(
-            (i) => i.toString() === item,
+            (i) => i.toString() === id,
           );
 
           if (itemIndex !== undefined && itemIndex > -1) {

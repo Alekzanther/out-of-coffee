@@ -3,7 +3,7 @@ import { orderFragment } from '../../fragments/Order';
 
 export const addItemToOrderMutation = gql`
   mutation addItemToOrder($id: String!) {
-    AddItemToOrder(item: $id) {
+    AddItemToOrder(id: $id) {
       ...OrderFragment
     }
     ${orderFragment}

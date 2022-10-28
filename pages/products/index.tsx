@@ -1,19 +1,33 @@
-import { useQuery } from '@apollo/client';
-import { getItemsQuery } from '../../apollo-client/queries/getItems/getItems';
+import styled from 'styled-components';
+import { useGetItemsQuery } from '../../apollo-generated/client-graphql';
+import { aggregateItems } from '../../helpers/aggregateItems';
 
 // ADD, REMOVE PRODUCTS TO CHOOSE FROM IN THE OTHER VIEW
 // LIST AVAILABLE STUFF
 
-const Items = () => {
-  const { data, loading } = useQuery(getItemsQuery);
+const ListItem = styled('li')`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Spacer = styled('span')`
+  padding-left: 5px;
+  padding-right: 5px;
+`;
+
+const Products = () => {
+  const { data, loading } = useGetItemsQuery();
   console.log('data', data);
   console.log('loading', loading);
+
   if (data) {
     return (
       <div>
         <ul>
           {data.GetItems.map((item) => (
-            <li>{item.name}</li>
+            <ListItem>
+              <div>{item.name}</div>
+            </ListItem>
           ))}
         </ul>
       </div>
@@ -22,4 +36,4 @@ const Items = () => {
   return <div>Loading......</div>;
 };
 
-export default Items;
+export default Products;

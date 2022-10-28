@@ -55,7 +55,7 @@ export type Mutation = {
 
 
 export type MutationAddItemToOrderArgs = {
-  item: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
@@ -70,7 +70,7 @@ export type MutationCreateOrderArgs = {
 
 
 export type MutationRemoveItemFromOrderArgs = {
-  item: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
@@ -357,7 +357,7 @@ export type GetBaseOrderQuery = { __typename: 'Query', GetBaseOrder: { __typenam
 export type GetCurrentOrderQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCurrentOrderQuery = { __typename: 'Query', GetCurrentOrder: { __typename: 'Order', _id: string, items: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null }> } };
+export type GetCurrentOrderQuery = { __typename: 'Query', GetCurrentOrder: { __typename: 'Order', _id: string, status: OrderStatus, creationDate: number, items: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null }> } };
 
 export type GetFavoriteItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -409,7 +409,7 @@ export const OrderFragmentFragmentDoc = gql`
     ${ItemFragmentFragmentDoc}`;
 export const AddItemToOrderDocument = gql`
     mutation addItemToOrder($id: String!) {
-  AddItemToOrder(item: $id) {
+  AddItemToOrder(id: $id) {
     ...OrderFragment
   }
 }
@@ -442,7 +442,7 @@ export type AddItemToOrderMutationResult = Apollo.MutationResult<AddItemToOrderM
 export type AddItemToOrderMutationOptions = Apollo.BaseMutationOptions<AddItemToOrderMutation, AddItemToOrderMutationVariables>;
 export const RemoveItemFromOrderDocument = gql`
     mutation removeItemFromOrder($id: String!) {
-  RemoveItemFromOrder(item: $id) {
+  RemoveItemFromOrder(id: $id) {
     ...OrderFragment
   }
 }
@@ -557,6 +557,8 @@ export const GetCurrentOrderDocument = gql`
     query getCurrentOrder {
   GetCurrentOrder {
     _id
+    status
+    creationDate
     items {
       _id
       name

@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { css } from 'styled-components';
-import New from '../../assets/new.svg';
+import New from '../assets/new.svg';
 
 type SimpleListItem = {
   title: string;

@@ -1,5 +1,5 @@
-import { initializeApollo } from '../apollo-client/client';
-import { Html, Head, Main, NextScript } from 'next/document';
+import { Order } from '../components/Orders2/Orders';
+import { Items } from '../components/Items/Items';
 
 <link
   href="https://res.cloudinary.com/dr6lvwubh/raw/upload/v1581441981/Anicons/anicons-regular.css"
@@ -9,7 +9,12 @@ import { Html, Head, Main, NextScript } from 'next/document';
 // CURRENT ORDER AND A LIST OF ALL AVAILABLE ITEMS
 
 const Index = () => {
-  return <div>hej</div>;
+  return (
+    <div>
+      <Items />
+      <Order />
+    </div>
+  );
 };
 
 // export async function getStaticProps() {

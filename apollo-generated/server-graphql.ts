@@ -49,7 +49,7 @@ export type Mutation = {
 
 
 export type MutationAddItemToOrderArgs = {
-  item: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
@@ -64,7 +64,7 @@ export type MutationCreateOrderArgs = {
 
 
 export type MutationRemoveItemFromOrderArgs = {
-  item: Scalars['String'];
+  id: Scalars['String'];
 };
 
 
@@ -310,10 +310,10 @@ export type ItemResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  AddItemToOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationAddItemToOrderArgs, 'item'>>;
+  AddItemToOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationAddItemToOrderArgs, 'id'>>;
   CreateItem?: Resolver<ResolversTypes['Item'], ParentType, ContextType, RequireFields<MutationCreateItemArgs, 'newItem'>>;
   CreateOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationCreateOrderArgs, 'newOrder'>>;
-  RemoveItemFromOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationRemoveItemFromOrderArgs, 'item'>>;
+  RemoveItemFromOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationRemoveItemFromOrderArgs, 'id'>>;
   SetBaseOrder?: Resolver<ResolversTypes['BaseOrder'], ParentType, ContextType, RequireFields<MutationSetBaseOrderArgs, 'newBaseOrder'>>;
   SetFavorite?: Resolver<ResolversTypes['Item'], ParentType, ContextType, RequireFields<MutationSetFavoriteArgs, 'id'>>;
 };

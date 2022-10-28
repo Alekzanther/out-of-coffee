@@ -23,6 +23,6 @@ input NewOrder {
 
 type Mutation {
   CreateOrder(newOrder: NewOrder!): Order!
-  AddItemToOrder(item: String!): Order!
-  RemoveItemFromOrder(item: String!): Order!
+  AddItemToOrder(id: String!): Order!
+  RemoveItemFromOrder(id: String!): Order!
 }
