@@ -386,6 +386,13 @@ export type GetSchemaQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetSchemaQuery = { __typename: 'Query', __schema: { __typename: '__Schema' } };
 
+export type AddNewItemMutationVariables = Exact<{
+  newItem: NewItem;
+}>;
+
+
+export type AddNewItemMutation = { __typename: 'Mutation', CreateItem: { __typename: 'Item', name: string, productUrl: string } };
+
 export const ItemFragmentFragmentDoc = gql`
     fragment ItemFragment on Item {
   _id
@@ -785,3 +792,37 @@ export function useGetSchemaLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetSchemaQueryHookResult = ReturnType<typeof useGetSchemaQuery>;
 export type GetSchemaLazyQueryHookResult = ReturnType<typeof useGetSchemaLazyQuery>;
 export type GetSchemaQueryResult = Apollo.QueryResult<GetSchemaQuery, GetSchemaQueryVariables>;
+export const AddNewItemDocument = gql`
+    mutation AddNewItem($newItem: NewItem!) {
+  CreateItem(newItem: $newItem) {
+    name
+    productUrl
+  }
+}
+    `;
+export type AddNewItemMutationFn = Apollo.MutationFunction<AddNewItemMutation, AddNewItemMutationVariables>;
+
+/**
+ * __useAddNewItemMutation__
+ *
+ * To run a mutation, you first call `useAddNewItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddNewItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addNewItemMutation, { data, loading, error }] = useAddNewItemMutation({
+ *   variables: {
+ *      newItem: // value for 'newItem'
+ *   },
+ * });
+ */
+export function useAddNewItemMutation(baseOptions?: Apollo.MutationHookOptions<AddNewItemMutation, AddNewItemMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddNewItemMutation, AddNewItemMutationVariables>(AddNewItemDocument, options);
+      }
+export type AddNewItemMutationHookResult = ReturnType<typeof useAddNewItemMutation>;
+export type AddNewItemMutationResult = Apollo.MutationResult<AddNewItemMutation>;
+export type AddNewItemMutationOptions = Apollo.BaseMutationOptions<AddNewItemMutation, AddNewItemMutationVariables>;
