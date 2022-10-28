@@ -2,6 +2,7 @@
 // They are still displayed along with all other items in products view, but here you can list them all and unfavorite them
 // But you can still add favorites in any other view
 
+import React from 'react';
 import {
   useGetFavoriteItemsQuery,
   useSetFavoriteMutation,
@@ -9,29 +10,32 @@ import {
 import { AnimatedButton } from '../../components/AnimatedButton';
 
 const Favorites = () => {
-  const { data, error, loading } = useGetFavoriteItemsQuery();
-  const [setFavorite, { data: data2 }] = useSetFavoriteMutation();
-  console.log('data', data);
-  console.log('loading', loading);
-  console.log('data2', data2);
+  const { data: getFavoritesData, error } =
+    useGetFavoriteItemsQuery();
+  const [setFavorite] = useSetFavoriteMutation();
+
   if (error) {
     return <div>{error.message}</div>;
   }
-  if (data) {
+  if (getFavoritesData) {
     return (
       <div>
         <ul>
-          {data.GetFavoriteItems.map((item) => (
-            <li key={item._id}>
-              {item.name}
-              <AnimatedButton
-                kind="outlineHeartToFilledHeart"
-                isToggled={item.isFavorite}
-                onClick={() =>
-                  setFavorite({ variables: { id: item._id } })
-                }
-              ></AnimatedButton>
-            </li>
+          {getFavoritesData.GetFavoriteItems.map((item) => (
+            <React.Fragment key={item._id}>
+              {item.isFavorite && (
+                <li key={item._id} style={{ display: 'flex' }}>
+                  <AnimatedButton
+                    kind="outlineHeartToFilledHeart"
+                    isToggled={item.isFavorite}
+                    onClick={() =>
+                      setFavorite({ variables: { id: item._id } })
+                    }
+                  />
+                  {item.name}
+                </li>
+              )}
+            </React.Fragment>
           ))}
         </ul>
       </div>
