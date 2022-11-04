@@ -6,6 +6,7 @@ type AggregatedItem = {
   _id: string;
   amount: number;
   name: string;
+  mathemId: string;
 };
 
 export const aggregateItems = (items: Item[]) =>
