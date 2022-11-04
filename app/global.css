@@ -1,5 +1,7 @@
 @import-normalize;
-
+* {
+  box-sizing: border-box;
+}
 html {
   font-size: 18px;
   --scrollbarBG: url('https://cutewallpaper.org/21/nyan-cat-background-gif/Nyan-Cat-Album-on-Imgur.gif');

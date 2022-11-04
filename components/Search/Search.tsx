@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAddItemToOrderMutation } from '../../apollo-generated/client-graphql';
 import { Order } from '../../components/Orders2/Orders';
+import { GridItem, ProductsGrid } from '../ProductsGrid/ProductsGrid';
 
 const Stuff = () => {
   const [data, setData] = useState();
@@ -48,46 +49,26 @@ const Stuff = () => {
         />
 
         <div>
-          <div
-            style={{
-              display: 'flex',
-              maxWidth: '1100px',
-              flexWrap: 'wrap',
-              gap: '12px',
-            }}
-          >
-            {data?.products?.map((el) => (
-              <div
-                key={el.id}
-                style={{
-                  flexBasis: '200px',
-                  padding: '16px',
-                  display: 'inline-flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <a
-                  style={{ fontSize: '12px', whiteSpace: 'nowrap' }}
-                  href={'https://www.mathem.se/' + el.url}
-                >
-                  {el.fullName}
-                </a>
-                <Image src={el.images.ORIGINAL} />
-                <button
-                  onClick={() =>
-                    handleAddProduct({
-                      name: el.fullName,
-                      productUrl: 'https://www.mathem.se/' + el.url,
-                      productImageUrl: el.images.ORIGINAL,
-                      mathemId: el.id,
-                    })
-                  }
-                >
-                  ADD TO ORDER
-                </button>
-              </div>
-            ))}
-          </div>
+          <ProductsGrid>
+            {data &&
+              data.products?.map((item) => {
+                return (
+                  <GridItem
+                    {...item}
+                    key={item.id}
+                    handleAddProduct={() =>
+                      handleAddProduct({
+                        name: item.fullName,
+                        productUrl: item.url,
+                        productImageUrl: item.images.ORIGINAL,
+                        mathemId: item.id,
+                      })
+                    }
+                    images={item.images}
+                  />
+                );
+              })}
+          </ProductsGrid>
         </div>
       </div>
       <Order />
