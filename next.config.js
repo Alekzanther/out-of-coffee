@@ -8,6 +8,14 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'static.mathem.se',
+      },
+    ],
+  },
   webpack(config) {
     // config.resolve.fallback = {
     // ...config.resolve.fallback, // if you miss it, all the other options in fallback, specified

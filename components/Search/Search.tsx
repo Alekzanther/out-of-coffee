@@ -7,7 +7,7 @@ import { Order } from '../../components/Orders2/Orders';
 const Stuff = () => {
   const [data, setData] = useState();
   // null === nudlar
-  const [searchString, setSearchString] = useState(null);
+  const [searchString, setSearchString] = useState('');
 
   const [addItem] = useAddItemToOrderMutation();
 

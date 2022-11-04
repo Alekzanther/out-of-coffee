@@ -25,6 +25,7 @@ export const Layout = (props: LayoutProps) => {
         <p>Beställ innan torsdag 25 september kl 12:00! 🎉</p>
       </div>
       <div>
+        <>hejhej</>
         <Link href="/">hem</Link>
         <Link href="/products">products</Link>
         <Link href="/favorites">favorites</Link>
