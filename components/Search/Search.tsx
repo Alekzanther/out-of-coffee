@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAddItemToOrderMutation } from '../../apollo-generated/client-graphql';
-import { Order } from '../../components/Orders2/Orders';
+import { Order } from '../Orders/Orders';
 
 const Stuff = () => {
   const [data, setData] = useState();
