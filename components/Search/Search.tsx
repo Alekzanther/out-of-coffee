@@ -1,23 +1,27 @@
-// PAST ORDERS
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAddItemToOrderMutation } from '../../apollo-generated/client-graphql';
-import { Order } from '../../components/Orders2/Orders';
 import { GridItem, ProductsGrid } from '../ProductsGrid/ProductsGrid';
+import { Order } from '../orders/Orders';
+
+async function getData(searchString: string) {
+  const URL = `https://api.mathem.io/product-search/noauth/search/query?size=25&index=0&keyword=${searchString}&searchType=searchResult&sortTerm=popular&sortOrder=desc&storeId=19&type=p&append=false&badges=&brands=&categories=&q=${searchString}`;
+
+  return await fetch(URL)
+    .then((res) => res.json())
+    .catch((e) => console.log('error', e));
+}
 
 const Stuff = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState<any | undefined>(undefined);
   // null === nudlar
   const [searchString, setSearchString] = useState('');
 
   const [addItem] = useAddItemToOrderMutation();
 
   useEffect(() => {
-    const URL = `https://api.mathem.io/product-search/noauth/search/query?size=25&index=0&keyword=${searchString}&searchType=searchResult&sortTerm=popular&sortOrder=desc&storeId=19&type=p&append=false&badges=&brands=&categories=&q=${searchString}`;
-
     const fetchData = async () => {
-      const result = await fetch(URL).then((res) => res.json());
-
+      const result = await getData(searchString);
       setData(result);
     };
     fetchData();
@@ -29,7 +33,7 @@ const Stuff = () => {
     productImageUrl,
     mathemId,
   }) => {
-    return addItem({
+    addItem({
       variables: {
         item: {
           name,
@@ -45,9 +49,9 @@ const Stuff = () => {
     <div style={{ display: 'flex' }}>
       <div>
         <input
-          onChange={(e) => setSearchString(e.currentTarget.value)}
+          value={searchString}
+          onChange={(e) => setSearchString(e.target.value)}
         />
-
         <div>
           <ProductsGrid>
             {data &&
@@ -86,7 +90,7 @@ const StyledImage = styled.img<{ loaded: boolean }>`
 
 export default Stuff;
 
-const Image = ({ src }) => {
+const Image = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
   return (
     <span
@@ -106,6 +110,7 @@ const Image = ({ src }) => {
         src={src}
         loaded={loaded}
         onLoad={() => setLoaded(true)}
+        alt={alt}
       />
     </span>
   );

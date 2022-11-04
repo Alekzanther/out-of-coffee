@@ -5,9 +5,7 @@ import { useApollo } from '../apollo-client/client';
 import { ApolloProvider } from '@apollo/client';
 import Search from '../components/Search/Search';
 
-// CURRENT ORDER AND A LIST OF ALL AVAILABLE ITEMS
-
-const Index = () => {
+export default function Index() {
   const apolloClient = useApollo({});
 
   return (
@@ -19,6 +17,4 @@ const Index = () => {
       </ThemeProvider>
     </ApolloProvider>
   );
-};
-
-export default Index;
+}
