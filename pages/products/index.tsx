@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import Image from 'next/image';
 import {
   FormEvent,
   JSXElementConstructor,
@@ -64,9 +65,10 @@ const Items = () => {
                   <a target="_blank" href={item.productUrl}>
                     {item.name}
                   </a>
-                  <img
+                  <Image
                     src={item.productImageUrl}
                     loading="lazy"
+                    alt={item.name}
                     style={{
                       width: '40px',
                       height: '40px',
