@@ -1,5 +1,5 @@
 # Select reference image
-FROM node:14-alpine
+FROM node:16-alpine
 
 # This is optional. Sets the level of logging that you see
 ENV NPM_CONFIG_LOGLEVEL warn
