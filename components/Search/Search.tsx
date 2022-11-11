@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAddItemToOrderMutation } from '../../apollo-generated/client-graphql';
-import { Order } from '../Orders/Orders';
 
 async function getData(searchString: string) {
   const URL = `https://api.mathem.io/product-search/noauth/search/query?size=25&index=0&keyword=${searchString}&searchType=searchResult&sortTerm=popular&sortOrder=desc&storeId=19&type=p&append=false&badges=&brands=&categories=&q=${searchString}`;
@@ -94,7 +93,6 @@ const Stuff = () => {
           </div>
         </div>
       </div>
-      <Order />
     </div>
   );
 };

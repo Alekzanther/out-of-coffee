@@ -1,5 +1,9 @@
+import { ApolloProvider } from '@apollo/client';
 import Head from 'next/head';
 import Link from 'next/link';
+import { ThemeProvider } from 'styled-components';
+import { useApollo } from '../apollo-client/client';
+import { theme } from '../theme';
 import './global.css';
 
 export default function RootLayout({
@@ -9,6 +13,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // const apolloClient = useApollo({});
+
   return (
     <html lang="en">
       <Head>
@@ -24,8 +30,15 @@ export default function RootLayout({
         </div>
         <div>
           <Link href="/">hem</Link>
+          <Link href="/history">history</Link>
         </div>
         <h1>Müsl.io</h1>
+        {/* 
+        Add apollo wrapper here if every child should use it,
+        but if you do you have to set every component to a client component
+        and that will break any suspense and server streaming and make everything
+        client rendered
+      */}
         <>{children}</>
       </body>
     </html>
