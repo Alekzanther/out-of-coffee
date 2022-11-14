@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAddItemToOrderMutation } from '../../apollo-generated/client-graphql';
+import { GridItem, ProductsGrid } from '../ProductsGrid/ProductsGrid';
+import { Order } from '../orders/Orders';
 
 async function getData(searchString: string) {
   const URL = `https://api.mathem.io/product-search/noauth/search/query?size=25&index=0&keyword=${searchString}&searchType=searchResult&sortTerm=popular&sortOrder=desc&storeId=19&type=p&append=false&badges=&brands=&categories=&q=${searchString}`;
@@ -51,46 +53,26 @@ const Stuff = () => {
           onChange={(e) => setSearchString(e.target.value)}
         />
         <div>
-          <div
-            style={{
-              display: 'flex',
-              maxWidth: '1100px',
-              flexWrap: 'wrap',
-              gap: '12px',
-            }}
-          >
-            {data?.products?.map((el) => (
-              <div
-                key={el.id}
-                style={{
-                  flexBasis: '200px',
-                  padding: '16px',
-                  display: 'inline-flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <a
-                  style={{ fontSize: '12px', whiteSpace: 'nowrap' }}
-                  href={'https://www.mathem.se/' + el.url}
-                >
-                  {el.fullName}
-                </a>
-                <Image src={el.images.ORIGINAL} alt="productImage" />
-                <button
-                  onClick={() =>
-                    handleAddProduct({
-                      name: el.fullName,
-                      productUrl: 'https://www.mathem.se/' + el.url,
-                      productImageUrl: el.images.ORIGINAL,
-                      mathemId: el.id,
-                    })
-                  }
-                >
-                  ADD TO ORDER
-                </button>
-              </div>
-            ))}
-          </div>
+          <ProductsGrid>
+            {data &&
+              data.products?.map((item) => {
+                return (
+                  <GridItem
+                    {...item}
+                    key={item.id}
+                    handleAddProduct={() =>
+                      handleAddProduct({
+                        name: item.fullName,
+                        productUrl: item.url,
+                        productImageUrl: item.images.ORIGINAL,
+                        mathemId: item.id,
+                      })
+                    }
+                    images={item.images}
+                  />
+                );
+              })}
+          </ProductsGrid>
         </div>
       </div>
     </div>

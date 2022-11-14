@@ -9,6 +9,8 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
+    domains: ['static.mathem.se'],
+    hostname: 'static.mathem.se',
     remotePatterns: [
       {
         protocol: 'https',
