@@ -37,18 +37,15 @@ export const baseOrderResolver: Resolvers = {
           await BaseOrderModel.find().orFail();
 
         const currentBaseOrder = currentBaseOrders[0];
+
         await currentBaseOrder.updateOne({
           _id: currentBaseOrder._id,
           items: newBaseOrder.items,
         });
 
-        const baseOrder = await BaseOrderModel.create({
-          items: newBaseOrder?.items,
-        });
+        const baseOrders = await BaseOrderModel.find().orFail();
 
-        if (!baseOrder) {
-          throw new Error('Unable to create BaseOrder');
-        }
+        const baseOrder = baseOrders[0];
 
         const populatedBaseOrder: BaseOrder =
           await baseOrder.populate('items');

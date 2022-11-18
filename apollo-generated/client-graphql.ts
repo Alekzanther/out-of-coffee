@@ -357,7 +357,7 @@ export type GetBaseOrderQuery = { __typename: 'Query', getBaseOrder: { __typenam
 export type GetCurrentOrderQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCurrentOrderQuery = { __typename: 'Query', GetCurrentOrder: { __typename: 'Order', _id: string, status: OrderStatus, creationDate: number, items: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null }> } };
+export type GetCurrentOrderQuery = { __typename: 'Query', GetCurrentOrder: { __typename: 'Order', _id: string, status: OrderStatus, creationDate: number, items: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null, mathemId: string }> } };
 
 export type GetFavoriteItemsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -570,6 +570,7 @@ export const GetCurrentOrderDocument = gql`
       name
       productUrl
       productImageUrl
+      mathemId
       __typename
     }
   }

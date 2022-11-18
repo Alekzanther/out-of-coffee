@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { useApollo } from '../apollo-client/client';
 import { ApolloProvider } from '@apollo/client';
 import Search from '../components/Search/Search';
-import { Order } from '../components/orders/Orders';
+import { Order } from '../components/Orders/Orders';
 // import Order from './orders/order';
 
 export default function Index() {
