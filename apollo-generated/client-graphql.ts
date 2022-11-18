@@ -23,7 +23,6 @@ export type AdditionalEntityFields = {
 export type BaseOrder = {
   __typename: 'BaseOrder';
   _id: Scalars['String'];
-  active: Scalars['Boolean'];
   items?: Maybe<Array<Maybe<Item>>>;
 };
 
@@ -50,8 +49,8 @@ export type Mutation = {
   CreateItem: Item;
   CreateOrder: Order;
   RemoveItemFromOrder: Order;
-  SetBaseOrder: BaseOrder;
   SetFavorite: Item;
+  setBaseOrder: BaseOrder;
 };
 
 
@@ -75,18 +74,17 @@ export type MutationRemoveItemFromOrderArgs = {
 };
 
 
-export type MutationSetBaseOrderArgs = {
-  newBaseOrder: NewBaseOrder;
-};
-
-
 export type MutationSetFavoriteArgs = {
   id: Scalars['ID'];
   value?: InputMaybe<Scalars['Boolean']>;
 };
 
+
+export type MutationSetBaseOrderArgs = {
+  newBaseOrder: NewBaseOrder;
+};
+
 export type NewBaseOrder = {
-  active: Scalars['Boolean'];
   items: Array<Scalars['String']>;
 };
 
@@ -117,13 +115,13 @@ export enum OrderStatus {
 
 export type Query = {
   __typename: 'Query';
-  GetBaseOrder: BaseOrder;
   GetCurrentOrder: Order;
   GetFavoriteItems: Array<Item>;
   GetItem: Item;
   GetItems: Array<Item>;
   GetOrder: Order;
   GetOrders: Array<Order>;
+  getBaseOrder: BaseOrder;
 };
 
 
@@ -354,7 +352,7 @@ export type SetFavoriteMutation = { __typename: 'Mutation', SetFavorite: { __typ
 export type GetBaseOrderQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetBaseOrderQuery = { __typename: 'Query', GetBaseOrder: { __typename: 'BaseOrder', _id: string, active: boolean, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null } | null> | null } };
+export type GetBaseOrderQuery = { __typename: 'Query', getBaseOrder: { __typename: 'BaseOrder', _id: string, items?: Array<{ __typename: 'Item', _id: string, name: string, productUrl: string, productImageUrl?: string | null } | null> | null } };
 
 export type GetCurrentOrderQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -522,9 +520,8 @@ export type SetFavoriteMutationResult = Apollo.MutationResult<SetFavoriteMutatio
 export type SetFavoriteMutationOptions = Apollo.BaseMutationOptions<SetFavoriteMutation, SetFavoriteMutationVariables>;
 export const GetBaseOrderDocument = gql`
     query getBaseOrder {
-  GetBaseOrder {
+  getBaseOrder {
     _id
-    active
     items {
       _id
       name

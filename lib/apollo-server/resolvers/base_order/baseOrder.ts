@@ -7,15 +7,10 @@ import { BaseOrder } from '../../../../apollo-generated/server-graphql';
 
 export const baseOrderResolver: Resolvers = {
   Query: {
-    // TODO: Base order should maybe be unique?
-    GetBaseOrder: async (): Promise<BaseOrder> => {
-      const baseOrder = await BaseOrderModel.findOne({
-        active: true,
-      });
+    getBaseOrder: async (): Promise<BaseOrder> => {
+      const baseOrders = await BaseOrderModel.find().orFail();
 
-      if (!baseOrder) {
-        throw new Error('Unable to get BaseOrder');
-      }
+      const baseOrder = baseOrders[0];
 
       const populatedBaseOrder: BaseOrder = await baseOrder.populate(
         'items',
@@ -24,19 +19,8 @@ export const baseOrderResolver: Resolvers = {
     },
   },
   Mutation: {
-    SetBaseOrder: async (_, { newBaseOrder }): Promise<BaseOrder> => {
+    setBaseOrder: async (_, { newBaseOrder }): Promise<BaseOrder> => {
       try {
-        const currentBaseOrder = await BaseOrderModel.findOne({
-          active: true,
-        });
-
-        if (currentBaseOrder) {
-          await currentBaseOrder.updateOne(
-            { _id: currentBaseOrder._id },
-            { active: false },
-          );
-        }
-
         const invalidId = checkIfIdsAreValid(
           newBaseOrder.items as string[],
         );
@@ -47,18 +31,27 @@ export const baseOrderResolver: Resolvers = {
           );
         }
 
+        if (!newBaseOrder.items) throw new Error('No items supplied');
+
+        const currentBaseOrders =
+          await BaseOrderModel.find().orFail();
+
+        const currentBaseOrder = currentBaseOrders[0];
+        await currentBaseOrder.updateOne({
+          _id: currentBaseOrder._id,
+          items: newBaseOrder.items,
+        });
+
         const baseOrder = await BaseOrderModel.create({
           items: newBaseOrder?.items,
-          active: newBaseOrder?.active,
         });
 
         if (!baseOrder) {
           throw new Error('Unable to create BaseOrder');
         }
 
-        const populatedBaseOrder: any = await baseOrder.populate(
-          'items',
-        );
+        const populatedBaseOrder: BaseOrder =
+          await baseOrder.populate('items');
 
         return populatedBaseOrder;
       } catch (error) {

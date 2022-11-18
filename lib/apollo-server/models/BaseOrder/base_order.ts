@@ -1,10 +1,14 @@
-import mongoose, { model, Schema, SchemaTypes } from 'mongoose';
+import { model, Schema, Types } from 'mongoose';
 
-export const BaseOrderSchema = new Schema({
-  items: [{ type: SchemaTypes.ObjectId, ref: 'Item' }],
-  active: { type: SchemaTypes.Boolean },
+interface BaseOrder {
+  items: Types.ObjectId[];
+}
+
+const baseOrderSchema = new Schema<BaseOrder>({
+  items: [{ type: Schema.Types.ObjectId, ref: 'Item' }],
 });
 
-export const BaseOrder =
-  mongoose.models.BaseOrder ||
-  model<any>('BaseOrder', BaseOrderSchema);
+export const BaseOrder = model<BaseOrder>(
+  'BaseOrder',
+  baseOrderSchema,
+);

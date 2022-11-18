@@ -17,7 +17,6 @@ export type Scalars = {
 export type BaseOrder = {
   __typename?: 'BaseOrder';
   _id: Scalars['String'];
-  active: Scalars['Boolean'];
   items?: Maybe<Array<Maybe<Item>>>;
 };
 
@@ -44,8 +43,8 @@ export type Mutation = {
   CreateItem: Item;
   CreateOrder: Order;
   RemoveItemFromOrder: Order;
-  SetBaseOrder: BaseOrder;
   SetFavorite: Item;
+  setBaseOrder: BaseOrder;
 };
 
 
@@ -69,18 +68,17 @@ export type MutationRemoveItemFromOrderArgs = {
 };
 
 
-export type MutationSetBaseOrderArgs = {
-  newBaseOrder: NewBaseOrder;
-};
-
-
 export type MutationSetFavoriteArgs = {
   id: Scalars['ID'];
   value?: InputMaybe<Scalars['Boolean']>;
 };
 
+
+export type MutationSetBaseOrderArgs = {
+  newBaseOrder: NewBaseOrder;
+};
+
 export type NewBaseOrder = {
-  active: Scalars['Boolean'];
   items: Array<Scalars['String']>;
 };
 
@@ -111,13 +109,13 @@ export enum OrderStatus {
 
 export type Query = {
   __typename?: 'Query';
-  GetBaseOrder: BaseOrder;
   GetCurrentOrder: Order;
   GetFavoriteItems: Array<Item>;
   GetItem: Item;
   GetItems: Array<Item>;
   GetOrder: Order;
   GetOrders: Array<Order>;
+  getBaseOrder: BaseOrder;
 };
 
 
@@ -206,10 +204,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   BaseOrder: ResolverTypeWrapper<BaseOrder>;
   String: ResolverTypeWrapper<Scalars['String']>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   ErrorResponse: ResolverTypeWrapper<ErrorResponse>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Item: ResolverTypeWrapper<Item>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Mutation: ResolverTypeWrapper<{}>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   NewBaseOrder: NewBaseOrder;
@@ -226,10 +224,10 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   BaseOrder: BaseOrder;
   String: Scalars['String'];
-  Boolean: Scalars['Boolean'];
   ErrorResponse: ErrorResponse;
   Int: Scalars['Int'];
   Item: Item;
+  Boolean: Scalars['Boolean'];
   Mutation: {};
   ID: Scalars['ID'];
   NewBaseOrder: NewBaseOrder;
@@ -290,7 +288,6 @@ export type MapDirectiveResolver<Result, Parent, ContextType = any, Args = MapDi
 
 export type BaseOrderResolvers<ContextType = any, ParentType extends ResolversParentTypes['BaseOrder'] = ResolversParentTypes['BaseOrder']> = {
   _id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  active?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   items?: Resolver<Maybe<Array<Maybe<ResolversTypes['Item']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -317,8 +314,8 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   CreateItem?: Resolver<ResolversTypes['Item'], ParentType, ContextType, RequireFields<MutationCreateItemArgs, 'newItem'>>;
   CreateOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationCreateOrderArgs, 'newOrder'>>;
   RemoveItemFromOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<MutationRemoveItemFromOrderArgs, 'id'>>;
-  SetBaseOrder?: Resolver<ResolversTypes['BaseOrder'], ParentType, ContextType, RequireFields<MutationSetBaseOrderArgs, 'newBaseOrder'>>;
   SetFavorite?: Resolver<ResolversTypes['Item'], ParentType, ContextType, RequireFields<MutationSetFavoriteArgs, 'id'>>;
+  setBaseOrder?: Resolver<ResolversTypes['BaseOrder'], ParentType, ContextType, RequireFields<MutationSetBaseOrderArgs, 'newBaseOrder'>>;
 };
 
 export type OrderResolvers<ContextType = any, ParentType extends ResolversParentTypes['Order'] = ResolversParentTypes['Order']> = {
@@ -331,13 +328,13 @@ export type OrderResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  GetBaseOrder?: Resolver<ResolversTypes['BaseOrder'], ParentType, ContextType>;
   GetCurrentOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType>;
   GetFavoriteItems?: Resolver<Array<ResolversTypes['Item']>, ParentType, ContextType>;
   GetItem?: Resolver<ResolversTypes['Item'], ParentType, ContextType, RequireFields<QueryGetItemArgs, 'id'>>;
   GetItems?: Resolver<Array<ResolversTypes['Item']>, ParentType, ContextType>;
   GetOrder?: Resolver<ResolversTypes['Order'], ParentType, ContextType, RequireFields<QueryGetOrderArgs, 'id'>>;
   GetOrders?: Resolver<Array<ResolversTypes['Order']>, ParentType, ContextType>;
+  getBaseOrder?: Resolver<ResolversTypes['BaseOrder'], ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
@@ -363,7 +360,6 @@ export type DirectiveResolvers<ContextType = any> = {
 import { ObjectId } from 'mongodb';
 export type BaseOrderDbObject = {
   _id: ObjectId,
-  active: boolean,
   items?: Maybe<Array<Maybe<ItemDbObject['_id']>>>,
 };
 

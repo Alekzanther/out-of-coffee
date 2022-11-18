@@ -2,9 +2,8 @@ import { gql } from '@apollo/client';
 
 export const getBaseOrderQuery = gql`
   query getBaseOrder {
-    GetBaseOrder {
+    getBaseOrder {
       _id
-      active
       items {
         _id
         name
