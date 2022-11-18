@@ -1,22 +1,27 @@
-// PAST ORDERS
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAddItemToOrderMutation } from '../../apollo-generated/client-graphql';
-import { Order } from '../../components/Orders2/Orders';
+import { GridItem, ProductsGrid } from '../ProductsGrid/ProductsGrid';
+import { Order } from '../orders/Orders';
+
+async function getData(searchString: string) {
+  const URL = `https://api.mathem.io/product-search/noauth/search/query?size=25&index=0&keyword=${searchString}&searchType=searchResult&sortTerm=popular&sortOrder=desc&storeId=19&type=p&append=false&badges=&brands=&categories=&q=${searchString}`;
+
+  return await fetch(URL)
+    .then((res) => res.json())
+    .catch((e) => console.log('error', e));
+}
 
 const Stuff = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState<any | undefined>(undefined);
   // null === nudlar
   const [searchString, setSearchString] = useState('');
 
   const [addItem] = useAddItemToOrderMutation();
 
   useEffect(() => {
-    const URL = `https://api.mathem.io/product-search/noauth/search/query?size=25&index=0&keyword=${searchString}&searchType=searchResult&sortTerm=popular&sortOrder=desc&storeId=19&type=p&append=false&badges=&brands=&categories=&q=${searchString}`;
-
     const fetchData = async () => {
-      const result = await fetch(URL).then((res) => res.json());
-
+      const result = await getData(searchString);
       setData(result);
     };
     fetchData();
@@ -28,7 +33,7 @@ const Stuff = () => {
     productImageUrl,
     mathemId,
   }) => {
-    return addItem({
+    addItem({
       variables: {
         item: {
           name,
@@ -44,53 +49,32 @@ const Stuff = () => {
     <div style={{ display: 'flex' }}>
       <div>
         <input
-          onChange={(e) => setSearchString(e.currentTarget.value)}
+          value={searchString}
+          onChange={(e) => setSearchString(e.target.value)}
         />
-
         <div>
-          <div
-            style={{
-              display: 'flex',
-              maxWidth: '1100px',
-              flexWrap: 'wrap',
-              gap: '12px',
-            }}
-          >
-            {data?.products?.map((el) => (
-              <div
-                key={el.id}
-                style={{
-                  flexBasis: '200px',
-                  padding: '16px',
-                  display: 'inline-flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <a
-                  style={{ fontSize: '12px', whiteSpace: 'nowrap' }}
-                  href={'https://www.mathem.se/' + el.url}
-                >
-                  {el.fullName}
-                </a>
-                <Image src={el.images.ORIGINAL} />
-                <button
-                  onClick={() =>
-                    handleAddProduct({
-                      name: el.fullName,
-                      productUrl: 'https://www.mathem.se/' + el.url,
-                      productImageUrl: el.images.ORIGINAL,
-                      mathemId: el.id,
-                    })
-                  }
-                >
-                  ADD TO ORDER
-                </button>
-              </div>
-            ))}
-          </div>
+          <ProductsGrid>
+            {data &&
+              data.products?.map((item) => {
+                return (
+                  <GridItem
+                    {...item}
+                    key={item.id}
+                    handleAddProduct={() =>
+                      handleAddProduct({
+                        name: item.fullName,
+                        productUrl: item.url,
+                        productImageUrl: item.images.ORIGINAL,
+                        mathemId: item.id,
+                      })
+                    }
+                    images={item.images}
+                  />
+                );
+              })}
+          </ProductsGrid>
         </div>
       </div>
-      <Order />
     </div>
   );
 };
@@ -105,7 +89,7 @@ const StyledImage = styled.img<{ loaded: boolean }>`
 
 export default Stuff;
 
-const Image = ({ src }) => {
+const Image = ({ src, alt }) => {
   const [loaded, setLoaded] = useState(false);
   return (
     <span
@@ -125,6 +109,7 @@ const Image = ({ src }) => {
         src={src}
         loaded={loaded}
         onLoad={() => setLoaded(true)}
+        alt={alt}
       />
     </span>
   );

@@ -4,21 +4,20 @@ import { ThemeProvider } from 'styled-components';
 import { useApollo } from '../apollo-client/client';
 import { ApolloProvider } from '@apollo/client';
 import Search from '../components/Search/Search';
+import { Order } from '../components/orders/Orders';
+// import Order from './orders/order';
 
-// CURRENT ORDER AND A LIST OF ALL AVAILABLE ITEMS
-
-const Index = () => {
+export default function Index() {
   const apolloClient = useApollo({});
 
   return (
-    <ApolloProvider client={apolloClient}>
-      <ThemeProvider theme={theme}>
-        <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex' }}>
+      <ApolloProvider client={apolloClient}>
+        <ThemeProvider theme={theme}>
           <Search />
-        </div>
-      </ThemeProvider>
-    </ApolloProvider>
+          <Order />
+        </ThemeProvider>
+      </ApolloProvider>
+    </div>
   );
-};
-
-export default Index;
+}

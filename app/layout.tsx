@@ -24,8 +24,15 @@ export default function RootLayout({
         </div>
         <div>
           <Link href="/">hem</Link>
+          <Link href="/history">history</Link>
         </div>
         <h1>Müsl.io</h1>
+        {/* 
+        Add apollo wrapper here if every child should use it,
+        but if you do you have to set every component to a client component
+        and that will break any suspense and server streaming and make everything
+        client rendered
+      */}
         <>{children}</>
       </body>
     </html>
