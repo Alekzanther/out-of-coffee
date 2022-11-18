@@ -1,9 +1,5 @@
-import { ApolloProvider } from '@apollo/client';
 import Head from 'next/head';
 import Link from 'next/link';
-import { ThemeProvider } from 'styled-components';
-import { useApollo } from '../apollo-client/client';
-import { theme } from '../theme';
 import './global.css';
 
 export default function RootLayout({
@@ -13,8 +9,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const apolloClient = useApollo({});
-
   return (
     <html lang="en">
       <Head>
